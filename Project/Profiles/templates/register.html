@@ -1,45 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Inscription Agent</title>
+    <title>Agent Registration</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'Backend_app/css/auth.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h2>Créer un compte Agent</h2>
-    
-    {% if form.non_field_errors %}
-        <div style="color: red;">
-            {% for error in form.non_field_errors %}
-                <p>{{ error }}</p>
-            {% endfor %}
-        </div>
-    {% endif %}
-    
-    <form method="POST">
-        {% csrf_token %}
-        
-        <div>
-            <label>Nom d'agent:</label>
-            {{ form.agent_name }}
-        </div>
-        
-        <div>
-            <label>Email:</label>
-            {{ form.agent_email }}
-        </div>
-    
-        <div>
-            <label>Mot de passe:</label>
-            {{ form.agent_pwd }}
-        </div>
-        
-        <div>
-            <label>Confirmer le mot de passe:</label>
-            {{ form.confirm_agent_pwd }}
-        </div>
-        
-        <button type="submit">S'inscrire</button>
-    </form>
-    
-    <p>Déjà un compte ? <a href="{% url 'login' %}">Se connecter</a></p>
+    <div class="auth-container">
+        <h2 class="auth-title">Create an Agent Account</h2>
+        {% if form.non_field_errors %}
+            <div class="error-container">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if success_message %}
+            <p class="success-container">{{ success_message }}</p>
+        {% endif %}
+
+        <form class="auth-form" method="POST">
+    {% csrf_token %}
+
+    <div class="form-group">
+        {{ form.agent_name }}
+        <label>Agent Name</label>
+    </div>
+
+    <div class="form-group">
+        {{ form.agent_email }}
+        <label>Email</label>
+    </div>
+
+    <div class="form-group">
+        {{ form.agent_pwd }}
+        <label>Password</label>
+    </div>
+
+    <div class="form-group">
+        {{ form.confirm_agent_pwd }}
+        <label>Confirm Password</label>
+    </div>
+
+    <button type="submit" class="auth-button">Register</button>
+</form>
+
+        <p class="auth-link">Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
+    </div>
 </body>
 </html>
