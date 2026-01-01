@@ -1,0 +1,117 @@
+body {
+    background-image: url("../images/Background.avif");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;   
+}
+
+.auth-container {
+    font-family: 'Open Sans', sans-serif;
+    width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    padding-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    font-weight: 400;
+}
+.auth-title {
+    text-align: center;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    color: #333;
+}
+.auth-form {
+    display: flex;
+    flex-direction: column;
+}
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.form-group label {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    font-size: 12px;
+    color: #3e4ef8;
+    pointer-events: none;
+    background-color: #f9f9f9;
+    padding: 0 4px;
+    opacity: 0;
+    transition: all 0.2s ease-out;
+}
+
+.form-group input:focus + label,
+.form-group input:not(:placeholder-shown) + label {
+    top: -8px;
+    left: 8px;
+    font-size: 12px;
+    opacity: 1;
+}
+
+.form-group input:focus::placeholder {
+    color: transparent;
+}
+
+
+
+.auth-button {
+    padding: 10px;
+    background-color: #29b8ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.auth-button:hover {
+    background-color: #7e35fb;
+}
+.auth-link {
+    text-align: center;
+    margin-top: 15px;
+}
+.error-container {
+    color: red;
+    margin-bottom: 15px;
+}
+.error-container ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.error-container li {
+    margin-bottom: 5px;
+}
+.success-container {
+    color: green;
+    margin-bottom: 15px;
+}
+.success-container ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.success-container li {
+    margin-bottom: 5px;
+}
+.auth-link a {
+    color: #9a3ff5;
+    text-decoration: none;
+}
+.auth-link a:hover {
+    text-decoration: underline;
+}

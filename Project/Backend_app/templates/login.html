@@ -1,39 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Connexion Agent</title>
+    <title>Agent Login</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'Backend_app/css/login.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h2>Connexion Agent</h2>
-    
-    {% if form.non_field_errors %}
-        <div style="color: red;">
-            {% for error in form.non_field_errors %}
-                <p>{{ error }}</p>
-            {% endfor %}
-        </div>
-    {% endif %}
-    
-    {% if success_message %}
-        <p style="color: green;">{{ success_message }}</p>
-    {% endif %}
-    
-    <form method="POST">
-        {% csrf_token %}
-        
-        <div>
-            <label>Nom d'agent:</label>
-            {{ form.agent_name }}
-        </div>
-        
-        <div>
-            <label>Mot de passe:</label>
-            {{ form.agent_pwd }}
-        </div>
-        
-        <button type="submit">Se connecter</button>
-    </form>
-    
-    <p>Pas encore de compte ? <a href="{% url 'register' %}">S'inscrire</a></p>
+    <div class="login-container">
+        <h2 class="login-title">Login</h2>
+
+        {% if form.non_field_errors %}
+            <div class="error-container">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if success_message %}
+            <div class="success-container">
+                <p>{{ success_message }}</p>
+            </div>
+        {% endif %}
+
+        <form class="login-form" method="POST">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <input type="text" name="agent_name" placeholder="Agent Name" required>
+                <label>Agent Name</label>
+            </div>
+
+            <div class="form-group">
+                <input type="password" name="agent_pwd" placeholder="Password" required>
+                <label>Password</label>
+            </div>
+
+            <button type="submit" class="auth-button">Login</button>
+        </form>
+
+        <p class="auth-link">Don't have an account? <a href="{% url 'register' %}">Sign up</a></p>
+        <p class="auth-link"><a>Forgot Password?</a></p>
+    </div>
 </body>
 </html>
