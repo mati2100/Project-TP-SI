@@ -6,6 +6,5 @@ class LoginForm(forms.Form):
 class AddAgentForm(forms.Form):
     agent_name = forms.CharField(max_length=100)
     agent_email = forms.EmailField()
-    role = forms.CharField(max_length=50)
     agent_pwd = forms.CharField(widget=forms.PasswordInput)
     confirm_agent_pwd = forms.CharField(widget=forms.PasswordInput)
