@@ -9,7 +9,6 @@
 <body>
     <div class="auth-container">
         <h2 class="auth-title">Create an Agent Account</h2>
-
         {% if form.non_field_errors %}
             <div class="error-container">
                 {% for error in form.non_field_errors %}
@@ -47,7 +46,6 @@
 
     <button type="submit" class="auth-button">Register</button>
 </form>
-
 
         <p class="auth-link">Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
     </div>

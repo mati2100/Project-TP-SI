@@ -1,0 +1,55 @@
+@startuml
+left to right direction
+
+actor "agent" as agent
+
+rectangle "Use Case" as UC {
+  usecase "Login" as login
+  usecase "Signup" as signup
+  usecase "Reset Password" as resetpassword
+  usecase "Navbar" as navbar
+  usecase "Profile" as profile
+  usecase "Favorite" as favorites
+  usecase "Dashboard" as dashboard
+  usecase "Tables" as tables
+  usecase "Statistics" as statistics
+  usecase "Shipments" as shipments
+  usecase "Tracking" as tracking
+  usecase "Payments" as payments
+  usecase "Incidents" as incidents
+  usecase "Complaints" as complaints
+  usecase "Client" as client
+  usecase "Driver" as driver
+  usecase "Vehicles" as vehicles
+  usecase "Destination" as destinations
+  usecase "Tiers" as tiers
+  usecase "Pricing" as pricing
+}
+
+agent --> login
+agent --> dashboard
+
+login     -- signup
+login     -- resetpassword
+
+dashboard -- tables
+dashboard -- navbar
+dashboard -- shipments
+dashboard -- statistics
+
+tables    -- client
+tables    -- driver
+tables    -- vehicles
+tables    -- destinations
+tables    -- tiers
+tables    -- pricing
+
+navbar    -- profile
+navbar    -- favorites
+
+shipments -- tracking
+shipments -- payments
+shipments -- incidents
+shipments -- complaints
+
+@enduml

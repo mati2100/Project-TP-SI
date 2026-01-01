@@ -7,7 +7,6 @@ class LoginForm(forms.Form):
     agent_pwd = forms.CharField(
         widget=forms.PasswordInput(attrs={'placeholder': 'Password'})
     )
-
 class AddAgentForm(forms.Form):
     agent_name = forms.CharField(
         max_length=100,

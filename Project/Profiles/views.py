@@ -13,14 +13,14 @@ def login_view(request):
                 agent = Agent.objects.get(agent_name=agent_name, agent_pwd=agent_pwd)
 
                 if not agent.is_active:
-                    form.add_error(None, "Ce compte est désactivé")
+                    form.add_error(None, "This account is disabled")
                 else:
 
                     request.session['agent_id'] = agent.id
                     request.session['agent_name'] = agent.agent_name
                     return render(request, 'home.html', {'agent_name': agent.agent_name})
             except Agent.DoesNotExist:
-                form.add_error(None, "Nom d'agent ou mot de passe incorrect")
+                form.add_error(None, "Agent name or password is incorrect")
     else:
         form = LoginForm()
     
@@ -38,14 +38,14 @@ def addagent_view(request):
             errors = []
 
             if agent_pwd != confirm_agent_pwd:
-                errors.append("Les mots de passe ne correspondent pas")
+                errors.append("Passwords do not match")
             
             if Agent.objects.filter(agent_name=agent_name).exists():
-                errors.append("Ce nom d'agent existe déjà")
+                errors.append("Agent name already taken")
             
             if Agent.objects.filter(agent_email=agent_email).exists():
-                errors.append("Cet email est déjà utilisé")
-            
+                errors.append("Email already used")
+
             if errors:
                 for error in errors:
                     form.add_error(None, error)
@@ -60,7 +60,7 @@ def addagent_view(request):
 
                 return render(request, 'login.html', {
                     'form': LoginForm(),
-                    'success_message': 'Compte créé avec succès! Connectez-vous.'
+                    'success_message': 'Account created successfully. Please log in.'
                 })
     else:
         form = AddAgentForm()
