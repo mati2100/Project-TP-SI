@@ -16,11 +16,11 @@ def login_view(request):
                 if not agent.is_active:
                     form.add_error(None, "Ce compte est désactivé")
                 else:
-                    # Créer une session simple
+                    # Créer une session simple 
                     request.session['agent_id'] = agent.id
                     request.session['agent_name'] = agent.agent_name
-                    request.session['agent_role'] = agent.role
-                    return render(request, 'home.html', {'agent_name': agent.agent_name, 'agent_role': agent.role})
+                    request.session['agent_email'] = agent.agent_email
+                    return render(request, 'home.html', {'agent_name': agent.agent_name, 'agent_email': agent.agent_email})
             except Agent.DoesNotExist:
                 form.add_error(None, "Nom d'agent ou mot de passe incorrect")
     else:
@@ -34,7 +34,6 @@ def addagent_view(request):
         if form.is_valid():
             agent_name = form.cleaned_data['agent_name']
             agent_email = form.cleaned_data['agent_email']
-            role = form.cleaned_data['role']
             agent_pwd = form.cleaned_data['agent_pwd']
             confirm_agent_pwd = form.cleaned_data['confirm_agent_pwd']
             
@@ -63,7 +62,6 @@ def addagent_view(request):
                     agent_name=agent_name,
                     agent_email=agent_email,
                     agent_pwd=agent_pwd,
-                    role=role,
                     is_active=True
                 )
                 # Rediriger vers la page de connexion
