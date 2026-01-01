@@ -21,5 +21,3 @@ class AddAgentForm(forms.Form):
     confirm_agent_pwd = forms.CharField(
         widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'})
     )
-    
-    
