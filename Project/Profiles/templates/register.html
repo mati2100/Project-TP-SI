@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agent Registration</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'Backend_app/css/auth.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <h2 class="auth-title">Create an Agent Account</h2>
+        {% if form.non_field_errors %}
+            <div class="error-container">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if success_message %}
+            <p class="success-container">{{ success_message }}</p>
+        {% endif %}
+
+        <form class="auth-form" method="POST">
+    {% csrf_token %}
+
+    <div class="form-group">
+        {{ form.agent_name }}
+        <label>Agent Name</label>
+    </div>
+
+    <div class="form-group">
+        {{ form.agent_email }}
+        <label>Email</label>
+    </div>
+
+    <div class="form-group">
+        {{ form.agent_pwd }}
+        <label>Password</label>
+    </div>
+
+    <div class="form-group">
+        {{ form.confirm_agent_pwd }}
+        <label>Confirm Password</label>
+    </div>
+
+    <button type="submit" class="auth-button">Register</button>
+</form>
+
+        <p class="auth-link">Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
+    </div>
+</body>
+</html>

@@ -9,20 +9,18 @@ def login_view(request):
             agent_name = form.cleaned_data['agent_name']
             agent_pwd = form.cleaned_data['agent_pwd']
             
-            # Vérifier manuellement les identifiants
             try:
                 agent = Agent.objects.get(agent_name=agent_name, agent_pwd=agent_pwd)
-                # Vérifier si le compte est actif
+
                 if not agent.is_active:
-                    form.add_error(None, "Ce compte est désactivé")
+                    form.add_error(None, "This account is disabled")
                 else:
-                    # Créer une session simple 
+
                     request.session['agent_id'] = agent.id
                     request.session['agent_name'] = agent.agent_name
-                    request.session['agent_email'] = agent.agent_email
-                    return render(request, 'home.html', {'agent_name': agent.agent_name, 'agent_email': agent.agent_email})
+                    return render(request, 'home.html', {'agent_name': agent.agent_name})
             except Agent.DoesNotExist:
-                form.add_error(None, "Nom d'agent ou mot de passe incorrect")
+                form.add_error(None, "Agent name or password is incorrect")
     else:
         form = LoginForm()
     
@@ -37,37 +35,32 @@ def addagent_view(request):
             agent_pwd = form.cleaned_data['agent_pwd']
             confirm_agent_pwd = form.cleaned_data['confirm_agent_pwd']
             
-            # Validation manuelle dans views.py
             errors = []
-            
-            # 1. Vérifier la correspondance des mots de passe
+
             if agent_pwd != confirm_agent_pwd:
-                errors.append("Les mots de passe ne correspondent pas")
+                errors.append("Passwords do not match")
             
-            # 2. Vérifier si l'agent existe déjà
             if Agent.objects.filter(agent_name=agent_name).exists():
-                errors.append("Ce nom d'agent existe déjà")
+                errors.append("Agent name already taken")
             
-            # 3. Vérifier si l'email existe déjà
             if Agent.objects.filter(agent_email=agent_email).exists():
-                errors.append("Cet email est déjà utilisé")
-            
-            # S'il y a des erreurs, les ajouter au formulaire
+                errors.append("Email already used")
+
             if errors:
                 for error in errors:
                     form.add_error(None, error)
             else:
-                # Créer le nouvel agent
+
                 Agent.objects.create(
                     agent_name=agent_name,
                     agent_email=agent_email,
                     agent_pwd=agent_pwd,
                     is_active=True
                 )
-                # Rediriger vers la page de connexion
+
                 return render(request, 'login.html', {
                     'form': LoginForm(),
-                    'success_message': 'Compte créé avec succès! Connectez-vous.'
+                    'success_message': 'Account created successfully. Please log in.'
                 })
     else:
         form = AddAgentForm()
