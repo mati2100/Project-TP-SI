@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vérification du code</title>
+</head>
+<body>
+    <h2>Vérification du code</h2>
+    
+    {% if success_message %}
+        <p style="color: green;">{{ success_message }}</p>
+    {% endif %}
+    
+    {% if test_code %}
+        <p style="color: blue;">Pour test: Code = {{ test_code }}</p>
+    {% endif %}
+    
+    {% if form.non_field_errors %}
+        <div style="color: red;">
+            {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <form method="POST">
+        {% csrf_token %}
+        
+        <p>Entrez le code à 6 chiffres envoyé à {{ agent_email }}</p>
+        
+        <div>
+            <label>Code:</label>
+            {{ form.code }}
+            {% if form.code.errors %}
+                <div style="color: red;">{{ form.code.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <button type="submit">Vérifier le code</button>
+    </form>
+    
+    <p><a href="{% url 'forgot_password' %}">Renvoyer le code</a></p>
+    <p><a href="{% url 'login' %}">Retour à la connexion</a></p>
+</body>
+</html>
