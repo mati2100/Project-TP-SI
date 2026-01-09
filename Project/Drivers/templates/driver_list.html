@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Driver List</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+        .status-available { color: green; font-weight: bold; }
+        .status-busy { color: orange; font-weight: bold; }
+        .status-inactive { color: red; font-weight: bold; }
+        .add-btn { 
+            background-color: #4CAF50; 
+            color: white; 
+            padding: 10px 15px; 
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .action-links a {
+            margin: 0 5px;
+            text-decoration: none;
+        }
+        .edit-link { color: #2196F3; }
+        .delete-link { color: #f44336; }
+    </style>
+</head>
+<body>
+    <h1>Driver Management</h1>
+    
+    <a href="{% url 'driver_create' %}" class="add-btn">+ Add New Driver</a>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>License Number</th>
+                <th>Phone</th>
+                <th>License Type</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for driver in drivers %}
+            <tr>
+                <td>{{ driver.id }}</td>
+                <td>{{ driver.driver_name }}</td>
+                <td>{{ driver.driver_license }}</td>
+                <td>{{ driver.driver_phone }}</td>
+                <td>{{ driver.license_type }}</td>
+                <td>
+                    {% if driver.driver_active %}
+                        {% if driver.driver_available %}
+                            <span class="status-available">Available</span>
+                        {% else %}
+                            <span class="status-busy">Busy</span>
+                        {% endif %}
+                    {% else %}
+                        <span class="status-inactive">Inactive</span>
+                    {% endif %}
+                </td>
+                <td class="action-links">
+                    <a href="{% url 'driver_update' driver.id %}" class="edit-link">Edit</a>
+                    <a href="{% url 'driver_delete' driver.id %}" class="delete-link">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8" style="text-align: center;">No drivers found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

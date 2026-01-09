@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Destination List</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #2c3e50; color: white; }
+        .add-btn { 
+            background-color: #27ae60; 
+            color: white; 
+            padding: 10px 15px; 
+            text-decoration: none;
+            border-radius: 4px;
+            display: inline-block;
+            margin: 10px 5px;
+        }
+        .zone-local { background-color: #d4edda; color: #155724; padding: 3px 8px; border-radius: 3px; }
+        .zone-regional { background-color: #d1ecf1; color: #0c5460; padding: 3px 8px; border-radius: 3px; }
+        .zone-national { background-color: #fff3cd; color: #856404; padding: 3px 8px; border-radius: 3px; }
+        .zone-international { background-color: #f8d7da; color: #721c24; padding: 3px 8px; border-radius: 3px; }
+        .action-links a {
+            margin: 0 5px;
+            text-decoration: none;
+        }
+        .edit-link { color: #3498db; }
+        .delete-link { color: #e74c3c; }
+        .fare-cell { text-align: right; font-weight: bold; }
+        .tab-container { margin-bottom: 20px; }
+        .tab-button { 
+            padding: 10px 20px; 
+            border: none; 
+            background-color: #ecf0f1; 
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        .tab-button.active { 
+            background-color: #2c3e50; 
+            color: white; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Destination Management</h1>
+    
+    <div class="tab-container">
+        <a href="{% url 'destination_list' %}" class="tab-button active">Destinations</a>
+        <a href="{% url 'servicetype_list' %}" class="tab-button">Service Types</a>
+    </div>
+    
+    <a href="{% url 'destination_create' %}" class="add-btn">+ Add New Destination</a>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>Zone</th>
+                <th>Base Fare</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for destination in destinations %}
+            <tr>
+                <td>{{ destination.id }}</td>
+                <td>{{ destination.dest_city }}</td>
+                <td>{{ destination.dest_country }}</td>
+                <td>
+                    {% if destination.dest_zone == 'local' %}
+                        <span class="zone-local">{{ destination.get_dest_zone_display }}</span>
+                    {% elif destination.dest_zone == 'regional' %}
+                        <span class="zone-regional">{{ destination.get_dest_zone_display }}</span>
+                    {% elif destination.dest_zone == 'national' %}
+                        <span class="zone-national">{{ destination.get_dest_zone_display }}</span>
+                    {% else %}
+                        <span class="zone-international">{{ destination.get_dest_zone_display }}</span>
+                    {% endif %}
+                </td>
+                <td class="fare-cell">${{ destination.base_fare }}</td>
+                <td class="action-links">
+                    <a href="{% url 'destination_update' destination.id %}" class="edit-link">Edit</a>
+                    <a href="{% url 'destination_delete' destination.id %}" class="delete-link">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8" style="text-align: center;">No destinations found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

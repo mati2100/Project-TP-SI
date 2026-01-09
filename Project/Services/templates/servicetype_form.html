@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <style>
+        .form-container { max-width: 500px; margin: 0 auto; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select, textarea { 
+            width: 100%; 
+            padding: 8px; 
+            border: 1px solid #ddd; 
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea { resize: vertical; }
+        .checkbox-group { display: flex; align-items: center; }
+        .checkbox-group input { width: auto; margin-right: 10px; }
+        .btn-submit { 
+            background-color: #8e44ad; 
+            color: white; 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-cancel { 
+            background-color: #95a5a6; 
+            color: white; 
+            padding: 10px 20px; 
+            text-decoration: none;
+            border-radius: 4px;
+            margin-left: 10px;
+        }
+        .error { color: #e74c3c; font-size: 14px; margin-top: 5px; }
+        .nav-links { margin-bottom: 20px; }
+        .nav-links a { 
+            margin-right: 10px; 
+            text-decoration: none;
+            color: #3498db;
+        }
+        .rate-row { display: flex; gap: 15px; }
+        .rate-row .form-group { flex: 1; }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="nav-links">
+            <a href="{% url 'servicetype_list' %}">← Back to List</a>
+            <a href="{% url 'destination_list' %}">Destinations</a>
+        </div>
+        
+        <h1>{{ title }}</h1>
+        
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label>Service Type *</label>
+                {{ form.st_name }}
+            </div>
+            
+            <div class="form-group">
+                <label>Description</label>
+                {{ form.st_description }}
+            </div>
+            
+            <div class="rate-row">
+                <div class="form-group">
+                    <label>Weight Rate ($/kg) *</label>
+                    {{ form.st_weight_rate }}
+                    {% if form.st_weight_rate.errors %}
+                        <div class="error">{{ form.st_weight_rate.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label>Volume Rate ($/m³) *</label>
+                    {{ form.st_volume_rate }}
+                    {% if form.volume_rate.errors %}
+                        <div class="error">{{ form.st_volume_rate.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <button type="submit" class="btn-submit">Save Service Type</button>
+                <a href="{% url 'servicetype_list' %}" class="btn-cancel">Cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
