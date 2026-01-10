@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'Invoice',
     'Incident',
     'Complaint', 
+    'Payments',
 ]
 
 MIDDLEWARE = [
