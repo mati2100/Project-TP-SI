@@ -13,18 +13,8 @@ class Driver(models.Model):
     
     def __str__(self):
         return f"{self.driver_name} ({self.driver_license})"
-    
-    # Méthode pour récupérer les expéditions du client
-    def get_shipments(self):
-        from Shipment_app.models import Shipment
-        return Shipment.objects.filter(client=self)
-    
-    # Méthode pour récupérer les factures du client
-    def get_invoices(self):
-        from Invoice_app.models import Invoice
-        return Invoice.objects.filter(client=self)
-    
-    # Méthode pour récupérer les réclamations du client
-    def get_complaints(self):
-        from Complaint.models import Complaint
-        return Complaint.objects.filter(client=self)
+   
+      # Méthode pour récupérer les tournées du chauffeur
+    def get_tours(self):
+        from DeliveryTour_app.models import DeliveryTour
+        return DeliveryTour.objects.filter(driver=self)

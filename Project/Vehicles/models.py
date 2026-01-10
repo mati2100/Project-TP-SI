@@ -13,7 +13,7 @@ class Vehicle(models.Model):
     vehicle_active = models.BooleanField(default=True)
     
     def __str__(self):
-        return f"{self.registration_number} ({self.vehicle_type})"
+        return f"{self.vehicle_registration_number} ({self.vehicle_type})"
     
     def get_status_color(self):
         status_colors = {
@@ -22,8 +22,8 @@ class Vehicle(models.Model):
             'maintenance': 'red',
             'out_of_service': 'gray',
         }
-        return status_colors.get(self.status, 'black')
+        return status_colors.get(self.vehicle_status, 'black')
     
     def get_tours(self):
-        from DeliveryTour_app.models import DeliveryTour
+        from DeliveryTour.models import DeliveryTour
         return DeliveryTour.objects.filter(vehicle=self)

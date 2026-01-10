@@ -25,7 +25,7 @@ class Shipment(models.Model):
     delivery_date = models.DateField(null=True, blank=True)
     
     def __str__(self):
-        return f"Shipment #{self.shipment_number} - {self.client.client_name}"
+        return f"Shipment #{self.shipment_number} - {self.client.client_nom}"
     
     def save(self, *args, **kwargs):
         if not self.shipment_number:
@@ -41,8 +41,8 @@ class Shipment(models.Model):
             service_type = ServiceType.objects.get(id=self.service_type.id)
             self.estimated_amount = (
                 destination.base_fare +
-                (self.weight * service_type.weight_rate) +
-                (self.volume * service_type.volume_rate)
+                (self.weight * service_type.st_weight_rate) +
+                (self.volume * service_type.st_volume_rate)
             )
         except:
             pass
