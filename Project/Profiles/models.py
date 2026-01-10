@@ -15,6 +15,10 @@ class Agent(models.Model):
     def __str__(self):
         return self.agent_name+" ("+self.agent_email+")"
     
+    def get_assigned_complaints(self):
+        from Complaint.models import Complaint
+        return Complaint.objects.filter(assigned_to=self)
+    
 class PasswordResetCode(models.Model):
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
     code = models.CharField(max_length=6)

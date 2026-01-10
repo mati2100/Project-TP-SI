@@ -23,3 +23,7 @@ class Vehicle(models.Model):
             'out_of_service': 'gray',
         }
         return status_colors.get(self.status, 'black')
+    
+    def get_tours(self):
+        from DeliveryTour_app.models import DeliveryTour
+        return DeliveryTour.objects.filter(vehicle=self)

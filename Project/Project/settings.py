@@ -41,6 +41,11 @@ INSTALLED_APPS = [
     'Drivers',
     'Vehicles',
     'Services',
+    'Shipment',
+    'DeliveryTour',
+    'Invoice',
+    'Incident',
+    'Complaint', 
 ]
 
 MIDDLEWARE = [
