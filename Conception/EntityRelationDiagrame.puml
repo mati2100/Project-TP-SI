@@ -1,0 +1,60 @@
+@startuml
+
+' hide the spot
+' hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity "Agent" as e01 {
+  *agent_id : number <<generated>>
+  agent_name : CharField(50)
+  agent_email : EmailField
+  agent_pwd : CharField(50)
+  is_active : boolean
+}
+
+entity "ResetPassword" as e02 {
+  *code_id : number <<generated>>
+  code : number
+  created_at : number
+  is_used : boolean
+  *agent_id : number <<FK>>
+}
+
+entity "CardHistory" as e05 {
+  *card_history_id : number <<generated>>
+  version : number
+  --
+  *card_id : number <<FK>>
+  other_details : text
+}
+
+entity "CardsAccounts" as e04 {
+  *id : number <<generated>>
+  card_id : number <<FK>>
+  account_id : number <<FK>>
+  other_details : text
+}
+
+
+entity "Account" as e03 {
+  *account_id : number <<generated>>
+  --
+  user_id : number <<FK>>
+  other_details : text
+}
+
+entity "Stream" as e06 {
+  *id : number <<generated>>
+  version: number
+  searchingText: string
+  --
+  owner_id : number <<FK>>
+  follower_id : number <<FK>>
+  card_id: number <<FK>>
+  other_details : text
+}
+
+
+@enduml
