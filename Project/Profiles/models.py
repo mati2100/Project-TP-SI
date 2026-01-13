@@ -8,12 +8,16 @@ from django.utils import timezone
 
 class Agent(models.Model):
     agent_name=models.CharField(max_length=50)
-    agent_email=models.EmailField()
+    agent_email=models.EmailField(verbose_name="Adresse email",unique=True)
     agent_pwd=models.CharField(max_length=50)
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.agent_name+" ("+self.agent_email+")"
+    
+    def get_assigned_complaints(self):
+        from Complaint.models import Complaint
+        return Complaint.objects.filter(assigned_to=self)
     
 class PasswordResetCode(models.Model):
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE)

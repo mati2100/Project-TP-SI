@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Client List</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .add-btn { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Client Management</h1>
+    
+    <a href="{% url 'client_create' %}" class="add-btn">Add New Client</a>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>City</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in clients %}
+            <tr>
+                <td>{{ client.id }}</td>
+                <td>{{ client.client_nom }} {{ client.client_prenom }}</td>
+                <td>{{ client.client_email }}</td>
+                <td>{{ client.client_phone }}</td>
+                <td>{{ client.client_city }}</td>
+                <td>
+                    {% if client.is_active %}
+                        <span style="color: green;">Active</span>
+                    {% else %}
+                        <span style="color: red;">Inactive</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'client_update' client.id %}">Edit</a> |
+                    <a href="{% url 'client_delete' client.id %}">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">No clients found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

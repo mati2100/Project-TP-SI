@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Client</title>
+</head>
+<body>
+    <h1>Delete Client</h1>
+    
+    <p>Are you sure you want to delete client: <strong>{{ client.client_nom }} {{ client.client_prenom }}</strong>?</p>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Yes, Delete</button>
+        <a href="{% url 'client_list' %}">Cancel</a>
+    </form>
+</body>
+</html>
