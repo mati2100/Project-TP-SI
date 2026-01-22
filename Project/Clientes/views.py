@@ -1,9 +1,13 @@
 from django.shortcuts import render, redirect
+
+from Profiles.decorators import token_required
+
 from .models import Client
 from .forms import ClientForm
 
 from django.db.models import Q
 
+@token_required
 def ClientListView(request):
     clients = Client.objects.all()
 
@@ -17,13 +21,13 @@ def ClientListView(request):
             clients = clients.filter(client_email__icontains=query)
         else:  # name (default)
             clients = clients.filter(
-                Q(client_nom__icontains=query) |
-                Q(client_prenom__icontains=query)
+                Q(client_firstname__icontains=query) |
+                Q(client_familyname__icontains=query)
             )
 
     return render(request, 'client_list.html', {'clients': clients})
 
-
+@token_required
 def ClientCreateView(request):
     if request.method == 'POST':
         form = ClientForm(request.POST)
@@ -37,7 +41,7 @@ def ClientCreateView(request):
         'form': form,
         'title': 'Create New Client'
     })
-
+@token_required
 def ClientUpdateView(request, client_id):
     client = Client.objects.get(id=client_id)
     
@@ -54,7 +58,7 @@ def ClientUpdateView(request, client_id):
         'title': 'Update Client',
         'client': client
     })
-
+@token_required
 def ClientDeleteView(request, client_id):
     client = Client.objects.get(id=client_id)
     

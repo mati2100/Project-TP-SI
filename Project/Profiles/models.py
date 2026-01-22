@@ -3,6 +3,8 @@ import random
 import string
 from datetime import timedelta
 from django.utils import timezone
+import uuid
+from django.db import models
 
 # Create your models here.
 
@@ -33,3 +35,15 @@ class PasswordResetCode(models.Model):
     @classmethod
     def generate_code(cls):
         return ''.join(random.choices(string.digits, k=6))
+
+class AgentToken(models.Model):
+    agent = models.OneToOneField(
+        'Agent',
+        on_delete=models.CASCADE,
+        related_name='token'
+    )
+    token = models.UUIDField(default=uuid.uuid4, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.agent.agent_name}"    
