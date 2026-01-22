@@ -5,7 +5,7 @@ class ComplaintForm(forms.ModelForm):
     class Meta:
         model = Complaint
         fields = [
-            'client', 'shipment', 'invoice', 'assigned_to',
-            'category', 'description', 'target_resolution_date',
-            'status', 'priority'
+            'client', 'shipment', 'invoice','complaint_number',
+            'complaint_category', 'complaint_description',
+            'complaint_status', 'complaint_priority',
         ]
