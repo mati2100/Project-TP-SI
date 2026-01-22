@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from .models import Complaint
 from .forms import ComplaintForm
+from Profiles.decorators import token_required
 
+
+@token_required
 def ComplaintListView(request):
     complaints = Complaint.objects.all()
 
@@ -25,7 +28,7 @@ def ComplaintListView(request):
         complaints = complaints.order_by('-complaint_date')
         
     return render(request, 'complaint_list.html', {'complaints': complaints})
-
+@token_required
 def ComplaintCreateView(request):
     if request.method == 'POST':
         form = ComplaintForm(request.POST)
@@ -39,7 +42,7 @@ def ComplaintCreateView(request):
         'form': form,
         'title': 'Create New Complaint'
     })
-
+@token_required
 def ComplaintUpdateView(request, complaint_id):
     complaint = Complaint.objects.get(id=complaint_id)
     
@@ -56,7 +59,7 @@ def ComplaintUpdateView(request, complaint_id):
         'title': 'Update Complaint',
         'complaint': complaint
     })
-
+@token_required
 def ComplaintDeleteView(request, complaint_id):
     complaint = Complaint.objects.get(id=complaint_id)
     

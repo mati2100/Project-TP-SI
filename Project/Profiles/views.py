@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
+import uuid
+from django.db import models
+from .models import AgentToken
 from .models import Agent, PasswordResetCode
 from .forms import LoginForm, AddAgentForm, ForgotPasswordForm, VerifyCodeForm, NewPasswordForm
 import smtplib
@@ -22,6 +25,9 @@ def login_view(request):
 
                     request.session['agent_id'] = agent.id
                     request.session['agent_name'] = agent.agent_name
+
+                    token, created = AgentToken.objects.get_or_create(agent=agent)
+                    request.session['auth_token'] = str(token.token)
                     return redirect("dashboard:index")
             except Agent.DoesNotExist:
                 form.add_error(None, "Agent name or password is incorrect")
@@ -29,6 +35,15 @@ def login_view(request):
         form = LoginForm()
     
     return render(request, 'login.html', {'form': form})
+
+def logout_view(request):
+    agent_id = request.session.get('agent_id')
+
+    if agent_id:
+        AgentToken.objects.filter(agent_id=agent_id).delete()
+
+    request.session.flush()
+    return redirect('login')
 
 def addagent_view(request):
     if request.method == 'POST':

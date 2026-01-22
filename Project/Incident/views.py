@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect
 from .models import Incident
 from .forms import IncidentForm
+from Profiles.decorators import token_required
 
+
+@token_required
 def IncidentListView(request):
     incidents = Incident.objects.all()
     return render(request, 'incident_list.html', {'incidents': incidents})
 
+@token_required
 def IncidentCreateView(request):
     if request.method == 'POST':
         form = IncidentForm(request.POST)
@@ -20,6 +24,7 @@ def IncidentCreateView(request):
         'title': 'Create New Incident'
     })
 
+@token_required
 def IncidentUpdateView(request, incident_id):
     incident = Incident.objects.get(id=incident_id)
     
@@ -37,6 +42,7 @@ def IncidentUpdateView(request, incident_id):
         'incident': incident
     })
 
+@token_required
 def IncidentDeleteView(request, incident_id):
     incident = Incident.objects.get(id=incident_id)
     

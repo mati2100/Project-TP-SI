@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect
 from .models import Invoice
 from .forms import InvoiceForm
+from Profiles.decorators import token_required
 
+
+@token_required
 def InvoiceListView(request):
     invoices = Invoice.objects.all()
     return render(request, 'invoice_list.html', {'invoices': invoices})
 
+@token_required
 def InvoiceCreateView(request):
     if request.method == 'POST':
         form = InvoiceForm(request.POST)
@@ -21,6 +25,7 @@ def InvoiceCreateView(request):
         'title': 'Create New Invoice'
     })
 
+@token_required
 def InvoiceUpdateView(request, invoice_id):
     invoice = Invoice.objects.get(id=invoice_id)
     
@@ -39,6 +44,7 @@ def InvoiceUpdateView(request, invoice_id):
         'invoice': invoice
     })
 
+@token_required
 def InvoiceDeleteView(request, invoice_id):
     invoice = Invoice.objects.get(id=invoice_id)
     
