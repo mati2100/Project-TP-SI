@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect
 from .models import Driver
 from .forms import DriverForm
+from Profiles.decorators import token_required
 
+
+@token_required
 def DriverListView(request):
     drivers = Driver.objects.all()
     return render(request, 'driver_list.html', {'drivers': drivers})
 
+@token_required
 def DriverCreateView(request):
     if request.method == 'POST':
         form = DriverForm(request.POST)
@@ -20,6 +24,7 @@ def DriverCreateView(request):
         'title': 'Create New Driver'
     })
 
+@token_required
 def DriverUpdateView(request, driver_id):
     driver = Driver.objects.get(id=driver_id)
     
@@ -37,6 +42,7 @@ def DriverUpdateView(request, driver_id):
         'driver': driver
     })
 
+@token_required
 def DriverDeleteView(request, driver_id):
     driver = Driver.objects.get(id=driver_id)
     
