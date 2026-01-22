@@ -2,3 +2,4 @@ __pycache__
 migrations
 Project/db.sqlite3
 out
+db.sqlite3
