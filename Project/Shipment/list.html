@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block page_title %}Shipments{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="table-header">
+    <input type="search" placeholder="Search...">
+    <a class="btn-primary">+ New Shipment</a>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Client</th>
+        <th>Status</th>
+        <th>Total</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>EXP-001</td>
+        <td>Client A</td>
+        <td><span class="badge success">Delivered</span></td>
+        <td>12,000 DA</td>
+        <td>👁 ✏ 🗑</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}

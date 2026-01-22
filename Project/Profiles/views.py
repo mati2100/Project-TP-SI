@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
 from .models import Agent, PasswordResetCode
 from .forms import LoginForm, AddAgentForm, ForgotPasswordForm, VerifyCodeForm, NewPasswordForm
 import smtplib
@@ -21,7 +22,7 @@ def login_view(request):
 
                     request.session['agent_id'] = agent.id
                     request.session['agent_name'] = agent.agent_name
-                    return render(request, 'home.html', {'agent_name': agent.agent_name})
+                    return redirect("dashboard:index")
             except Agent.DoesNotExist:
                 form.add_error(None, "Agent name or password is incorrect")
     else:
