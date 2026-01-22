@@ -6,6 +6,6 @@ class DeliveryTourForm(forms.ModelForm):
         model = DeliveryTour
         fields = [
             'driver', 'vehicle', 'shipments', 'tour_number',
-            'date', 'distance', 'duration', 'fuel_consumption',
-            'status', 'total_weight', 'total_volume'
+            'tour_distance', 'tour_duration', 'tour_fuel_consumption',
+            'tour_status','started_at' ,'completed_at'
         ]

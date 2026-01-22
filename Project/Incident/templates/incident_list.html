@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Incident List</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .add-btn { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Incident Management</h1>
+    
+    <a href="{% url 'incident_create' %}" class="add-btn">Add New Incident</a>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Shipment number</th>
+                <th>Tour number</th>
+                <th>Type</th>
+                <th>Severity</th>
+                <th>Description</th>
+                <th>Location</th>
+                <th>Incident Date</th>
+                <th>Is resolved</th>
+                <th>Resolution note</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for incident in incidents %}
+            <tr>
+                <td>{{ incident.id }}</td>
+                <td>{{ incident.shipment.shipment_number }}</td>
+                <td>{{ incident.tour.tour_number }}</td>
+                <td>{{ incident.get_incident_type_display }}</td>
+                <td>{{ incident.get_incident_severity_display }}</td>
+                <td>{{ incident.incident_description }}</td>
+                <td>{{ incident.incident_location }}</td>
+                <td>{{ incident.incident_date }}</td>
+                <td>
+                    {% if incident.is_resolved %}
+                        <span style="color: green;">Yes</span>
+                    {% else %}
+                        <span style="color: red;">No</span>
+                    {% endif %}
+                </td>
+                <td>{{ incident.resolution_notes }}</td>
+                <td>
+                    <a href="{% url 'incident_update' incident.id %}">Edit</a> |
+                    <a href="{% url 'incident_delete' incident.id %}">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">No incidents found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,118 @@
+:root {
+  --bg: url("../images/Background.avif");
+  --white: #f9f9f9;          /* login card background */
+  --primary: #29b8ff;        /* login button color */
+  --primary-hover: #7e35fb;  /* login button hover */
+  --text: #0F172A;
+  --border: #ccc;
+}
+
+body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  background-image: var(--bg);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.sidebar {
+  position: fixed;
+  width: 220px;
+  height: 100vh;
+  background: var(--white);
+  border-right: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.sidebar a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: var(--text);
+  border-radius: 5px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.sidebar a:hover {
+  background-color: rgba(41, 184, 255, 0.1); /* hover effect */
+  color: var(--primary);
+}
+
+.main {
+  margin-left: 240px; /*wider for padding */
+}
+
+.topbar {
+  background: var(--white);
+  padding: 15px 25px;
+  border-bottom: 1px solid var(--border);
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.content {
+  padding: 25px;
+}
+
+.card {
+  background: var(--white);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.button, .auth-button {
+  padding: 10px 15px;
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.button:hover, .auth-button:hover {
+  background-color: var(--primary-hover);
+}
+
+a {
+  color: #9a3ff5; 
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text);
+  font-weight: 600;
+}
+
+input, select, textarea {
+  font-family: 'Open Sans', sans-serif;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 5px rgba(41, 184, 255, 0.3);
+}

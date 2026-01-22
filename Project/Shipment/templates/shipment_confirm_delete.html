@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Shipment</title>
+</head>
+<body>
+    <h1>Delete Shipment</h1>
+    
+    <p>Are you sure you want to delete Shipment: <strong>{{ shipment.shipment_number }} - {{ shipment.client.client_familyname }} {{ shipment.client.client_firstname }}</strong>?</p>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Yes, Delete</button>
+        <a href="{% url 'shipment_list' %}">Cancel</a>
+    </form>
+</body>
+</html>
