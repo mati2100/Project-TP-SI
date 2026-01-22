@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shipment List</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .add-btn { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Shipment Management</h1>
+    
+    <a href="{% url 'shipment_create' %}" class="add-btn">Add New Shipment</a>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Client name</th>
+                <th>Shipment number</th>
+                <th>Service type</th>
+                <th>Destination</th>
+                <th>Driver</th>
+                <th>Vehicule</th>
+                <th>Weight</th>
+                <th>Volume</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Amount</th>
+                <th>Delivery date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for shipment in shipments %}
+            <tr>
+                <td>{{ shipment.id }}</td>
+                <td>{{ shipment.client.client_familyname }} {{ shipment.client.client_firstname }}</td>
+                <td>{{ shipment.shipment_number }}</td>
+                <td>{{ shipment.service_type.st_name }}</td>
+                <td>{{ shipment.destination.dest_city }}, {{ shipment.destination.dest_country }}</td>
+                <td>{{ shipment.driver.driver_name }}</td>
+                <td>{{ shipment.vehicle.vehicle_registration_number }}</td>
+                <td>{{ shipment.shipment_weight }}</td>
+                <td>{{ shipment.shipment_volume }}</td>
+                <td>{{ shipment.shipment_description }}</td>
+                <td>{{ shipment.get_shipment_status_display }}</td>
+                <td>{{ shipment.estimated_amount }}</td>
+                <td>{{ shipment.shipment_delivery_date }}</td>
+                <td>
+                    <a href="{% url 'shipment_update' shipment.id %}">Edit</a> |
+                    <a href="{% url 'shipment_delete' shipment.id %}">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">No shipments found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

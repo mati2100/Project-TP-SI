@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Incident</title>
+</head>
+<body>
+    <h1>Delete Incident</h1>
+    
+    <p>Are you sure you want to delete incident: <strong>{{ incident.get_incident_type_display }} - {{ incident.incident_date}}</strong>?</p>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Yes, Delete</button>
+        <a href="{% url 'incident_list' %}">Cancel</a>
+    </form>
+</body>
+</html>

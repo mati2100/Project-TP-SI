@@ -38,12 +38,12 @@ body {
 }
 
 .sidebar a:hover {
-  background-color: rgba(41, 184, 255, 0.1); /* subtle primary hover effect */
+  background-color: rgba(41, 184, 255, 0.1); /* hover effect */
   color: var(--primary);
 }
 
 .main {
-  margin-left: 240px; /* slightly wider for padding */
+  margin-left: 240px; /*wider for padding */
 }
 
 .topbar {
@@ -89,7 +89,7 @@ body {
 }
 
 a {
-  color: #9a3ff5; /* like login auth links */
+  color: #9a3ff5; 
   text-decoration: none;
   transition: all 0.2s ease;
 }

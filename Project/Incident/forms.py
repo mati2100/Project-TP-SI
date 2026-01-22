@@ -5,7 +5,7 @@ class IncidentForm(forms.ModelForm):
     class Meta:
         model = Incident
         fields = [
-            'shipment', 'tour', 'incident_type', 'severity',
-            'description', 'location', 'incident_date',
+            'shipment', 'tour', 'incident_type', 'incident_severity',
+            'incident_description', 'incident_location', 'incident_date',
             'is_resolved', 'resolution_notes'
         ]
