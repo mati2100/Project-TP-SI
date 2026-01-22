@@ -4,15 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Clients</title>
-    <link rel="stylesheet" href="{% static 'Clientes/css/list.css' %}">
+    <link rel="stylesheet" href="{% static 'clientes/css/list.css' %}">
 </head>
 <body>
 <!-- Top Navigation Bar -->
 <div class="topbar">
     <div class="topbar-left">
-        <a href="#" class="home-link">Home</a>
+        <a href="{% url 'dashboard:index' %}" class="home-link">Home</a>
     </div>
-
     <div class="topbar-right">
         <div class="account">
             <button class="account-btn">
@@ -76,11 +75,11 @@
             <tbody>
                 {% for client in clients %}
                 <tr>
-                    <td>{{ client.id }}</td>
-                    <td>{{ client.client_lastname }} {{ client.client_firstname }}</td>
-                    <td>{{ client.client_email }}</td>
-                    <td>{{ client.client_phone }}</td>
-                    <td>{{ client.client_city }}</td>
+                    <td title="{{ client.id }}">{{ client.id }}</td>
+                    <td title="{{ client.client_lastname }} {{ client.client_firstname }}">{{ client.client_lastname }} {{ client.client_firstname }}</td>
+                    <td title="{{ client.client_email }}">{{ client.client_email }}</td>
+                    <td title="{{ client.client_phone }}">{{ client.client_phone }}</td>
+                    <td title="{{ client.client_city }}">{{ client.client_city }}</td>
                     <td>
                         {% if client.is_active %}
                             <span class="badge badge-success">Active</span>

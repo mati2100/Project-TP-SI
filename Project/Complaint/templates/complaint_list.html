@@ -1,22 +1,66 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Complaint List</title>
-    <style>
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .add-btn { margin: 10px 0; }
-    </style>
+    <link rel="stylesheet" href="{% static 'complaint/css/list.css' %}">
 </head>
 <body>
-    <h1>Complaint Management</h1>
+<!-- Top Navigation Bar -->
+<div class="topbar">
+    <div class="topbar-left">
+        <a href="{% url 'dashboard:index' %}" class="home-link">Home</a>
+    </div>
+
+    <div class="topbar-right">
+        <div class="account">
+            <button class="account-btn">
+                {{ agent.agent_name|default:"Account" }}
+            </button>
+
+            <div class="account-menu">
+                <p>Hello! <strong>{{ agent.agent_name|default:"Account" }}</strong></p>
+                <a href="{% url 'login' %}" class="logout-link">Log out</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-container">
+    <!-- Header -->
+    <div class="page-header">
+        <h2>Complaint Management</h2>
+    </div>
+<div class="toolbar">
+<form method="get" class="search-form fused-search">
+    <select name="by" class="fused-select">
+        <option value="name" {% if request.GET.by == "name" %}selected{% endif %}>Name</option>
+        <option value="id" {% if request.GET.by == "id" %}selected{% endif %}>ID</option>
+    </select>
+
+    <input
+        type="text"
+        name="q"
+        value="{{ request.GET.q }}"
+        placeholder="Search complaints..."
+        class="fused-input"
+    >
+
+    <button type="submit" class="fused-button">
+        Search
+    </button>
+</form>
+
+
+    <a href="{% url 'complaint_create' %}" class="btn-pill btn-add">
+        + Add Complaint
+    </a>
+</div>
     
-    <a href="{% url 'complaint_create' %}" class="add-btn">Add New Complaint</a>
-    
-    <table>
-        <thead>
-            <tr>
+    <div class="card">
+        <table class="styled-table">
+            <thead>
+                <tr>
                 <th>ID</th>
                 <th>Client name</th>
                 <th>Shipment number</th>
@@ -43,9 +87,9 @@
                 <td>{{ complaint.complaint_description }}</td>
                 <td>{{ complaint.get_complaint_status_display }}</td>
                 <td>{{ complaint.get_complaint_priority_display }}</td>
-                <td>
-                    <a href="{% url 'complaint_update' complaint.id %}">Edit</a> |
-                    <a href="{% url 'complaint_delete' complaint.id %}">Delete</a>
+                <td class="actions">
+                        <button onclick="location.href='{% url 'complaint_update' complaint.id %}'" class="btn-edit">Edit</button>
+                        <button onclick="location.href='{% url 'complaint_delete' complaint.id %}'" class="btn-delete">Delete</button>
                 </td>
             </tr>
             {% empty %}

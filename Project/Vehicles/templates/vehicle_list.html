@@ -1,90 +1,111 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Vehicle List</title>
-    <style>
-        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
-        th { background-color: #2c3e50; color: white; }
-        .add-btn { 
-            background-color: #3498db; 
-            color: white; 
-            padding: 10px 15px; 
-            text-decoration: none;
-            border-radius: 4px;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
-        .status-available { color: #27ae60; font-weight: bold; }
-        .status-in_use { color: #e67e22; font-weight: bold; }
-        .status-maintenance { color: #e74c3c; font-weight: bold; }
-        .status-out_of_service { color: #7f8c8d; font-weight: bold; }
-        .action-links a {
-            margin: 0 5px;
-            text-decoration: none;
-        }
-        .edit-link { color: #3498db; }
-        .delete-link { color: #e74c3c; }
-        .capacity-cell, .consumption-cell { text-align: right; }
-    </style>
+    <link rel="stylesheet" href="{% static 'vehicles/css/list.css' %}">
 </head>
 <body>
-    <h1>Vehicle Management</h1>
-    
-    <a href="{% url 'vehicle_create' %}" class="add-btn">+ Add New Vehicle</a>
-    
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Registration</th>
-                <th>Type</th>
-                <th>Model</th>
-                <th>Year</th>
-                <th>Capacity (kg)</th>
-                <th>Status</th>
-                <th>Active</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for vehicle in vehicles %}
-            <tr>
-                <td>{{ vehicle.id }}</td>
-                <td>{{ vehicle.vehicle_registration_number }}</td>
-                <td>{{ vehicle.get_vehicle_type_display }}</td>
-                <td>{{ vehicle.vehicle_model }}</td>
-                <td>{{ vehicle.vehicle_year }}</td>
-                <td class="capacity-cell">{{ vehicle.vehicle_capacity }}</td>
-                <td>
-                    {% if vehicle.vehicle_status == 'available' %}
-                        <span class="status-available">{{ vehicle.get_vehicle_status_display }}</span>
-                    {% elif vehicle.vehicle_status == 'in_use' %}
-                        <span class="status-in_use">{{ vehicle.get_vehicle_status_display }}</span>
-                    {% elif vehicle.vehicle_status == 'maintenance' %}
-                        <span class="status-maintenance">{{ vehicle.get_vehicle_status_display }}</span>
-                    {% else %}
-                        <span class="status-out_of_service">{{ vehicle.get_vehicle_status_display }}</span>
-                    {% endif %}
-                </td>
-                <td>
-                    {% if vehicle.vehicle_active %}
-                        <span style="color: green;">✓</span>
-                    {% else %}
-                        <span style="color: red;">✗</span>
-                    {% endif %}
-                </td>
-                <td class="action-links">
-                    <a href="{% url 'vehicle_update' vehicle.id %}" class="edit-link">Edit</a>
-                    <a href="{% url 'vehicle_delete' vehicle.id %}" class="delete-link">Delete</a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="10" style="text-align: center;">No vehicles found</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<!-- Top Navigation Bar -->
+<div class="topbar">
+    <div class="topbar-left">
+        <a href="{% url 'dashboard:index' %}" class="home-link">Home</a>
+    </div>
+    <div class="topbar-right">
+        <div class="account">
+            <button class="account-btn">
+                {{ agent.agent_name|default:"Account" }}
+            </button>
+            <div class="account-menu">
+                <p>Hello! <strong>{{ agent.agent_name|default:"Account" }}</strong></p>
+                <a href="{% url 'login' %}" class="logout-link">Log out</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-container">
+    <!-- Header -->
+    <div class="page-header">
+        <h2>Vehicle Management</h2>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <form method="get" class="search-form fused-search">
+            <select name="by" class="fused-select">
+                <option value="registration" {% if request.GET.by == "registration" %}selected{% endif %}>Registration</option>
+                <option value="type" {% if request.GET.by == "type" %}selected{% endif %}>Type</option>
+            </select>
+            <input
+                type="text"
+                name="q"
+                value="{{ request.GET.q }}"
+                placeholder="Search vehicles..."
+                class="fused-input"
+            >
+            <button type="submit" class="fused-button">Search</button>
+        </form>
+
+        <a href="{% url 'vehicle_create' %}" class="btn-pill btn-add">+ Add New Vehicle</a>
+    </div>
+
+    <!-- Table Card -->
+    <div class="card">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Registration</th>
+                    <th>Type</th>
+                    <th>Model</th>
+                    <th>Year</th>
+                    <th>Capacity (kg)</th>
+                    <th>Status</th>
+                    <th>Active</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vehicle in vehicles %}
+                <tr>
+                    <td>{{ vehicle.id }}</td>
+                    <td>{{ vehicle.vehicle_registration_number }}</td>
+                    <td>{{ vehicle.get_vehicle_type_display }}</td>
+                    <td>{{ vehicle.vehicle_model }}</td>
+                    <td>{{ vehicle.vehicle_year }}</td>
+                    <td class="capacity-cell">{{ vehicle.vehicle_capacity }}</td>
+                    <td>
+                        {% if vehicle.vehicle_status == 'available' %}
+                            <span class="status-available">{{ vehicle.get_vehicle_status_display }}</span>
+                        {% elif vehicle.vehicle_status == 'in_use' %}
+                            <span class="status-busy">{{ vehicle.get_vehicle_status_display }}</span>
+                        {% elif vehicle.vehicle_status == 'maintenance' %}
+                            <span class="status-maintenance">{{ vehicle.get_vehicle_status_display }}</span>
+                        {% else %}
+                            <span class="status-out_of_service">{{ vehicle.get_vehicle_status_display }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if vehicle.vehicle_active %}
+                            <span class="status-available">✓</span>
+                        {% else %}
+                            <span class="status-busy">✗</span>
+                        {% endif %}
+                    </td>
+                    <td class="actions">
+                        <button onclick="location.href='{% url 'vehicle_update' vehicle.id %}'" class="btn-edit">Edit</button>
+                        <button onclick="location.href='{% url 'vehicle_delete' vehicle.id %}'" class="btn-delete">Delete</button>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="9" style="text-align: center;">No vehicles found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
 </html>

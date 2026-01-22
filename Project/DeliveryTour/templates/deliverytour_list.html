@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Driver List</title>
-    <link rel="stylesheet" href="{% static 'drivers/css/list.css' %}">
+    <title>Delivery Tour List</title>
+    <link rel="stylesheet" href="{% static 'deliverytour/css/list.css' %}">
 </head>
 <body>
 <!-- Top Navigation Bar -->
@@ -27,7 +27,7 @@
 <div class="page-container">
     <!-- Header -->
     <div class="page-header">
-        <h2>Driver Management</h2>
+        <h2>Delivery Tour Management</h2>
     </div>
 
     <!-- Toolbar -->
@@ -41,13 +41,13 @@
                 type="text"
                 name="q"
                 value="{{ request.GET.q }}"
-                placeholder="Search drivers..."
+                placeholder="Search tours..."
                 class="fused-input"
             >
             <button type="submit" class="fused-button">Search</button>
         </form>
 
-        <a href="{% url 'driver_create' %}" class="btn-pill btn-add">+ Add New Driver</a>
+        <a href="{% url 'tour_create' %}" class="btn-pill btn-add">+ Delivery Tour</a>
     </div>
 
     <!-- Table Card -->
@@ -56,41 +56,47 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Name</th>
-                    <th>License Number</th>
-                    <th>Phone</th>
-                    <th>License Type</th>
+                    <th>Tour number</th>
+                    <th>Driver name</th>
+                    <th>Vehicle</th>
+                    <th>Shipments number</th>
+                    <th>Distance</th>
+                    <th>Duration</th>
+                    <th>Fuel consumption</th>
                     <th>Status</th>
+                    <th>Start date</th>
+                    <th>Complete date</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                {% for driver in drivers %}
+                {% for tour in tours %}
                 <tr>
-                    <td>{{ driver.id }}</td>
-                    <td>{{ driver.driver_name }}</td>
-                    <td>{{ driver.driver_license }}</td>
-                    <td>{{ driver.driver_phone }}</td>
-                    <td>{{ driver.license_type }}</td>
+                    <td>{{ tour.id }}</td>
+                    <td>{{ tour.tour_number }}</td>
+                    <td>{{ tour.driver.driver_name }}</td>
+                    <td>{{ tour.vehicle.vehicle_registration_number }}</td>
                     <td>
-                        {% if driver.driver_active %}
-                            {% if driver.driver_available %}
-                                <span class="status-available">Available</span>
-                            {% else %}
-                                <span class="status-busy">Busy</span>
-                            {% endif %}
-                        {% else %}
-                            <span class="status-inactive">Inactive</span>
-                        {% endif %}
+                        {% for shipment in tour.shipments.all %}
+                            <span>{{ shipment.shipment_number }}</span>{% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            No shipments
+                        {% endfor %}
                     </td>
+                    <td>{{ tour.tour_distance }}</td>
+                    <td>{{ tour.tour_duration }}</td>
+                    <td>{{ tour.tour_fuel_consumption }}</td>
+                    <td>{{ tour.get_tour_status_display }}</td>
+                    <td>{{ tour.started_at }}</td>
+                    <td>{{ tour.completed_at }}</td>
                     <td class="actions">
-                        <button onclick="location.href='{% url 'driver_update' driver.id %}'" class="btn-edit">Edit</button>
-                        <button onclick="location.href='{% url 'driver_delete' driver.id %}'" class="btn-delete">Delete</button>
+                        <button onclick="location.href='{% url 'tour_update' tour.id %}'" class="btn-edit">Edit</button>
+                        <button onclick="location.href='{% url 'tour_delete' tour.id %}'" class="btn-delete">Delete</button>
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="7" style="text-align: center;">No drivers found</td>
+                    <td colspan="12">No tours found</td>
                 </tr>
                 {% endfor %}
             </tbody>

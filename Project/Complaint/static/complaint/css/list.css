@@ -8,6 +8,7 @@ body {
     margin: 0;
     padding: 0px;
 }
+
 /* Layout */
 .page-container {
     max-width: 1200px;
@@ -363,4 +364,3 @@ body {
     outline: none;
     box-shadow: none;
 }
-
