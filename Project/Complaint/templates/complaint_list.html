@@ -1,53 +1,80 @@
+<!--unfinished. needs ui work-->
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Complaint List</title>
+    <meta charset="UTF-8">
+    <title>Complaints</title>
+    <link rel="stylesheet" href="{% static 'Complaint/css/list.css' %}">
 </head>
 <body>
+
     <h1>Complaint Management</h1>
+
+<form method="get" class="search-form fused-search">
+    <select name="by" class="fused-select">
+        <option value="number" {% if request.GET.by == "number" %}selected{% endif %}>Complaint Number</option>
+        <option value="status" {% if request.GET.by == "status" %}selected{% endif %}>Status</option>
+        <option value="client" {% if request.GET.by == "client" %}selected{% endif %}>Client</option>
+        <option value="shipment" {% if request.GET.by == "shipment" %}selected{% endif %}>Shipment</option>
+    </select>
+    <input
+        type="text"
+        name="q"
+        value="{{ request.GET.q }}"
+        placeholder="Search Complaints..."
+        class="fused-input"
+    >
+
+    <button type="submit" class="fused-button">
+        Search
+    </button>
+</form>
     
     <a href="{% url 'complaint_create' %}" class="add-btn">Add New Complaint</a>
     
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Client name</th>
-                <th>Shipment number</th>
-                <th>Invoice number</th>
-                <th>Complaint number</th>
-                <th>Category</th>
-                <th>Complaint date</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Priority</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for complaint in complaints %}
-            <tr>
-                <td>{{ complaint.id }}</td>
-                <td>{{ complaint.client.client_familyname }} {{ complaint.client.client_firstname }}</td>
-                <td>{{ complaint.shipment.shipment_number }}</td>
-                <td>{{ complaint.invoice.invoice_number }}</td>
-                <td>{{ complaint.complaint_number }}</td>
-                <td>{{ complaint.get_complaint_category_display }}</td>
-                <td>{{ complaint.complaint_date }}</td>
-                <td>{{ complaint.complaint_description }}</td>
-                <td>{{ complaint.get_complaint_status_display }}</td>
-                <td>{{ complaint.get_complaint_priority_display }}</td>
-                <td>
-                    <a href="{% url 'complaint_update' complaint.id %}">Edit</a> |
-                    <a href="{% url 'complaint_delete' complaint.id %}">Delete</a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="7">No complaints found</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="card">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th scope="col" onclick="sortTable(0)">ID <span class="sort-arrow" id="arrow-name1"></span> </th>
+                    <th scope="col" onclick="sortTable(1)">Client name  <span class="sort-arrow" id="arrow-name2"></span> </th>
+                    <th scope="col" onclick="sortTable(2)">Shipment number <span class="sort-arrow" id="arrow-name3"></span> </th>
+                    <th scope="col" onclick="sortTable(3)">Invoice number <span class="sort-arrow" id="arrow-name4"></span></th>
+                    <th scope="col" onclick="sortTable(4)">Complaint number <span class="sort-arrow" id="arrow-name5"></span></th>
+                    <th scope="col" onclick="sortTable(5)">Category <span class="sort-arrow" id="arrow-name6"></span></th>
+                    <th scope="col" onclick="sortTable(6)">Complaint date <span class="sort-arrow" id="arrow-name7"></span></th>
+                    <th scope="col" onclick="sortTable(7)">Description <span class="sort-arrow" id="arrow-name8"></span></th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for complaint in complaints %}
+                <tr>
+                    <td>{{ complaint.id }}</td>
+                    <td>{{ complaint.client.client_familyname }} {{ complaint.client.client_firstname }}</td>
+                    <td>{{ complaint.shipment.shipment_number }}</td>
+                    <td>{{ complaint.invoice.invoice_number }}</td>
+                    <td>{{ complaint.complaint_number }}</td>
+                    <td>{{ complaint.get_complaint_category_display }}</td>
+                    <td>{{ complaint.complaint_date }}</td>
+                    <td>{{ complaint.complaint_description }}</td>
+                    <td>{{ complaint.get_complaint_status_display }}</td>
+                    <td>{{ complaint.get_complaint_priority_display }}</td>
+                    <td>
+                        <a href="{% url 'complaint_update' complaint.id %}">Edit</a> |
+                        <a href="{% url 'complaint_delete' complaint.id %}">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="11">No complaints found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

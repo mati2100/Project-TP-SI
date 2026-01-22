@@ -1,17 +1,33 @@
+<!--unfinished. needs ui work-->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Shipment List</title>
-    <style>
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .add-btn { margin: 10px 0; }
-    </style>
+    <meta charset="UTF-8">
+    <title>Shipments</title>
 </head>
 <body>
     <h1>Shipment Management</h1>
     
+    <form method="get" class="search-form fused-search">
+    <select name="by" class="fused-select">
+        <option value="number" {% if request.GET.by == "number" %}selected{% endif %}>Complaint Number</option>
+        <option value="status" {% if request.GET.by == "status" %}selected{% endif %}>Status</option>
+        <option value="client" {% if request.GET.by == "client" %}selected{% endif %}>Client</option>
+        <option value="shipment" {% if request.GET.by == "shipment" %}selected{% endif %}>Shipment</option>
+    </select>
+    <input
+        type="text"
+        name="q"
+        value="{{ request.GET.q }}"
+        placeholder="Search Complaints..."
+        class="fused-input"
+    >
+
+    <button type="submit" class="fused-button">
+        Search
+    </button>
+</form>
+
     <a href="{% url 'shipment_create' %}" class="add-btn">Add New Shipment</a>
     
     <table>
@@ -56,7 +72,7 @@
             </tr>
             {% empty %}
             <tr>
-                <td colspan="7">No shipments found</td>
+                <td colspan="14">No shipments found</td>
             </tr>
             {% endfor %}
         </tbody>

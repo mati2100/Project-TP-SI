@@ -4,6 +4,26 @@ from .forms import ComplaintForm
 
 def ComplaintListView(request):
     complaints = Complaint.objects.all()
+
+    query = request.GET.get('q')
+    search_by = request.GET.get('by')
+
+    if query:
+        if search_by == 'number':
+            complaints = complaints.filter(complaint_number__icontains=query)
+        elif search_by == 'status':
+            complaints = complaints.filter(complaint_status__icontains=query)
+        elif search_by == 'client':
+            complaints = complaints.filter(client__client_firstname__icontains=query) | complaints.filter(client__client_familyname__icontains=query)
+        elif search_by == 'shipment':
+            complaints = complaints.filter(shipment__shipment_number__icontains=query)
+
+    order = request.GET.get('order')
+    if order == 'date_asc':
+        complaints = complaints.order_by('complaint_date')
+    elif order == 'date_desc':
+        complaints = complaints.order_by('-complaint_date')
+        
     return render(request, 'complaint_list.html', {'complaints': complaints})
 
 def ComplaintCreateView(request):
