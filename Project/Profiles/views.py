@@ -104,23 +104,23 @@ def forgot_password_view(request):
                     message["From"] = sender_email
                     message["To"] = agent_email
                     
-                    text = f"""Bonjour {agent.agent_name},
+                    text = f"""Hello {agent.agent_name},
                     
-Vous avez demandé la réinitialisation de votre mot de passe.
-Votre code de vérification est : {code}
-                    
-Ce code est valable pendant 15 minutes.
-                    
-Si vous n'avez pas fait cette demande, ignorez cet email.
+You have requested a password reset.
+Your verification code is: {code}
+
+This code is valid for 15 minutes.
+
+If you did not make this request, please ignore this email.
 """
                     
                     html = f"""<html>
 <body>
-    <h3>Bonjour {agent.agent_name},</h3>
-    <p>Vous avez demandé la réinitialisation de votre mot de passe.</p>
-    <p>Votre code de vérification est : <strong>{code}</strong></p>
-    <p>Ce code est valable pendant 15 minutes.</p>
-    <p>Si vous n'avez pas fait cette demande, ignorez cet email.</p>
+    <h3>Hello {agent.agent_name},</h3>
+    <p>You have requested a password reset.</p>
+    <p>Your verification code is: <strong>{code}</strong></p>
+    <p>This code is valid for 15 minutes.</p>
+    <p>If you did not make this request, please ignore this email.</p>
 </body>
 </html>"""
                     
@@ -140,13 +140,13 @@ Si vous n'avez pas fait cette demande, ignorez cet email.
                     return render(request, 'verify_code.html', {
                         'form': VerifyCodeForm(),
                         'agent_email': agent_email,
-                        'success_message': f'Un code de vérification a été envoyé à {agent_email}'
+                        'success_message': f'A verification code has been sent to {agent_email}'
                     })
                     
                 except Exception as e:
                     # En cas d'erreur d'envoi d'email, on peut utiliser une méthode alternative
                     # Ici, on affiche juste le code dans la console pour le test
-                    print(f"CODE DE RÉINITIALISATION pour {agent_email}: {code}")
+                    print(f"RESET CODE FOR {agent_email}: {code}")
                     
                     # Stocker l'ID de l'agent dans la session
                     request.session['reset_agent_id'] = agent.id
@@ -154,11 +154,11 @@ Si vous n'avez pas fait cette demande, ignorez cet email.
                         'form': VerifyCodeForm(),
                         'agent_email': agent_email,
                         'test_code': code,  # Pour le test, on affiche le code
-                        'success_message': f'Code de test (pour développement): {code}'
+                        'success_message': f'Test code (for developpement) for: {code}'
                     })
                     
             except Agent.DoesNotExist:
-                form.add_error('agent_email', "Aucun compte associé à cet email")
+                form.add_error('agent_email', "No account found with this email")
     else:
         form = ForgotPasswordForm()
     
@@ -169,7 +169,7 @@ def verify_code_view(request):
     if 'reset_agent_id' not in request.session:
         return render(request, 'forgot_password.html', {
             'form': ForgotPasswordForm(),
-            'error_message': 'Veuillez d\'abord demander une réinitialisation'
+            'error_message': 'Please first request a password reset'
         })
     
     if request.method == 'POST':
@@ -195,10 +195,10 @@ def verify_code_view(request):
                     request.session['verified_agent_id'] = agent_id
                     return render(request, 'new_password.html', {
                         'form': NewPasswordForm(),
-                        'success_message': 'Code vérifié! Choisissez un nouveau mot de passe'
+                        'success_message': 'Code verified! Choose a new password'
                     })
                 else:
-                    form.add_error('code', 'Ce code a expiré ou a déjà été utilisé')
+                    form.add_error('code', 'This code has expired or has already been used')
                     
             except PasswordResetCode.DoesNotExist:
                 form.add_error('code', 'Code invalide')
@@ -212,7 +212,7 @@ def new_password_view(request):
     if 'verified_agent_id' not in request.session:
         return render(request, 'forgot_password.html', {
             'form': ForgotPasswordForm(),
-            'error_message': 'Veuillez d\'abord vérifier votre code'
+            'error_message': 'Please first verify your code'
         })
     
     if request.method == 'POST':
@@ -222,7 +222,7 @@ def new_password_view(request):
             confirm_new_password = form.cleaned_data['confirm_new_password']
             
             if new_password != confirm_new_password:
-                form.add_error('confirm_new_password', "Les mots de passe ne correspondent pas")
+                form.add_error('confirm_new_password', "Passwords do not match")
             else:
                 # Mettre à jour le mot de passe
                 agent_id = request.session['verified_agent_id']
@@ -239,11 +239,11 @@ def new_password_view(request):
                     
                     return render(request, 'login.html', {
                         'form': LoginForm(),
-                        'success_message': 'Mot de passe modifié avec succès! Connectez-vous avec votre nouveau mot de passe'
+                        'success_message': 'Password changed successfully! Please log in with your new password'
                     })
                     
                 except Agent.DoesNotExist:
-                    form.add_error(None, "Une erreur est survenue")
+                    form.add_error(None, "An error occurred")
     else:
         form = NewPasswordForm()
     
