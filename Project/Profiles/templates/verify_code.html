@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Vérification du code</title>
+    <title>Code verification</title>
 </head>
 <body>
-    <h2>Vérification du code</h2>
+    <h2>Verification of code</h2>
     
     {% if success_message %}
         <p style="color: green;">{{ success_message }}</p>
     {% endif %}
     
     {% if test_code %}
-        <p style="color: blue;">Pour test: Code = {{ test_code }}</p>
+        <p style="color: blue;">To test: Code = {{ test_code }}</p>
     {% endif %}
     
     {% if form.non_field_errors %}
@@ -25,7 +25,7 @@
     <form method="POST">
         {% csrf_token %}
         
-        <p>Entrez le code à 6 chiffres envoyé à {{ agent_email }}</p>
+        <p>Enter the 6-digit code sent to {{ agent_email }}</p>
         
         <div>
             <label>Code:</label>
@@ -35,10 +35,10 @@
             {% endif %}
         </div>
         
-        <button type="submit">Vérifier le code</button>
+        <button type="submit">Verify the code</button>
     </form>
     
-    <p><a href="{% url 'forgot_password' %}">Renvoyer le code</a></p>
-    <p><a href="{% url 'login' %}">Retour à la connexion</a></p>
+    <p><a href="{% url 'forgot_password' %}">Resend the code</a></p>
+    <p><a href="{% url 'login' %}">Return to login</a></p>
 </body>
 </html>

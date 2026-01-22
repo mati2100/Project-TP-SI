@@ -2,9 +2,27 @@ from django.shortcuts import render, redirect
 from .models import Client
 from .forms import ClientForm
 
+from django.db.models import Q
+
 def ClientListView(request):
     clients = Client.objects.all()
+
+    query = request.GET.get('q')
+    search_by = request.GET.get('by')
+
+    if query:
+        if search_by == 'id':
+            clients = clients.filter(id__icontains=query)
+        elif search_by == 'email':
+            clients = clients.filter(client_email__icontains=query)
+        else:  # name (default)
+            clients = clients.filter(
+                Q(client_nom__icontains=query) |
+                Q(client_prenom__icontains=query)
+            )
+
     return render(request, 'client_list.html', {'clients': clients})
+
 
 def ClientCreateView(request):
     if request.method == 'POST':
