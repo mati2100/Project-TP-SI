@@ -2,55 +2,56 @@
 
 skinparam linetype ortho
 
-entity "Agent" as e01 {
-  *agent_id : number <<generated>>
-  agent_name : CharField(50)
-  agent_email : EmailField
-  agent_pwd : CharField(50)
-  is_active : boolean
+entity "Agent" as agent {
 }
 
-entity "ResetPassword" as e02 {
-  *code_id : number <<generated>>
-  code : number
-  created_at : number
-  is_used : boolean
-  *agent_id : number <<FK>>
+entity "PasswordResetCode" as PasswordResetCode {
 }
 
-entity "CardHistory" as e05 {
-  *card_history_id : number <<generated>>
-  version : number
-  --
-  *card_id : number <<FK>>
-  other_details : text
+entity "Vehicle" as vehicle {
 }
 
-entity "CardsAccounts" as e04 {
-  *id : number <<generated>>
-  card_id : number <<FK>>
-  account_id : number <<FK>>
-  other_details : text
+entity "Shipment" as shipment {
 }
 
 
-entity "Account" as e03 {
-  *account_id : number <<generated>>
-  --
-  user_id : number <<FK>>
-  other_details : text
+entity "Destination" as destination {
 }
 
-entity "Stream" as e06 {
-  *id : number <<generated>>
-  version: number
-  searchingText: string
-  --
-  owner_id : number <<FK>>
-  follower_id : number <<FK>>
-  card_id: number <<FK>>
-  other_details : text
+entity "ServiceType" as service_type {
 }
 
+entity "Payment" as payment {
+}
+entity "Invoice" as invoice {
+}
+entity "Incident" as incident {
+}
+entity "Client" as client {
+}
+entity "Driver" as driver {
+}
+entity "Tour" as tour {
+}
+entity "Complaint" as complaint {
+}
+shipment -- client
+shipment -- service_type
+shipment -- destination
+shipment -- driver
+shipment -- vehicle
+PasswordResetCode -- agent
+payment -- client
+payment -- invoice
+invoice -- shipment
+invoice -- client
+incident -- shipment
+incident -- tour
+tour -- driver
+tour -- vehicle
+tour -- shipment
+complaint -- client
+complaint -- invoice
+complaint -- shipment
 
 @enduml
