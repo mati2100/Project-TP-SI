@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Delete Client</title>
+    <title>Delete Complaint</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/confirm.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -9,18 +9,18 @@
 <body>
 
 <div class="confirm-box">
-    <h1>Delete Client</h1>
+    <h1>Delete Complaint</h1>
 
     <p class="confirm-message">
-        Are you sure you want to delete client:
-        <strong>{{ client.client_lastname }} {{ client.client_firstname }}</strong>?
+        Are you sure you want to delete complaint:
+        <strong>{{ complaint.complaint_number }} - {{ complaint.client.client_familyname }} {{ complaint.client.client_firstname }}</strong>?
     </p>
 
     <form method="POST">
         {% csrf_token %}
         <div class="confirm-actions">
             <button type="submit" class="confirm-delete">Yes, Delete</button>
-            <a href="{% url 'client_list' %}" class="confirm-cancel">Cancel</a>
+            <a href="{% url 'complaint_list' %}" class="confirm-cancel">Cancel</a>
         </div>
     </form>
 </div>

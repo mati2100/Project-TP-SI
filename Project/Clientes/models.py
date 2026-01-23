@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 class Client(models.Model):
+
     client_lastname = models.CharField(max_length=50)
     client_firstname = models.CharField(max_length=50)
     client_email = models.EmailField(unique=True)
@@ -13,7 +14,7 @@ class Client(models.Model):
     client_created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.client_lastname} {self.client_firstname} - {'Actif' if self.client_actif else 'Inactif'}"
+        return f"{self.client_lastname} {self.client_firstname} - {'Active' if self.client_actif else 'Inactive'}"
 
     # Méthode pour récupérer les expéditions du client
     def get_shipments(self):

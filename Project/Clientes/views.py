@@ -22,7 +22,7 @@ def ClientListView(request):
         else:  # name (default)
             clients = clients.filter(
                 Q(client_firstname__icontains=query) |
-                Q(client_familyname__icontains=query)
+                Q(client_lastname__icontains=query)
             )
 
     return render(request, 'client_list.html', {'clients': clients})
