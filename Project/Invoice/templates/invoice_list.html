@@ -6,54 +6,101 @@
     <link rel="stylesheet" href="{% static 'css/list.css' %}">
 </head>
 <body>
-    <h1>Invoice Management</h1>
-    
-    <a href="{% url 'invoice_create' %}" class="add-btn">Add New Invoice</a>
-    
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Client name</th>
-                <th>Shipments number</th>
-                <th>Issue date</th>
-                <th>Due date</th>
-                <th>Total amount</th>
-                <th>Paid amount</th>
-                <th>Status</th>
-                <th>Notes</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for invoice in invoices %}
-            <tr>
-                <td>{{ invoice.id }}</td>
-                <td>{{ invoice.client_familyname }} {{ invoice.client_firstname }}</td>
-                <td>
-                    <ul>
-                        {% for shipment in invoice.shipments.all %}
-                            <span>{{ shipment.shipment_number}}</span>
-                        {% endfor %}
-                    </ul>
-                </td>
-                <td>{{ invoice.invoice_issue_date }}</td>
-                <td>{{ invoice.invoice_due_date }}</td>
-                <td>{{ invoice.total_amount }}</td>
-                <td>{{ invoice.amount_paid }}</td>
-                <td>{{ invoice.get_invoice_status_display }}</td>
-                <td>{{ invoice.invoice_notes }}</td>
-                <td>
-                    <a href="{% url 'invoice_update' invoice.id %}">Edit</a> |
-                    <a href="{% url 'invoice_delete' invoice.id %}">Delete</a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="7">No invoices found</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+
+<!-- Top Navigation Bar -->
+<div class="topbar">
+    <div class="topbar-left">
+        <a href="{% url 'dashboard:index' %}" class="home-link">Home</a>
+    </div>
+    <div class="topbar-right">
+        <div class="account">
+            <button class="account-btn">
+                {{ agent.agent_name|default:"Account" }}
+            </button>
+            <div class="account-menu">
+                <p>Hello! <strong>{{ agent.agent_name|default:"Account" }}</strong></p>
+                <a href="{% url 'login' %}" class="logout-link">Log out</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-container">
+    <!-- Header -->
+    <div class="page-header">
+        <h2>Invoice Management</h2>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <form method="get" class="search-form fused-search">
+            <select name="by" class="fused-select">
+                <option value="id" {% if request.GET.by == "id" %}selected{% endif %}>ID</option>
+                <option value="client" {% if request.GET.by == "client" %}selected{% endif %}>Client Name</option>
+                <option value="status" {% if request.GET.by == "status" %}selected{% endif %}>Status</option>
+            </select>
+            <input
+                type="text"
+                name="q"
+                value="{{ request.GET.q }}"
+                placeholder="Search invoices..."
+                class="fused-input"
+            >
+            <button type="submit" class="fused-button">Search</button>
+        </form>
+
+        <a href="{% url 'invoice_create' %}" class="btn-pill btn-add">+ Add New Invoice</a>
+    </div>
+
+    <!-- Table Card -->
+    <div class="card">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Client Name</th>
+                    <th>Shipments Number</th>
+                    <th>Issue Date</th>
+                    <th>Due Date</th>
+                    <th>Total Amount</th>
+                    <th>Paid Amount</th>
+                    <th>Status</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for invoice in invoices %}
+                <tr>
+                    <td>{{ invoice.id }}</td>
+                    <td>{{ invoice.client_familyname }} {{ invoice.client_firstname }}</td>
+                    <td>
+                        <ul>
+                            {% for shipment in invoice.shipments.all %}
+                                <li>{{ shipment.shipment_number }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>{{ invoice.invoice_issue_date }}</td>
+                    <td>{{ invoice.invoice_due_date }}</td>
+                    <td>{{ invoice.total_amount }}</td>
+                    <td>{{ invoice.amount_paid }}</td>
+                    <td>{{ invoice.get_invoice_status_display }}</td>
+                    <td>{{ invoice.invoice_notes }}</td>
+                    <td class="actions">
+                        <button onclick="location.href='{% url 'invoice_update' invoice.id %}'" class="btn-edit">Edit</button>
+                        <button onclick="location.href='{% url 'invoice_delete' invoice.id %}'" class="btn-delete">Delete</button>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="10" style="text-align: center;">No invoices found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
 </body>
 </html>
