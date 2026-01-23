@@ -22,7 +22,7 @@ body {
 /* Sidebar */
 .sidebar {
   position: fixed;
-  width: 240px;
+  width: 200px;
   height: 100vh;
   background: var(--white);
   border-right: 1px solid var(--border);
@@ -59,7 +59,7 @@ body {
 
 /* Main layout */
 .main {
-  margin-left: 240px;
+  margin-left: 200px;
   min-height: 100vh;
 }
 
@@ -68,6 +68,7 @@ body {
   background: var(--white);
   padding: 16px 32px;
   border-bottom: 1px solid var(--border);
+  margin-left: 20px;
   box-shadow: none;
   border-radius: 0;
   font-weight: 600;
