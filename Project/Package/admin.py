@@ -1,4 +1,4 @@
 from django.contrib import admin
-from.models import DeliveryTour
+from.models import Package
 # Register your models here.
-admin.site.register(DeliveryTour)
+admin.site.register(Package)
