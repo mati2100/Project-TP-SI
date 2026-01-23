@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Reclaims</title>
+</head>
+<body>
+    <h1>Delete Reclaims</h1>
+    
+    <p>Are you sure you want to delete reclaims: <strong> {{ reclaims.reclaims_number }} - {{ reclaims.client.client_familyname }} {{ client.client_firstname }}</strong>?</p>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Yes, Delete</button>
+        <a href="{% url 'client_list' %}">Cancel</a>
+    </form>
+</body>
+</html>

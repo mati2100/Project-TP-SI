@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delivery Tour List</title>
+    <link rel="stylesheet" href="{% static 'Package/css/list.css' %}">
+</head>
+<body>
+<!-- Top Navigation Bar -->
+<div class="topbar">
+    <div class="topbar-left">
+        <a href="{% url 'dashboard:index' %}" class="home-link">Home</a>
+    </div>
+    <div class="topbar-right">
+        <div class="account">
+            <button class="account-btn">
+                {{ agent.agent_name|default:"Account" }}
+            </button>
+            <div class="account-menu">
+                <p>Hello! <strong>{{ agent.agent_name|default:"Account" }}</strong></p>
+                <a href="{% url 'login' %}" class="logout-link">Log out</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-container">
+    <!-- Header -->
+    <div class="page-header">
+        <h2>Delivery Tour Management</h2>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <form method="get" class="search-form fused-search">
+            <select name="by" class="fused-select">
+                <option value="name" {% if request.GET.by == "name" %}selected{% endif %}>Name</option>
+                <option value="id" {% if request.GET.by == "id" %}selected{% endif %}>ID</option>
+            </select>
+            <input
+                type="text"
+                name="q"
+                value="{{ request.GET.q }}"
+                placeholder="Search tours..."
+                class="fused-input"
+            >
+            <button type="submit" class="fused-button">Search</button>
+        </form>
+
+        <a href="{% url 'tour_create' %}" class="btn-pill btn-add">+ Delivery Tour</a>
+    </div>
+
+    <!-- Table Card -->
+    <div class="card">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tour number</th>
+                    <th>Driver name</th>
+                    <th>Vehicle</th>
+                    <th>Shipments number</th>
+                    <th>Distance</th>
+                    <th>Duration</th>
+                    <th>Fuel consumption</th>
+                    <th>Status</th>
+                    <th>Start date</th>
+                    <th>Complete date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tour in tours %}
+                <tr>
+                    <td>{{ tour.id }}</td>
+                    <td>{{ tour.tour_number }}</td>
+                    <td>{{ tour.driver.driver_name }}</td>
+                    <td>{{ tour.vehicle.vehicle_registration_number }}</td>
+                    <td>
+                        {% for shipment in tour.shipments.all %}
+                            <span>{{ shipment.shipment_number }}</span>{% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            No shipments
+                        {% endfor %}
+                    </td>
+                    <td>{{ tour.tour_distance }}</td>
+                    <td>{{ tour.tour_duration }}</td>
+                    <td>{{ tour.tour_fuel_consumption }}</td>
+                    <td>{{ tour.get_tour_status_display }}</td>
+                    <td>{{ tour.started_at }}</td>
+                    <td>{{ tour.completed_at }}</td>
+                    <td class="actions">
+                        <button onclick="location.href='{% url 'tour_update' tour.id %}'" class="btn-edit">Edit</button>
+                        <button onclick="location.href='{% url 'tour_delete' tour.id %}'" class="btn-delete">Delete</button>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="12">No tours found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

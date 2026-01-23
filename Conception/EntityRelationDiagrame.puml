@@ -3,55 +3,204 @@
 skinparam linetype ortho
 
 entity "Agent" as agent {
+    first_name
+    last_name
+    email
+    username
+    password_hash
+    account_status
+    created_at
+    --
+    *agent_id <<PK>>
+    
 }
 
 entity "PasswordResetCode" as PasswordResetCode {
+    code
+    is_used
+    created_at
+    --
+    *password_reset_code_id <<PK>>
+    agent_id <<FK>>
+}
+entity "AgentToken" as token {
+    token
+    created_at
+    --
+    *agent_token_id <<PK>>
+    agent_id <<FK>>
 }
 
 entity "Vehicle" as vehicle {
+    registration_number
+    type
+    brand
+    model
+    year
+    license_plate
+    capacity
+    state
+    fuel_mileage
+    start_date
+    end_date
+    active
+    created_at
+    --
+    *vehicle_id <<PK>> 
 }
 
-entity "Shipment" as shipment {
+entity "Package" as package {
+    weight
+    volume
+    description
+    value
+    created_at
+    --
+    *package_id <<PK>>
+    shipment_id <<FK>>
 }
 
 
 entity "Destination" as destination {
+    city
+    state
+    country
+    base_fare
+    created_at
+    --
+    *destination_id <<PK>>
 }
 
 entity "ServiceType" as service_type {
+    name
+    description
+    volume_surcharge
+    weight_surcharge
+    priority_level
+    created_at
+    --
+    *service_type_id <<PK>>
 }
 
 entity "Payment" as payment {
+    number
+    date
+    amount
+    method
+    status
+    created_at
+    --
+    *payment_id <<PK>>
+    invoice_id <<FK>>
 }
 entity "Invoice" as invoice {
+    number
+    issue_date
+    subtotal
+    tax_amount
+    total_amount
+    status
+    created_at
+    --
+    *invoice_id <<PK>>
+    client_id <<FK>>
 }
 entity "Incident" as incident {
+    type
+    description
+    comments
+    created_at
+    --
+    *incident_id <<PK>>
+    shipment_id <<FK>>
 }
 entity "Client" as client {
+    first_name
+    last_name
+    email
+    phone_number
+    address
+    balance
+    created_at
+    history*
+    --
+    *client_id <<PK>>
 }
 entity "Driver" as driver {
+    first_name
+    last_name
+    email
+    phone_number
+    address
+    license_number
+    availability
+    hire_date
+    created_at
+    --
+    *driver_id <<PK>>
 }
-entity "Tour" as tour {
+entity "Shipment" as shipment {
+    tracking_number
+    total_weight
+    total_volume
+    status
+    expected_delivery_date
+    delivery_date
+    notes
+    created_at
+    --
+    *shipment_id <<PK>>
+    driver_id <<FK>>
+    destination_id <<FK>>
+    service_type_id <<FK>>
+    client_id <<FK>>
+    invoice_id <<FK>>
+    vehicle_id <<FK>>
 }
-entity "Complaint" as complaint {
+entity "Reclaim" as reclaim {
+    number
+    type
+    description
+    date
+    resolution_date
+    state
+    priority
+    created_at
+    --
+    *reclaim_id <<PK>>
+    agent_id <<FK>>
 }
-shipment -- client
-shipment -- service_type
-shipment -- destination
-shipment -- driver
-shipment -- vehicle
-PasswordResetCode -- agent
-payment -- client
-payment -- invoice
-invoice -- shipment
-invoice -- client
-incident -- shipment
-incident -- tour
-tour -- driver
-tour -- vehicle
-tour -- shipment
-complaint -- client
-complaint -- invoice
-complaint -- shipment
+entity "Reclaim_Packages" as reclaim_packages {
+    created_at
+    --
+    *reclaim_id <<FK>>
+    *package_id <<FK>>
+}
+entity "Reclaim_invoice" as reclaim_invoice {
+    created_at
+    --
+    *reclaim_id <<FK>>
+    *invoice_id <<FK>>
+}
+
+reclaim_packages --> reclaim
+reclaim_packages --> package
+reclaim_invoice --> reclaim
+reclaim_invoice --> invoice
+PasswordResetCode --> agent
+token --> agent
+package --> shipment
+shipment --> driver
+shipment --> vehicle
+shipment --> destination
+shipment --> service_type
+shipment --> client
+shipment --> invoice
+payment --> invoice
+incident --> shipment
+invoice --> client
+reclaim --> agent
+
+
 
 @enduml

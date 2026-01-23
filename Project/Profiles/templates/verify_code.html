@@ -1,44 +1,60 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Code verification</title>
+    <title>Code Verification</title>
+    <link rel="stylesheet" href="{% static 'Backend_app/css/resetpass.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h2>Verification of code</h2>
-    
-    {% if success_message %}
-        <p style="color: green;">{{ success_message }}</p>
-    {% endif %}
-    
-    {% if test_code %}
-        <p style="color: blue;">To test: Code = {{ test_code }}</p>
-    {% endif %}
-    
-    {% if form.non_field_errors %}
-        <div style="color: red;">
-            {% for error in form.non_field_errors %}
-                <p>{{ error }}</p>
-            {% endfor %}
-        </div>
-    {% endif %}
-    
-    <form method="POST">
-        {% csrf_token %}
+    <div class="reset-container">
+        <h2 class="reset-title">Verify Code</h2>
         
-        <p>Enter the 6-digit code sent to {{ agent_email }}</p>
+        {% if success_message %}
+            <div class="success-container">
+                <p>{{ success_message }}</p>
+            </div>
+        {% endif %}
         
-        <div>
-            <label>Code:</label>
-            {{ form.code }}
-            {% if form.code.errors %}
-                <div style="color: red;">{{ form.code.errors }}</div>
-            {% endif %}
-        </div>
+        {% if test_code %}
+            <div class="success-container" style="background-color: #e6f7ff; padding: 10px; border-radius: 5px;">
+                <p><strong>Test Code:</strong> {{ test_code }}</p>
+                <p><small>This is displayed for development purposes only</small></p>
+            </div>
+        {% endif %}
         
-        <button type="submit">Verify the code</button>
-    </form>
-    
-    <p><a href="{% url 'forgot_password' %}">Resend the code</a></p>
-    <p><a href="{% url 'login' %}">Return to login</a></p>
+        {% if form.non_field_errors %}
+            <div class="error-container">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <form class="reset-form" method="POST">
+            {% csrf_token %}
+            
+            <p class="form-info">
+                Enter the 6-digit code sent to <strong>{{ agent_email }}</strong>
+            </p>
+            
+            <div class="form-group">
+                {{ form.code }}
+                <label>Verification Code</label>
+                {% if form.code.errors %}
+                    <div class="field-error">
+                        {{ form.code.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="auth-button">Verify Code</button>
+        </form>
+        
+        <p class="auth-link">
+            <a href="{% url 'forgot_password' %}">Resend Code</a> | 
+            <a href="{% url 'login' %}">Return to Login</a>
+        </p>
+    </div>
 </body>
 </html>

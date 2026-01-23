@@ -4,9 +4,18 @@ from .models import Destination, ServiceType
 class DestinationForm(forms.ModelForm):
     class Meta:
         model = Destination
-        fields = ['dest_city', 'dest_country', 'dest_zone', 'base_fare']
+        fields = [
+            'destination_city',
+            'destination_state',
+            'destination_country', 
+            'destination_base_fare']
 
 class ServiceTypeForm(forms.ModelForm):
     class Meta:
         model = ServiceType
-        fields = ['st_name', 'st_description', 'st_weight_rate', 'st_volume_rate']
+        fields = [
+            'service_type_name', 
+            'service_type_description', 
+            'service_type_volume_surcharge', 
+            'service_type_weight_surcharge', 
+            'service_type_priority_level']

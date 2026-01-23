@@ -5,7 +5,7 @@ class Incident(models.Model):
     SEVERITY_CHOICES = [('low', 'Low'),('medium', 'Medium'),('high', 'High'),('critical', 'Critical'),]
 
     shipment = models.ForeignKey('Shipment.Shipment', on_delete=models.CASCADE)
-    tour = models.ForeignKey('DeliveryTour.DeliveryTour', on_delete=models.CASCADE)
+    tour = models.ForeignKey('Package.Package', on_delete=models.CASCADE)
     incident_type = models.CharField(max_length=50, choices=TYPE_CHOICES)
     incident_severity = models.CharField(max_length=50, choices=SEVERITY_CHOICES, default='medium')
     incident_description = models.TextField()

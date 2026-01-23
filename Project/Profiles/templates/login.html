@@ -27,13 +27,23 @@
             {% csrf_token %}
 
             <div class="form-group">
-                <input type="text" name="agent_name" placeholder="Agent Name" required>
-                <label>Agent Name</label>
+                {{ form.agent_username }}
+                <label>Username</label>
+                {% if form.agent_username.errors %}
+                    <div class="field-error">
+                        {{ form.agent_username.errors }}
+                    </div>
+                {% endif %}
             </div>
 
             <div class="form-group">
-                <input type="password" name="agent_pwd" placeholder="Password" required>
+                {{ form.agent_password }}
                 <label>Password</label>
+                {% if form.agent_password.errors %}
+                    <div class="field-error">
+                        {{ form.agent_password.errors }}
+                    </div>
+                {% endif %}
             </div>
 
             <button type="submit" class="auth-button">Login</button>
