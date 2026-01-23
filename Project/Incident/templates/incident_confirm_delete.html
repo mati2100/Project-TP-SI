@@ -2,16 +2,28 @@
 <html>
 <head>
     <title>Delete Incident</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/confirm.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+<div class="confirm-box">
     <h1>Delete Incident</h1>
-    
-    <p>Are you sure you want to delete incident: <strong>{{ incident.get_incident_type_display }} - {{ incident.incident_date}}</strong>?</p>
-    
+
+    <p class="confirm-message">
+        Are you sure you want to delete incident:
+        <strong>{{ incident.get_incident_type_display }} - {{ incident.incident_date }}</strong>?
+    </p>
+
     <form method="POST">
         {% csrf_token %}
-        <button type="submit">Yes, Delete</button>
-        <a href="{% url 'incident_list' %}">Cancel</a>
+        <div class="confirm-actions">
+            <button type="submit" class="confirm-delete">Yes, Delete</button>
+            <a href="{% url 'incident_list' %}" class="confirm-cancel">Cancel</a>
+        </div>
     </form>
+</div>
+
 </body>
 </html>

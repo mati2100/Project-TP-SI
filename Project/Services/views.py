@@ -1,12 +1,16 @@
 from django.shortcuts import render, redirect
 from .models import Destination, ServiceType
 from .forms import DestinationForm, ServiceTypeForm
+from Profiles.decorators import token_required
+
 
 # Destination Views
+@token_required
 def DestinationListView(request):
     destinations = Destination.objects.all()
     return render(request, 'destination_list.html', {'destinations': destinations})
 
+@token_required
 def DestinationCreateView(request):
     if request.method == 'POST':
         form = DestinationForm(request.POST)
@@ -21,6 +25,7 @@ def DestinationCreateView(request):
         'title': 'Create New Destination'
     })
 
+@token_required
 def DestinationUpdateView(request, destination_id):
     destination = Destination.objects.get(id=destination_id)
     
@@ -37,7 +42,7 @@ def DestinationUpdateView(request, destination_id):
         'title': 'Update Destination',
         'destination': destination
     })
-
+@token_required
 def DestinationDeleteView(request, destination_id):
     destination = Destination.objects.get(id=destination_id)
     
@@ -48,10 +53,12 @@ def DestinationDeleteView(request, destination_id):
     return render(request, 'destination_confirm_delete.html', {'destination': destination})
 
 # Service Type Views
+@token_required
 def ServiceTypeListView(request):
     service_types = ServiceType.objects.all()
     return render(request, 'servicetype_list.html', {'service_types': service_types})
 
+@token_required
 def ServiceTypeCreateView(request):
     if request.method == 'POST':
         form = ServiceTypeForm(request.POST)
@@ -66,6 +73,7 @@ def ServiceTypeCreateView(request):
         'title': 'Create New Service Type'
     })
 
+@token_required
 def ServiceTypeUpdateView(request, servicetype_id):
     service_type = ServiceType.objects.get(id=servicetype_id)
     
@@ -83,6 +91,7 @@ def ServiceTypeUpdateView(request, servicetype_id):
         'service_type': service_type
     })
 
+@token_required
 def ServiceTypeDeleteView(request, servicetype_id):
     service_type = ServiceType.objects.get(id=servicetype_id)
     

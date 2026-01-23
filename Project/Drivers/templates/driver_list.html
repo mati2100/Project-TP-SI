@@ -1,76 +1,101 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Driver List</title>
-    <style>
-        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
-        th { background-color: #4CAF50; color: white; }
-        .status-available { color: green; font-weight: bold; }
-        .status-busy { color: orange; font-weight: bold; }
-        .status-inactive { color: red; font-weight: bold; }
-        .add-btn { 
-            background-color: #4CAF50; 
-            color: white; 
-            padding: 10px 15px; 
-            text-decoration: none;
-            border-radius: 4px;
-        }
-        .action-links a {
-            margin: 0 5px;
-            text-decoration: none;
-        }
-        .edit-link { color: #2196F3; }
-        .delete-link { color: #f44336; }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/list.css' %}">
 </head>
 <body>
-    <h1>Driver Management</h1>
-    
-    <a href="{% url 'driver_create' %}" class="add-btn">+ Add New Driver</a>
-    
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>License Number</th>
-                <th>Phone</th>
-                <th>License Type</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for driver in drivers %}
-            <tr>
-                <td>{{ driver.id }}</td>
-                <td>{{ driver.driver_name }}</td>
-                <td>{{ driver.driver_license }}</td>
-                <td>{{ driver.driver_phone }}</td>
-                <td>{{ driver.license_type }}</td>
-                <td>
-                    {% if driver.driver_active %}
-                        {% if driver.driver_available %}
-                            <span class="status-available">Available</span>
+<!-- Top Navigation Bar -->
+<div class="topbar">
+    <div class="topbar-left">
+        <a href="{% url 'dashboard:index' %}" class="home-link">Home</a>
+    </div>
+    <div class="topbar-right">
+        <div class="account">
+            <button class="account-btn">
+                {{ agent.agent_name|default:"Account" }}
+            </button>
+            <div class="account-menu">
+                <p>Hello! <strong>{{ agent.agent_name|default:"Account" }}</strong></p>
+                <a href="{% url 'login' %}" class="logout-link">Log out</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-container">
+    <!-- Header -->
+    <div class="page-header">
+        <h2>Driver Management</h2>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <form method="get" class="search-form fused-search">
+            <select name="by" class="fused-select">
+                <option value="name" {% if request.GET.by == "name" %}selected{% endif %}>Name</option>
+                <option value="id" {% if request.GET.by == "id" %}selected{% endif %}>ID</option>
+            </select>
+            <input
+                type="text"
+                name="q"
+                value="{{ request.GET.q }}"
+                placeholder="Search drivers..."
+                class="fused-input"
+            >
+            <button type="submit" class="fused-button">Search</button>
+        </form>
+
+        <a href="{% url 'driver_create' %}" class="btn-pill btn-add">+ Add New Driver</a>
+    </div>
+
+    <!-- Table Card -->
+    <div class="card">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>License Number</th>
+                    <th>Phone</th>
+                    <th>License Type</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for driver in drivers %}
+                <tr>
+                    <td>{{ driver.id }}</td>
+                    <td>{{ driver.driver_name }}</td>
+                    <td>{{ driver.driver_license }}</td>
+                    <td>{{ driver.driver_phone }}</td>
+                    <td>{{ driver.license_type }}</td>
+                    <td>
+                        {% if driver.driver_active %}
+                            {% if driver.driver_available %}
+                                <span class="status-available">Available</span>
+                            {% else %}
+                                <span class="status-busy">Busy</span>
+                            {% endif %}
                         {% else %}
-                            <span class="status-busy">Busy</span>
+                            <span class="status-inactive">Inactive</span>
                         {% endif %}
-                    {% else %}
-                        <span class="status-inactive">Inactive</span>
-                    {% endif %}
-                </td>
-                <td class="action-links">
-                    <a href="{% url 'driver_update' driver.id %}" class="edit-link">Edit</a>
-                    <a href="{% url 'driver_delete' driver.id %}" class="delete-link">Delete</a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="8" style="text-align: center;">No drivers found</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                    </td>
+                    <td class="actions">
+                        <button onclick="location.href='{% url 'driver_update' driver.id %}'" class="btn-edit">Edit</button>
+                        <button onclick="location.href='{% url 'driver_delete' driver.id %}'" class="btn-delete">Delete</button>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" style="text-align: center;">No drivers found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
 </html>

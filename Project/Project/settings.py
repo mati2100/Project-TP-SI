@@ -64,7 +64,7 @@ ROOT_URLCONF = 'Project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,6 +74,14 @@ TEMPLATES = [
             ],
         },
     },
+]
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = "/dashboard/"
+
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
 ]
 
 WSGI_APPLICATION = 'Project.wsgi.application'
@@ -124,7 +132,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Configuration email (pour Gmail)
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

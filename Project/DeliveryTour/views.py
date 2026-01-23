@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect
 from .models import DeliveryTour
 from .forms import DeliveryTourForm
+from Profiles.decorators import token_required
 
+
+@token_required
 def DeliveryTourListView(request):
     tours = DeliveryTour.objects.all()
     return render(request, 'deliverytour_list.html', {'tours': tours})
 
+@token_required
 def DeliveryTourCreateView(request):
     if request.method == 'POST':
         form = DeliveryTourForm(request.POST)
@@ -20,6 +24,7 @@ def DeliveryTourCreateView(request):
         'title': 'Create New Delivery Tour'
     })
 
+@token_required
 def DeliveryTourUpdateView(request, tour_id):
     tour = DeliveryTour.objects.get(id=tour_id)
     
@@ -37,6 +42,7 @@ def DeliveryTourUpdateView(request, tour_id):
         'tour': tour
     })
 
+@token_required
 def DeliveryTourDeleteView(request, tour_id):
     tour = DeliveryTour.objects.get(id=tour_id)
     
