@@ -1,17 +1,29 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Delete Payment</title>
+    <link rel="stylesheet" href="{% static 'css/confirm.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+<div class="confirm-box">
     <h1>Delete Payment</h1>
-    
-    <p>Are you sure you want to delete payment: <strong>{{ payment.payment_number }} - {{ payment.client.client_familyname }} {{ payment.client.client_firstname }}</strong>?</p>
-    
+
+    <p class="confirm-message">
+        Are you sure you want to delete payment:
+        <strong>{{ payment.payment_number }} - {{ payment.client.client_familyname }} {{ payment.client.client_firstname }}</strong>?
+    </p>
+
     <form method="POST">
         {% csrf_token %}
-        <button type="submit">Yes, Delete</button>
-        <a href="{% url 'payment_list' %}">Cancel</a>
+        <div class="confirm-actions">
+            <button type="submit" class="confirm-delete">Yes, Delete</button>
+            <a href="{% url 'payment_list' %}" class="confirm-cancel">Cancel</a>
+        </div>
     </form>
+</div>
+
 </body>
 </html>

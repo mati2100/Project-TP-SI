@@ -28,7 +28,7 @@
 <div class="page-container">
     <!-- Header -->
     <div class="page-header">
-        <h2>Reclaims Management</h2>
+        <h2>Reclamations Management</h2>
     </div>
 <div class="toolbar">
 <form method="get" class="search-form fused-search">
@@ -41,7 +41,7 @@
         type="text"
         name="q"
         value="{{ request.GET.q }}"
-        placeholder="Search reclaimss..."
+        placeholder="Search reclamations..."
         class="fused-input"
     >
 
@@ -52,7 +52,7 @@
 
 
     <a href="{% url 'reclaims_create' %}" class="btn-pill btn-add">
-        + Add Reclaims
+        + Add Reclamation
     </a>
 </div>
     
@@ -64,9 +64,9 @@
                 <th>Client name</th>
                 <th>Shipment number</th>
                 <th>Invoice number</th>
-                <th>Reclaims number</th>
+                <th>Reclamation number</th>
                 <th>Category</th>
-                <th>Reclaims date</th>
+                <th>Reclamation date</th>
                 <th>Description</th>
                 <th>Status</th>
                 <th>Priority</th>

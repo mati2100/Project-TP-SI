@@ -1,54 +1,96 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Payment List</title>
-    <style>
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .add-btn { margin: 10px 0; }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/list.css' %}">
 </head>
 <body>
-    <h1>Payment Management</h1>
 
-    <a href="{% url 'payment_create' %}" class="add-btn">Add New Payment</a>
+<!-- Top Navigation Bar -->
+<div class="topbar">
+    <div class="topbar-left">
+        <a href="{% url 'dashboard:index' %}" class="home-link">Home</a>
+    </div>
+    <div class="topbar-right">
+        <div class="account">
+            <button class="account-btn">
+                {{ agent.agent_name|default:"Account" }}
+            </button>
+            <div class="account-menu">
+                <p>Hello! <strong>{{ agent.agent_name|default:"Account" }}</strong></p>
+                <a href="{% url 'login' %}" class="logout-link">Log out</a>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Client name</th>
-                <th>Payment number</th>
-                <th>Payment date</th>
-                <th>Amount</th>
-                <th>Method</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for payment in payments %}
-            <tr>
-                <td>{{ payment.id }}</td>
-                <td>{{ payment.client.client_familyname }} {{ payment.client.client_firstname }}</td>
-                <td>{{ payment.payment_number }}</td>
-                <td>{{ payment.payment_date }}</td>
-                <td>{{ payment.payment_amount }}</td>
-                <td>{{ payment.get_payment_method_display }}</td>
-                <td>{{ payment.get_payment_status_display }}</td>
-                <td>
-                    <a href="{% url 'payment_update' payment.id %}">Edit</a> |
-                    <a href="{% url 'payment_delete' payment.id %}">Delete</a>
-                    </ul>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="7">No payments found</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="page-container">
+    <!-- Header -->
+    <div class="page-header">
+        <h2>Payment Management</h2>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <form method="get" class="search-form fused-search">
+            <select name="by" class="fused-select">
+                <option value="id" {% if request.GET.by == "id" %}selected{% endif %}>ID</option>
+                <option value="client" {% if request.GET.by == "client" %}selected{% endif %}>Client Name</option>
+                <option value="status" {% if request.GET.by == "status" %}selected{% endif %}>Status</option>
+            </select>
+            <input
+                type="text"
+                name="q"
+                value="{{ request.GET.q }}"
+                placeholder="Search payments..."
+                class="fused-input"
+            >
+            <button type="submit" class="fused-button">Search</button>
+        </form>
+
+        <a href="{% url 'payment_create' %}" class="btn-pill btn-add">+ Add New Payment</a>
+    </div>
+
+    <!-- Table Card -->
+    <div class="card">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Client Name</th>
+                    <th>Payment Number</th>
+                    <th>Payment Date</th>
+                    <th>Amount</th>
+                    <th>Method</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for payment in payments %}
+                <tr>
+                    <td>{{ payment.id }}</td>
+                    <td>{{ payment.client.client_familyname }} {{ payment.client.client_firstname }}</td>
+                    <td>{{ payment.payment_number }}</td>
+                    <td>{{ payment.payment_date }}</td>
+                    <td>{{ payment.payment_amount }}</td>
+                    <td>{{ payment.get_payment_method_display }}</td>
+                    <td>{{ payment.get_payment_status_display }}</td>
+                    <td class="actions">
+                        <button onclick="location.href='{% url 'payment_update' payment.id %}'" class="btn-edit">Edit</button>
+                        <button onclick="location.href='{% url 'payment_delete' payment.id %}'" class="btn-delete">Delete</button>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8" style="text-align: center;">No payments found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
 </body>
 </html>
