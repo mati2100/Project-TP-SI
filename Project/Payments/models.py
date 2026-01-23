@@ -19,25 +19,19 @@ class Payment(models.Model):
     
     # Relations
     invoice = models.ForeignKey('Invoice.Invoice', on_delete=models.CASCADE)
-    client = models.ForeignKey('Clientes.Client', on_delete=models.CASCADE)
     
     # Payment information
     payment_number = models.CharField(max_length=20, unique=True)
     payment_date = models.DateTimeField(default=timezone.now)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_amount = models.DecimalField(max_digits=10, decimal_places=2)
     payment_method = models.CharField(max_length=50, choices=PAYMENT_METHOD_CHOICES, default='cash')
-    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='completed')
-    
-    # Transaction details
-    reference = models.CharField(max_length=100, blank=True)
-    notes = models.TextField(blank=True)
+    payment_status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='completed')
     
     # System fields
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    payment_created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return f"Payment #{self.payment_number} - {self.amount} DZD"
+        return f"Payment #{self.payment_number} - {self.payment_amount} DZD"
     
     def save(self, *args, **kwargs):
         if not self.payment_number:

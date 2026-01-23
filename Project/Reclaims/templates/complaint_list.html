@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Complaint List</title>
-    <link rel="stylesheet" href="{% static 'complaint/css/list.css' %}">
+    <title>Reclaims List</title>
+    <link rel="stylesheet" href="{% static 'reclaims/css/list.css' %}">
 </head>
 <body>
 <!-- Top Navigation Bar -->
@@ -29,7 +29,7 @@
 <div class="page-container">
     <!-- Header -->
     <div class="page-header">
-        <h2>Complaint Management</h2>
+        <h2>Reclaims Management</h2>
     </div>
 <div class="toolbar">
 <form method="get" class="search-form fused-search">
@@ -42,7 +42,7 @@
         type="text"
         name="q"
         value="{{ request.GET.q }}"
-        placeholder="Search complaints..."
+        placeholder="Search reclaimss..."
         class="fused-input"
     >
 
@@ -52,8 +52,8 @@
 </form>
 
 
-    <a href="{% url 'complaint_create' %}" class="btn-pill btn-add">
-        + Add Complaint
+    <a href="{% url 'reclaims_create' %}" class="btn-pill btn-add">
+        + Add Reclaims
     </a>
 </div>
     
@@ -65,9 +65,9 @@
                 <th>Client name</th>
                 <th>Shipment number</th>
                 <th>Invoice number</th>
-                <th>Complaint number</th>
+                <th>Reclaims number</th>
                 <th>Category</th>
-                <th>Complaint date</th>
+                <th>Reclaims date</th>
                 <th>Description</th>
                 <th>Status</th>
                 <th>Priority</th>
@@ -75,26 +75,26 @@
             </tr>
         </thead>
         <tbody>
-            {% for complaint in complaints %}
+            {% for reclaims in reclaimss %}
             <tr>
-                <td>{{ complaint.id }}</td>
-                <td>{{ complaint.client.client_familyname }} {{ complaint.client.client_firstname }}</td>
-                <td>{{ complaint.shipment.shipment_number }}</td>
-                <td>{{ complaint.invoice.invoice_number }}</td>
-                <td>{{ complaint.complaint_number }}</td>
-                <td>{{ complaint.get_complaint_category_display }}</td>
-                <td>{{ complaint.complaint_date }}</td>
-                <td>{{ complaint.complaint_description }}</td>
-                <td>{{ complaint.get_complaint_status_display }}</td>
-                <td>{{ complaint.get_complaint_priority_display }}</td>
+                <td>{{ reclaims.id }}</td>
+                <td>{{ reclaims.client.client_familyname }} {{ reclaims.client.client_firstname }}</td>
+                <td>{{ reclaims.shipment.shipment_number }}</td>
+                <td>{{ reclaims.invoice.invoice_number }}</td>
+                <td>{{ reclaims.reclaims_number }}</td>
+                <td>{{ reclaims.get_reclaims_category_display }}</td>
+                <td>{{ reclaims.reclaims_date }}</td>
+                <td>{{ reclaims.reclaims_description }}</td>
+                <td>{{ reclaims.get_reclaims_status_display }}</td>
+                <td>{{ reclaims.get_reclaims_priority_display }}</td>
                 <td class="actions">
-                        <button onclick="location.href='{% url 'complaint_update' complaint.id %}'" class="btn-edit">Edit</button>
-                        <button onclick="location.href='{% url 'complaint_delete' complaint.id %}'" class="btn-delete">Delete</button>
+                        <button onclick="location.href='{% url 'reclaims_update' reclaims.id %}'" class="btn-edit">Edit</button>
+                        <button onclick="location.href='{% url 'reclaims_delete' reclaims.id %}'" class="btn-delete">Delete</button>
                 </td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="7">No complaints found</td>
+                <td colspan="7">No reclaimss found</td>
             </tr>
             {% endfor %}
         </tbody>

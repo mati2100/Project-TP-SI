@@ -5,6 +5,17 @@ class ShipmentForm(forms.ModelForm):
     class Meta:
         model = Shipment
         fields = [
-            'client', 'service_type', 'destination', 'driver', 'vehicle','shipment_number',
-            'shipment_weight', 'shipment_volume', 'shipment_description', 'shipment_status', 'shipment_delivery_date'
+            'shipment_tracking_number',
+            'shipment_total_weight',
+            'shipment_total_volume',
+            'shipment_status',
+            'shipment_expected_delivery_date',
+            'shipment_delivery_date',
+            'shipment_notes',
+            'driver',
+            'destination',
+            'service_type',
+            'client',
+            'vehicle',
+            'invoice',
         ]

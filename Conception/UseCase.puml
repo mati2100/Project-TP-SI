@@ -17,7 +17,7 @@ rectangle "Use Case" as UC {
   usecase "Tracking" as tracking
   usecase "Payments" as payments
   usecase "Incidents" as incidents
-  usecase "Complaints" as complaints
+  usecase "Reclaimss" as complaints
   usecase "Client" as client
   usecase "Driver" as driver
   usecase "Vehicles" as vehicles

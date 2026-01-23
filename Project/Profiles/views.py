@@ -1,9 +1,6 @@
-from django.shortcuts import render
-from django.shortcuts import redirect
-import uuid
-from django.db import models
-from .models import AgentToken
-from .models import Agent, PasswordResetCode
+from django.shortcuts import render, redirect
+from django.contrib.auth.hashers import make_password, check_password
+from .models import Agent, AgentToken, PasswordResetCode
 from .forms import LoginForm, AddAgentForm, ForgotPasswordForm, VerifyCodeForm, NewPasswordForm
 import smtplib
 from email.mime.text import MIMEText
@@ -13,24 +10,31 @@ def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            agent_name = form.cleaned_data['agent_name']
-            agent_pwd = form.cleaned_data['agent_pwd']
+            agent_username = form.cleaned_data['agent_username']
+            agent_password = form.cleaned_data['agent_password']
             
             try:
-                agent = Agent.objects.get(agent_name=agent_name, agent_pwd=agent_pwd)
-
-                if not agent.is_active:
-                    form.add_error(None, "This account is disabled")
+                agent = Agent.objects.get(agent_username=agent_username)
+                
+                # Verify password using check_password
+                if not check_password(agent_password, agent.agent_password_hash):
+                    form.add_error(None, "Invalid username or password")
+                elif agent.agent_account_status != 'active':
+                    form.add_error(None, "Your account is not active. Please contact administrator.")
                 else:
-
+                    # Store session data
                     request.session['agent_id'] = agent.id
-                    request.session['agent_name'] = agent.agent_name
-
+                    request.session['agent_name'] = f"{agent.agent_first_name} {agent.agent_last_name}"
+                    
+                    # Create or get token
                     token, created = AgentToken.objects.get_or_create(agent=agent)
                     request.session['auth_token'] = str(token.token)
-                    return redirect("dashboard:index")
+                    
+                    # For now, redirect to home - you might want to change this to your dashboard
+                    return redirect('dashboard:index')
+                    
             except Agent.DoesNotExist:
-                form.add_error(None, "Agent name or password is incorrect")
+                form.add_error(None, "Invalid username or password")
     else:
         form = LoginForm()
     
@@ -38,49 +42,41 @@ def login_view(request):
 
 def logout_view(request):
     agent_id = request.session.get('agent_id')
-
+    
     if agent_id:
         AgentToken.objects.filter(agent_id=agent_id).delete()
-
+    
     request.session.flush()
     return redirect('login')
+
+def home_view(request):
+    if 'agent_id' not in request.session:
+        return redirect('login')
+    
+    agent_id = request.session['agent_id']
+    try:
+        agent = Agent.objects.get(id=agent_id)
+        return render(request, 'home.html', {
+            'agent_name': f"{agent.agent_first_name} {agent.agent_last_name}"
+        })
+    except Agent.DoesNotExist:
+        request.session.flush()
+        return redirect('login')
 
 def addagent_view(request):
     if request.method == 'POST':
         form = AddAgentForm(request.POST)
         if form.is_valid():
-            agent_name = form.cleaned_data['agent_name']
-            agent_email = form.cleaned_data['agent_email']
-            agent_pwd = form.cleaned_data['agent_pwd']
-            confirm_agent_pwd = form.cleaned_data['confirm_agent_pwd']
-            
-            errors = []
-
-            if agent_pwd != confirm_agent_pwd:
-                errors.append("Passwords do not match")
-            
-            if Agent.objects.filter(agent_name=agent_name).exists():
-                errors.append("Agent name already taken")
-            
-            if Agent.objects.filter(agent_email=agent_email).exists():
-                errors.append("Email already used")
-
-            if errors:
-                for error in errors:
-                    form.add_error(None, error)
-            else:
-
-                Agent.objects.create(
-                    agent_name=agent_name,
-                    agent_email=agent_email,
-                    agent_pwd=agent_pwd,
-                    is_active=True
-                )
-
+            try:
+                # Save the agent (form.save() handles password hashing)
+                agent = form.save()
+                
                 return render(request, 'login.html', {
                     'form': LoginForm(),
                     'success_message': 'Account created successfully. Please log in.'
                 })
+            except Exception as e:
+                form.add_error(None, f"Error creating account: {str(e)}")
     else:
         form = AddAgentForm()
     
@@ -93,87 +89,51 @@ def forgot_password_view(request):
             agent_email = form.cleaned_data['agent_email']
             
             try:
-                # Chercher l'agent par email
                 agent = Agent.objects.get(agent_email=agent_email)
                 
-                # Générer un nouveau code
+                # Generate a new code
                 code = PasswordResetCode.generate_code()
                 
-                # Supprimer les anciens codes non utilisés
+                # Delete old unused codes
                 PasswordResetCode.objects.filter(agent=agent, is_used=False).delete()
                 
-                # Créer le nouveau code
+                # Create the new code
                 reset_code = PasswordResetCode.objects.create(
                     agent=agent,
                     code=code
                 )
                 
-                # Envoyer l'email (version basique)
+                # Store agent ID in session for next steps
+                request.session['reset_agent_id'] = agent.id
+                request.session['reset_agent_email'] = agent_email
+                
+                # Try to send email (simplified for now)
                 try:
-                    # Configuration SMTP (à adapter selon ton fournisseur email)
-                    # Pour Gmail par exemple
-                    sender_email = "ton_email@gmail.com"  # À CHANGER
-                    sender_password = "ton_mot_de_passe"  # À CHANGER
+                    # For development, just print the code
+                    print(f"PASSWORD RESET CODE FOR {agent_email}: {code}")
                     
-                    message = MIMEMultipart("alternative")
-                    message["Subject"] = "Réinitialisation de votre mot de passe"
-                    message["From"] = sender_email
-                    message["To"] = agent_email
+                    # You can implement email sending here if needed
+                    # For now, we'll just show it on the verify page for testing
                     
-                    text = f"""Hello {agent.agent_name},
-                    
-You have requested a password reset.
-Your verification code is: {code}
-
-This code is valid for 15 minutes.
-
-If you did not make this request, please ignore this email.
-"""
-                    
-                    html = f"""<html>
-<body>
-    <h3>Hello {agent.agent_name},</h3>
-    <p>You have requested a password reset.</p>
-    <p>Your verification code is: <strong>{code}</strong></p>
-    <p>This code is valid for 15 minutes.</p>
-    <p>If you did not make this request, please ignore this email.</p>
-</body>
-</html>"""
-                    
-                    part1 = MIMEText(text, "plain")
-                    part2 = MIMEText(html, "html")
-                    
-                    message.attach(part1)
-                    message.attach(part2)
-                    
-                    # Connexion au serveur SMTP
-                    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-                        server.login(sender_email, sender_password)
-                        server.sendmail(sender_email, agent_email, message.as_string())
-                    
-                    # Stocker l'ID de l'agent dans la session pour les étapes suivantes
-                    request.session['reset_agent_id'] = agent.id
                     return render(request, 'verify_code.html', {
                         'form': VerifyCodeForm(),
                         'agent_email': agent_email,
-                        'success_message': f'A verification code has been sent to {agent_email}'
+                        'test_code': code,  # For development/testing only
+                        'success_message': f'A verification code has been generated. Test code: {code}'
                     })
                     
                 except Exception as e:
-                    # En cas d'erreur d'envoi d'email, on peut utiliser une méthode alternative
-                    # Ici, on affiche juste le code dans la console pour le test
-                    print(f"RESET CODE FOR {agent_email}: {code}")
-                    
-                    # Stocker l'ID de l'agent dans la session
-                    request.session['reset_agent_id'] = agent.id
+                    print(f"Error sending email: {e}")
+                    # Fall back to showing code
                     return render(request, 'verify_code.html', {
                         'form': VerifyCodeForm(),
                         'agent_email': agent_email,
-                        'test_code': code,  # Pour le test, on affiche le code
-                        'success_message': f'Test code (for developpement) for: {code}'
+                        'test_code': code,
+                        'success_message': f'Test code (for development): {code}'
                     })
                     
             except Agent.DoesNotExist:
+                # Form validation already handles this, but just in case
                 form.add_error('agent_email', "No account found with this email")
     else:
         form = ForgotPasswordForm()
@@ -181,12 +141,14 @@ If you did not make this request, please ignore this email.
     return render(request, 'forgot_password.html', {'form': form})
 
 def verify_code_view(request):
-    # Vérifier si l'agent est en train de réinitialiser son mot de passe
+    # Check if agent is in password reset process
     if 'reset_agent_id' not in request.session:
         return render(request, 'forgot_password.html', {
             'form': ForgotPasswordForm(),
             'error_message': 'Please first request a password reset'
         })
+    
+    agent_email = request.session.get('reset_agent_email', '')
     
     if request.method == 'POST':
         form = VerifyCodeForm(request.POST)
@@ -195,7 +157,7 @@ def verify_code_view(request):
             agent_id = request.session['reset_agent_id']
             
             try:
-                # Chercher le code non utilisé et valide
+                # Find the unused and valid code
                 reset_code = PasswordResetCode.objects.get(
                     agent_id=agent_id,
                     code=code,
@@ -203,11 +165,11 @@ def verify_code_view(request):
                 )
                 
                 if reset_code.is_valid():
-                    # Marquer le code comme utilisé
+                    # Mark code as used
                     reset_code.is_used = True
                     reset_code.save()
                     
-                    # Stocker dans la session pour l'étape suivante
+                    # Store in session for next step
                     request.session['verified_agent_id'] = agent_id
                     return render(request, 'new_password.html', {
                         'form': NewPasswordForm(),
@@ -217,14 +179,17 @@ def verify_code_view(request):
                     form.add_error('code', 'This code has expired or has already been used')
                     
             except PasswordResetCode.DoesNotExist:
-                form.add_error('code', 'Code invalide')
+                form.add_error('code', 'Invalid code')
     else:
         form = VerifyCodeForm()
     
-    return render(request, 'verify_code.html', {'form': form})
+    return render(request, 'verify_code.html', {
+        'form': form,
+        'agent_email': agent_email
+    })
 
 def new_password_view(request):
-    # Vérifier si le code a été vérifié
+    # Check if code has been verified
     if 'verified_agent_id' not in request.session:
         return render(request, 'forgot_password.html', {
             'form': ForgotPasswordForm(),
@@ -237,21 +202,22 @@ def new_password_view(request):
             new_password = form.cleaned_data['new_password']
             confirm_new_password = form.cleaned_data['confirm_new_password']
             
+            # Form validation already checks this, but double-check
             if new_password != confirm_new_password:
                 form.add_error('confirm_new_password', "Passwords do not match")
             else:
-                # Mettre à jour le mot de passe
+                # Update the password
                 agent_id = request.session['verified_agent_id']
                 try:
                     agent = Agent.objects.get(id=agent_id)
-                    agent.agent_pwd = new_password
+                    # Hash and save the new password
+                    agent.agent_password_hash = make_password(new_password)
                     agent.save()
                     
-                    # Nettoyer la session
-                    if 'reset_agent_id' in request.session:
-                        del request.session['reset_agent_id']
-                    if 'verified_agent_id' in request.session:
-                        del request.session['verified_agent_id']
+                    # Clean up session
+                    for key in ['reset_agent_id', 'reset_agent_email', 'verified_agent_id']:
+                        if key in request.session:
+                            del request.session[key]
                     
                     return render(request, 'login.html', {
                         'form': LoginForm(),

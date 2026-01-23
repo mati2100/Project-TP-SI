@@ -22,30 +22,70 @@
         {% endif %}
 
         <form class="auth-form" method="POST">
-    {% csrf_token %}
+            {% csrf_token %}
 
-    <div class="form-group">
-        {{ form.agent_name }}
-        <label>Agent Name</label>
-    </div>
+            <div class="form-group">
+                {{ form.agent_first_name }}
+                <label>First Name</label>
+                {% if form.agent_first_name.errors %}
+                    <div class="field-error">
+                        {{ form.agent_first_name.errors }}
+                    </div>
+                {% endif %}
+            </div>
 
-    <div class="form-group">
-        {{ form.agent_email }}
-        <label>Email</label>
-    </div>
+            <div class="form-group">
+                {{ form.agent_last_name }}
+                <label>Last Name</label>
+                {% if form.agent_last_name.errors %}
+                    <div class="field-error">
+                        {{ form.agent_last_name.errors }}
+                    </div>
+                {% endif %}
+            </div>
 
-    <div class="form-group">
-        {{ form.agent_pwd }}
-        <label>Password</label>
-    </div>
+            <div class="form-group">
+                {{ form.agent_email }}
+                <label>Email</label>
+                {% if form.agent_email.errors %}
+                    <div class="field-error">
+                        {{ form.agent_email.errors }}
+                    </div>
+                {% endif %}
+            </div>
 
-    <div class="form-group">
-        {{ form.confirm_agent_pwd }}
-        <label>Confirm Password</label>
-    </div>
+            <div class="form-group">
+                {{ form.agent_username }}
+                <label>Username</label>
+                {% if form.agent_username.errors %}
+                    <div class="field-error">
+                        {{ form.agent_username.errors }}
+                    </div>
+                {% endif %}
+            </div>
 
-    <button type="submit" class="auth-button">Register</button>
-</form>
+            <div class="form-group">
+                {{ form.password }}
+                <label>Password</label>
+                {% if form.password.errors %}
+                    <div class="field-error">
+                        {{ form.password.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.confirm_password }}
+                <label>Confirm Password</label>
+                {% if form.confirm_password.errors %}
+                    <div class="field-error">
+                        {{ form.confirm_password.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="auth-button">Register</button>
+        </form>
 
         <p class="auth-link">Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
     </div>
