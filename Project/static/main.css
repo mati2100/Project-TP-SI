@@ -1,5 +1,4 @@
 :root {
-  --bg: #f5f7fb;
   --white: #ffffff;
   --primary: #4f46e5;        /* Indigo / blue */
   --primary-hover: #4338ca;
@@ -153,7 +152,7 @@ th {
   border-bottom: 1px solid var(--border);
 }
 
-h1, h2, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6 {
   color: var(--text);
   font-weight: 600;
 }
@@ -162,10 +161,23 @@ h3 {
   font-weight: 500;
 }
 
-input, select, textarea {
-  font-family: 'Open Sans', sans-serif;
-  padding: 10px;
-  border-radius: 5px;
+.badge.inactive {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.badge.active {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+/* Inputs */
+input,
+select,
+textarea {
+  font-family: inherit;
+  padding: 10px 14px;
+  border-radius: 8px;
   border: 1px solid var(--border);
   outline: none;
   font-size: 14px;
