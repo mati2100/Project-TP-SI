@@ -30,6 +30,6 @@ urlpatterns = [
     path('tours/', include('Package.urls')),      
     path('invoices/', include('Invoice.urls')),       
     path('incidents/', include('Incident.urls')),     
-    path('reclaimss/', include('Reclaims.urls')),
+    path('reclaims/', include('Reclaims.urls')),
 
 ]
