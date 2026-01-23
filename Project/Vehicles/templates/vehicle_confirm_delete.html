@@ -1,8 +1,8 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Delete Vehicle</title>
-    {% load static %}
     <link rel="stylesheet" href="{% static 'css/confirm.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
@@ -12,21 +12,14 @@
     <h1>Delete Vehicle</h1>
 
     <p class="confirm-message">
-        ⚠️ WARNING: This action cannot be undone!
+        Are you sure you want to delete vehicle:
+        <strong>{{ vehicle.vehicle_registration_number }} - {{ vehicle.vehicle_model }}</strong>?
     </p>
-
-    <div class="item-info">
-        <p><strong>Registration:</strong> {{ vehicle.vehicle_registration_number }}</p>
-        <p><strong>Type:</strong> {{ vehicle.get_vehicle_type_display }}</p>
-        <p><strong>Model:</strong> {{ vehicle.vehicle_model }}</p>
-        <p><strong>Year:</strong> {{ vehicle.vehicle_year }}</p>
-        <p><strong>Status:</strong> {{ vehicle.get_vehicle_status_display }}</p>
-    </div>
 
     <form method="POST">
         {% csrf_token %}
         <div class="confirm-actions">
-            <button type="submit" class="confirm-delete">Yes, Delete Permanently</button>
+            <button type="submit" class="confirm-delete">Yes, Delete</button>
             <a href="{% url 'vehicle_list' %}" class="confirm-cancel">Cancel</a>
         </div>
     </form>
