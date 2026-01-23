@@ -30,7 +30,7 @@ def login_view(request):
                     token, created = AgentToken.objects.get_or_create(agent=agent)
                     request.session['auth_token'] = str(token.token)
                     
-                    # For now, redirect to home - you might want to change this to your dashboard
+                    # redirect to dashboard
                     return redirect('dashboard:index')
                     
             except Agent.DoesNotExist:
