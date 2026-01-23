@@ -22,5 +22,5 @@ class Payment(models.Model):
             raise ValidationError("The payment amount exceeds the client's balance.")
     
         Client.objects.filter(id=self.client.id).update(
-        balance=F('balance') - self.payment_amount
+        client_due_balance=F('client_due_balance') - self.payment_amount
       )

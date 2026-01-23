@@ -33,7 +33,7 @@ def PaymentUpdateView(request, payment_id):
             payment = form.save()
             if old_amount != payment.payment_amount:
                 Client.objects.filter(id=payment.client.id).update(
-                    balance=F('balance') + old_amount - payment.payment_amount
+                    client_due_balance=F('client_due_balance') + old_amount - payment.payment_amount
                 )
             return redirect('payment_list')
     else:
@@ -52,7 +52,7 @@ def PaymentDeleteView(request, payment_id):
         from Clientes.models import Client
         from django.db.models import F
         Client.objects.filter(id=payment.client.id).update(
-            balance=F('balance') + payment.payment_amount
+            client_due_balance=F('client_due_balance') + payment.payment_amount
         )
         payment.delete()
         return redirect('payment_list')

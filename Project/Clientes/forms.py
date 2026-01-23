@@ -9,5 +9,4 @@ class ClientForm(forms.ModelForm):
                   'client_email', 
                   'client_phone', 
                   'client_address', 
-                  'client_due_balance'
                   ]

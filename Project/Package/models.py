@@ -10,7 +10,7 @@ class Package(models.Model):
     package_created_at = models.DateTimeField(auto_now_add=True)
 
     #foreign keys
-    shipment = models.ForeignKey('Shipment.Shipment', on_delete=models.CASCADE, related_name='packages')
+    shipment = models.ForeignKey('Shipment.Shipment', on_delete=models.CASCADE, related_name='packages' , null=True , blank=True)
 
     def __str__(self):
         return f"Package #{self.id} - {self.package_description[:20]}"

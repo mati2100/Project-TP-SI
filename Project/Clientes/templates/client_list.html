@@ -67,7 +67,8 @@
                     <th>Client</th>
                     <th>Email</th>
                     <th>Phone</th>
-                    <th>City</th>
+                    <th>Address</th>
+                    <th>Balance</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
@@ -79,7 +80,8 @@
                     <td title="{{ client.client_lastname }} {{ client.client_firstname }}">{{ client.client_lastname }} {{ client.client_firstname }}</td>
                     <td title="{{ client.client_email }}">{{ client.client_email }}</td>
                     <td title="{{ client.client_phone }}">{{ client.client_phone }}</td>
-                    <td title="{{ client.client_city }}">{{ client.client_city }}</td>
+                    <td title="{{ client.client_address }}">{{ client.client_address }}</td>
+                    <td title="{{ client.client_due_balance }}">{{ client.client_due_balance }}</td>
                     <td>
                         {% if client.is_active %}
                             <span class="badge badge-success">Active</span>
