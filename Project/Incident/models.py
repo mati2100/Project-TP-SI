@@ -1,18 +1,17 @@
 from django.db import models
 
 class Incident(models.Model):
-    STATUS_CHOICES = [('pending', 'Pending'),('paid', 'Paid'),('partially_paid', 'Partially Paid'),('overdue', 'Overdue'),('cancelled', 'Cancelled'),]
+    SEVERITY_CHOICES = [('low', 'Low'), ('medium', 'Medium'), ('high', 'High'), ('critical', 'Critical')]
+    TYPE_CHOICES = [('Damage', 'Damage'), ('Delay', 'Delay'), ('Lost', 'Lost'), ('Theft', 'Theft'), ('Address Issue', 'Address Issue'), ('System Error', 'System Error'), ('Other', 'Other'),]
 
-    invoice_number = models.CharField(max_length=20, unique=True)
-    invoice_issue_date = models.DateField()
-    invoice_subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    invoice_tax_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    invoice_total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    invoice_status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='pending')
+    incident_type = models.CharField(max_length=50, choices=TYPE_CHOICES)
+    incident_severity = models.CharField(max_length=50, choices=SEVERITY_CHOICES, default='medium')
+    incident_description = models.TextField()
+    incident_time = models.DateTimeField()
 
-    invoice_created_at = models.DateTimeField(auto_now_add=True)
+    incident_created_at = models.DateTimeField(auto_now_add=True)
     #foriegn keys
-    client = models.ForeignKey('Clientes.Client', on_delete=models.CASCADE)
+    shipment = models.ForeignKey('Shipment.Shipment', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Incident - {self.invoice_number} - {self.invoice_issue_date}"
+        return f"Incident - {self.incident_type} - {self.incident_time}"

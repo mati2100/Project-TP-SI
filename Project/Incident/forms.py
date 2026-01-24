@@ -5,10 +5,9 @@ class IncidentForm(forms.ModelForm):
     class Meta:
         model = Incident
         fields = [
-            'invoice_number', 
-            'invoice_issue_date', 
-            'invoice_subtotal', 
-            'invoice_tax_amount',
-            'invoice_status',
-            'client',
+            'incident_type', 
+            'incident_severity', 
+            'incident_description',
+            'incident_time',
+            'shipment',
         ]
