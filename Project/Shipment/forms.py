@@ -61,6 +61,11 @@ class ShipmentForm(forms.ModelForm):
         self.fields['vehicle'].label_from_instance = lambda obj: f"{obj.vehicle_registration_number} - {obj.vehicle_model} - {obj.vehicle_brand} (#{obj.id})"
         self.fields['service_type'].label_from_instance = lambda obj: f"{obj.service_type_name} - {obj.service_type_priority_level} (#{obj.id})"
         self.fields['invoice'].label_from_instance = lambda obj: f"Invoice #{obj.id} - Amount: {obj.invoice_total_amount} (#{obj.id})"
+
+        # make total weight and total volume read-only
+        self.fields['shipment_total_weight'].widget.attrs['readonly'] = True
+        self.fields['shipment_total_volume'].widget.attrs['readonly'] = True
+
         # generate tracking number for new shipments
         if not self.instance.pk:
             today = timezone.now().strftime("%Y%m%d")

@@ -3,7 +3,7 @@ from django.db import models
 
 class Package(models.Model):
     package_weight = models.DecimalField(max_digits=10, decimal_places=2)
-    package_volume = models.CharField(max_length=100)
+    package_volume = models.DecimalField(max_digits=10, decimal_places=2)
     package_description = models.TextField()
     package_value = models.DecimalField(max_digits=10, decimal_places=2)
 
