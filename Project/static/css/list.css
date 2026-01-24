@@ -388,3 +388,65 @@ body {
     outline: none;
     box-shadow: none;
 }
+
+.home-sidebar-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.hover-sidebar {
+    position: absolute;
+    left: -5px;
+    top: -10px;
+    width: 200px;
+    background: linear-gradient(180deg, #f8faff, #eef2ff);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    z-index: 200;
+}
+
+.home-sidebar-wrapper:hover .hover-sidebar {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.hover-sidebar .sidebar-title {
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--text);
+    border-bottom: 1px solid #a4a8b1;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.hover-sidebar .sidebar-nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 10px;
+    margin-bottom: 6px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #334155;
+    transition: all 0.2s ease;
+}
+
+.hover-sidebar .sidebar-nav a:hover {
+    background: linear-gradient(135deg, #e0e7ff, #f0abfc);
+    color: var(--primary);
+}
+
+.hover-sidebar .sidebar-nav a i {
+    width: 20px;
+    text-align: center;
+}
+.sidebar-nav a.active {
+  background: linear-gradient(135deg, #4facfe, #a18cd1);
+  color: white;
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.35);
+}

@@ -4,6 +4,7 @@
 <head>
     <title>Shipment List</title>
     <link rel="stylesheet" href="{% static 'css/list.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
         --primary: #14acf3;
@@ -15,7 +16,64 @@
 <!-- Top Navigation Bar -->
 <div class="topbar">
     <div class="topbar-left">
-        <a href="{% url 'dashboard:index' %}" class="home-link">Home</a>
+        <div class="home-sidebar-wrapper">
+            <a href="{% url 'dashboard:index' %}" class="home-link">Home</a>
+
+            <aside class="sidebar hover-sidebar">
+                <h1 class="sidebar-title">LOGISTICS</h1>
+
+                <nav class="sidebar-nav">
+                    <a href="{% url 'dashboard:index' %}">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="/shipments/" class="active">
+                        <i class="fa-solid fa-truck-fast"></i>
+                        <span>Shipments</span>
+                    </a>
+                    <a href="/packages/">
+                        <i class="fa-solid fa-box"></i>
+                        <span>Packages</span>
+                    </a>
+                    <a href="/clientes/">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Clients</span>
+                    </a>
+                    <a href="/drivers/">
+                        <i class="fa-solid fa-id-card"></i>
+                        <span>Drivers</span>
+                    </a>
+                    <a href="/vehicles/">
+                        <i class="fa-solid fa-car"></i>
+                        <span>Vehicles</span>
+                    </a>
+                    <a href="/invoices/">
+                        <i class="fa-solid fa-file-invoice"></i>
+                        <span>Invoices</span>
+                    </a>
+                    <a href="/incidents/">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <span>Incidents</span>
+                    </a>
+                    <a href="/reclaims/">
+                        <i class="fa-solid fa-rotate-left"></i>
+                        <span>Reclamations</span>
+                    </a>
+                    <a href="/services/destinations/">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Destinations</span>
+                    </a>
+                    <a href="/services/servicetypes/">
+                        <i class="fa-solid fa-layer-group"></i>
+                        <span>Service Types</span>
+                    </a>
+                    <a href="/payments/">
+                        <i class="fa-solid fa-credit-card"></i>
+                        <span>Payments</span>
+                    </a>
+                </nav>
+            </aside>
+        </div>
     </div>
     <div class="topbar-right">
 <div class="account">
