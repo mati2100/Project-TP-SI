@@ -19,9 +19,6 @@ def InvoiceCreateView(request):
             invoice = form.save(commit=False)
             invoice.save()
             form.save_m2m()
-            Client.objects.filter(id=invoice.client.id).update(
-                client_due_balance=F('client_due_balance') + invoice.invoice_total_amount
-            )
             return redirect('invoice_list')
     else:
         form = InvoiceForm()

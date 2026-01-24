@@ -16,9 +16,9 @@
     </p>
 
     <div class="item-info">
-        <p><strong>Name:</strong> {{ driver.driver_name }}</p>
-        <p><strong>License:</strong> {{ driver.driver_license }}</p>
-        <p><strong>Phone:</strong> {{ driver.driver_phone }}</p>
+        <p><strong>Name:</strong> {{ driver.driver_first_name }} {{ driver.driver_last_name }}</p>
+        <p><strong>License:</strong> {{ driver.driver_license_number }}</p>
+        <p><strong>Phone:</strong> {{ driver.driver_phone_number }}</p>
     </div>
 
     <form method="POST">
