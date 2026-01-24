@@ -1,57 +1,65 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Service Type List</title>
-    <style>
-        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background-color: #8e44ad; color: white; }
-        .add-btn { 
-            background-color: #27ae60; 
-            color: white; 
-            padding: 10px 15px; 
-            text-decoration: none;
-            border-radius: 4px;
-            display: inline-block;
-            margin: 10px 5px;
-        }
-        .service-standard { background-color: #d4edda; color: #155724; padding: 3px 8px; border-radius: 3px; }
-        .service-express { background-color: #fff3cd; color: #856404; padding: 3px 8px; border-radius: 3px; }
-        .service-international { background-color: #cce5ff; color: #004085; padding: 3px 8px; border-radius: 3px; }
-        .action-links a {
-            margin: 0 5px;
-            text-decoration: none;
-        }
-        .edit-link { color: #3498db; }
-        .delete-link { color: #e74c3c; }
-        .rate-cell { text-align: right; }
-        .tab-container { margin-bottom: 20px; }
-        .tab-button { 
-            padding: 10px 20px; 
-            border: none; 
-            background-color: #ecf0f1; 
-            cursor: pointer;
-            margin-right: 5px;
-        }
-        .tab-button.active { 
-            background-color: #8e44ad; 
-            color: white; 
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/list.css' %}">
 </head>
+
 <body>
-    <h1>Service Type Management</h1>
-    
-    <div class="tab-container">
-        <a href="{% url 'destination_list' %}" class="tab-button">Destinations</a>
-        <a href="{% url 'servicetype_list' %}" class="tab-button active">Service Types</a>
+<!-- Top Navigation Bar -->
+<div class="topbar">
+    <div class="topbar-left">
+        <a href="{% url 'dashboard:index' %}" class="home-link">Home</a>
     </div>
+    <div class="topbar-right">
+        <div class="account">
+            <button class="account-btn">
+                {{ agent.agent_name|default:"Account" }}
+            </button>
+
+            <div class="account-menu">
+                <p>Hello! <strong>{{ agent.agent_name|default:"Account" }}</strong></p>
+                <a href="{% url 'login' %}" class="logout-link">Log out</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-container">
+    <!-- Header -->
+    <div class="page-header">
+        <h2>Service Management</h2>
+    </div>
+<div class="toolbar">
+<form method="get" class="search-form fused-search">
+    <select name="by" class="fused-select">
+        <option value="name" {% if request.GET.by == "name" %}selected{% endif %}>Name</option>
+        <option value="id" {% if request.GET.by == "id" %}selected{% endif %}>ID</option>
+    </select>
+
+    <input
+        type="text"
+        name="q"
+        value="{{ request.GET.q }}"
+        placeholder="Search service types..."
+        class="fused-input"
+    >
+
+    <button type="submit" class="fused-button">
+        Search
+    </button>
+</form>
     
-    <a href="{% url 'servicetype_create' %}" class="add-btn">+ Add New Service Type</a>
-    
-    <table>
-        <thead>
-            <tr>
+    <a href="{% url 'servicetype_create' %}" class="btn-pill btn-add">
+        + Add New Service Type
+    </a>
+</div>    
+
+    <div class="card">
+        <table class="styled-table">
+            <thead>
+                <tr>
                 <th>ID</th>
                 <th>Service Type</th>
                 <th>Description</th>
@@ -65,25 +73,25 @@
             <tr>
                 <td>{{ service.id }}</td>
                 <td>
-                    {% if service.st_name == 'standard' %}
+                    {% if service.service_type_name == 'standard' %}
                         <span class="service-standard">{{ service.get_st_name_display }}</span>
-                    {% elif service.st_name == 'express' %}
+                    {% elif service.service_type_name == 'express' %}
                         <span class="service-express">{{ service.get_st_name_display }}</span>
                     {% else %}
                         <span class="service-international">{{ service.get_st_name_display }}</span>
                     {% endif %}
                 </td>
                 <td>{{ service.st_description|truncatechars:50 }}</td>
-                <td class="rate-cell">${{ service.st_weight_rate }}</td>
-                <td class="rate-cell">${{ service.st_volume_rate }}</td>
+                <td class="rate-cell">${{ service.service_type_weight_surcharge }}</td>
+                <td class="rate-cell">${{ service.service_type_volume_surcharge }}</td>
                 <td class="action-links">
-                    <a href="{% url 'servicetype_update' service.id %}" class="edit-link">Edit</a>
-                    <a href="{% url 'servicetype_delete' service.id %}" class="delete-link">Delete</a>
+                    <button onclick="location.href='{% url 'servicetype_update' service.id %}'" class="btn-edit">Edit</button>
+                        <button onclick="location.href='{% url 'servicetype_delete' service.id %}'" class="btn-delete">Delete</button>
                 </td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="8" style="text-align: center;">No service types found</td>
+                <td colspan="7">No service types found</td>
             </tr>
             {% endfor %}
         </tbody>

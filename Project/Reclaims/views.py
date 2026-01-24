@@ -20,12 +20,12 @@ def ReclaimListView(request):
             reclaims = reclaims.filter(client__client_firstname__icontains=query) | reclaims.filter(client__client_familyname__icontains=query)
         elif search_by == 'shipment':
             reclaims = reclaims.filter(shipment__shipment_number__icontains=query)
-
-    order = request.GET.get('order')
-    if order == 'date_asc':
-        reclaims = reclaims.order_by('Reclaim_date')
-    elif order == 'date_desc':
-        reclaims = reclaims.order_by('-Reclaim_date')
+#        experimental sorting feature
+    # order = request.GET.get('order')
+    # if order == 'date_asc':
+    #     reclaims = reclaims.order_by('Reclaim_date')
+    # elif order == 'date_desc':
+    #     reclaims = reclaims.order_by('-Reclaim_date')
         
     return render(request, 'Reclaim_list.html', {'reclaims': reclaims})
 @token_required

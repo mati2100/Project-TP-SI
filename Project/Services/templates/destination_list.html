@@ -1,58 +1,63 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Destination List</title>
-    <style>
-        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background-color: #2c3e50; color: white; }
-        .add-btn { 
-            background-color: #27ae60; 
-            color: white; 
-            padding: 10px 15px; 
-            text-decoration: none;
-            border-radius: 4px;
-            display: inline-block;
-            margin: 10px 5px;
-        }
-        .zone-local { background-color: #d4edda; color: #155724; padding: 3px 8px; border-radius: 3px; }
-        .zone-regional { background-color: #d1ecf1; color: #0c5460; padding: 3px 8px; border-radius: 3px; }
-        .zone-national { background-color: #fff3cd; color: #856404; padding: 3px 8px; border-radius: 3px; }
-        .zone-international { background-color: #f8d7da; color: #721c24; padding: 3px 8px; border-radius: 3px; }
-        .action-links a {
-            margin: 0 5px;
-            text-decoration: none;
-        }
-        .edit-link { color: #3498db; }
-        .delete-link { color: #e74c3c; }
-        .fare-cell { text-align: right; font-weight: bold; }
-        .tab-container { margin-bottom: 20px; }
-        .tab-button { 
-            padding: 10px 20px; 
-            border: none; 
-            background-color: #ecf0f1; 
-            cursor: pointer;
-            margin-right: 5px;
-        }
-        .tab-button.active { 
-            background-color: #2c3e50; 
-            color: white; 
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/list.css' %}">
 </head>
 <body>
-    <h1>Destination Management</h1>
-    
-    <div class="tab-container">
-        <a href="{% url 'destination_list' %}" class="tab-button active">Destinations</a>
-        <a href="{% url 'servicetype_list' %}" class="tab-button">Service Types</a>
+    <!-- Top Navigation Bar -->
+<div class="topbar">
+    <div class="topbar-left">
+        <a href="{% url 'dashboard:index' %}" class="home-link">Home</a>
     </div>
+    <div class="topbar-right">
+        <div class="account">
+            <button class="account-btn">
+                {{ agent.agent_name|default:"Account" }}
+            </button>
+
+            <div class="account-menu">
+                <p>Hello! <strong>{{ agent.agent_name|default:"Account" }}</strong></p>
+                <a href="{% url 'login' %}" class="logout-link">Log out</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-container">
+    <!-- Header -->
+    <div class="page-header">
+    <h1>Destination Management</h1>
+    </div>
+<div class="toolbar">
+<form method="get" class="search-form fused-search">
+    <select name="by" class="fused-select">
+        <option value="name" {% if request.GET.by == "name" %}selected{% endif %}>Name</option>
+        <option value="id" {% if request.GET.by == "id" %}selected{% endif %}>ID</option>
+    </select>
+
+    <input
+        type="text"
+        name="q"
+        value="{{ request.GET.q }}"
+        placeholder="Search destinations..."
+        class="fused-input"
+    >
+
+    <button type="submit" class="fused-button">
+        Search
+    </button>
+</form>
     
-    <a href="{% url 'destination_create' %}" class="add-btn">+ Add New Destination</a>
-    
-    <table>
-        <thead>
-            <tr>
+    <a href="{% url 'destination_create' %}" class="btn-pill btn-add">
+        + Add New Destination
+    </a>
+</div>
+
+    <div class="card">
+        <table class="styled-table">
+            <thead>
+                <tr>
                 <th>ID</th>
                 <th>City</th>
                 <th>Country</th>
@@ -80,16 +85,17 @@
                 </td>
                 <td class="fare-cell">${{ destination.base_fare }}</td>
                 <td class="action-links">
-                    <a href="{% url 'destination_update' destination.id %}" class="edit-link">Edit</a>
-                    <a href="{% url 'destination_delete' destination.id %}" class="delete-link">Delete</a>
+                    <button onclick="location.href='{% url 'destination_update' destination.id %}'" class="btn-edit">Edit</button>
+                        <button onclick="location.href='{% url 'destination_delete' destination.id %}'" class="btn-delete">Delete</button>
                 </td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="8" style="text-align: center;">No destinations found</td>
+                <td colspan="7" style="text-align: center;">No destinations found</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+</div>
 </body>
 </html>
