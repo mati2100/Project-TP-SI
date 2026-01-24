@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Delivery Tour List</title>
+    <title>Delivery Package List</title>
     <link rel="stylesheet" href="{% static 'css/list.css' %}">
 </head>
 <body>
@@ -27,7 +27,7 @@
 <div class="page-container">
     <!-- Header -->
     <div class="page-header">
-        <h2>Delivery Tour Management</h2>
+        <h2>Delivery Package Management</h2>
     </div>
 
     <!-- Toolbar -->
@@ -41,13 +41,13 @@
                 type="text"
                 name="q"
                 value="{{ request.GET.q }}"
-                placeholder="Search tours..."
+                placeholder="Search packages..."
                 class="fused-input"
             >
             <button type="submit" class="fused-button">Search</button>
         </form>
 
-        <a href="{% url 'tour_create' %}" class="btn-pill btn-add">+ Delivery Tour</a>
+        <a href="{% url 'package_create' %}" class="btn-pill btn-add">+ Delivery Package</a>
     </div>
 
     <!-- Table Card -->
@@ -56,7 +56,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Tour number</th>
+                    <th>Package number</th>
                     <th>Driver name</th>
                     <th>Vehicle</th>
                     <th>Shipments number</th>
@@ -70,33 +70,33 @@
                 </tr>
             </thead>
             <tbody>
-                {% for tour in tours %}
+                {% for package in packages %}
                 <tr>
-                    <td>{{ tour.id }}</td>
-                    <td>{{ tour.tour_number }}</td>
-                    <td>{{ tour.driver.driver_name }}</td>
-                    <td>{{ tour.vehicle.vehicle_registration_number }}</td>
+                    <td>{{ package.id }}</td>
+                    <td>{{ package.package_number }}</td>
+                    <td>{{ package.driver.driver_name }}</td>
+                    <td>{{ package.vehicle.vehicle_registration_number }}</td>
                     <td>
-                        {% for shipment in tour.shipments.all %}
+                        {% for shipment in package.shipments.all %}
                             <span>{{ shipment.shipment_number }}</span>{% if not forloop.last %}, {% endif %}
                         {% empty %}
                             No shipments
                         {% endfor %}
                     </td>
-                    <td>{{ tour.tour_distance }}</td>
-                    <td>{{ tour.tour_duration }}</td>
-                    <td>{{ tour.tour_fuel_consumption }}</td>
-                    <td>{{ tour.get_tour_status_display }}</td>
-                    <td>{{ tour.started_at }}</td>
-                    <td>{{ tour.completed_at }}</td>
+                    <td>{{ package.package_distance }}</td>
+                    <td>{{ package.package_duration }}</td>
+                    <td>{{ package.package_fuel_consumption }}</td>
+                    <td>{{ package.get_package_status_display }}</td>
+                    <td>{{ package.started_at }}</td>
+                    <td>{{ package.completed_at }}</td>
                     <td class="actions">
-                        <button onclick="location.href='{% url 'tour_update' tour.id %}'" class="btn-edit">Edit</button>
-                        <button onclick="location.href='{% url 'tour_delete' tour.id %}'" class="btn-delete">Delete</button>
+                        <button onclick="location.href='{% url 'package_update' package.id %}'" class="btn-edit">Edit</button>
+                        <button onclick="location.href='{% url 'package_delete' package.id %}'" class="btn-delete">Delete</button>
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="12">No tours found</td>
+                    <td colspan="12">No packages found</td>
                 </tr>
                 {% endfor %}
             </tbody>

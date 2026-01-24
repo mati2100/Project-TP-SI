@@ -6,8 +6,8 @@ from Profiles.decorators import token_required
 
 @token_required
 def PackageListView(request):
-    tours = Package.objects.all()
-    return render(request, 'package_list.html', {'tours': tours})
+    packages = Package.objects.all()
+    return render(request, 'package_list.html', {'packages': packages})
 
 @token_required
 def PackageCreateView(request):
