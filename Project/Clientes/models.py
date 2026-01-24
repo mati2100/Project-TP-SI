@@ -14,7 +14,7 @@ class Client(models.Model):
     client_created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.client_lastname} {self.client_firstname} - {'Active' if self.client_actif else 'Inactive'}"
+        return f"{self.client_lastname} {self.client_firstname}"
 
     # Méthode pour récupérer les expéditions du client
     def get_shipments(self):
@@ -28,5 +28,5 @@ class Client(models.Model):
     
     # Méthode pour récupérer les réclamations du client
     def get_reclaimss(self):
-        from Reclaims.models import Reclaims
-        return Reclaims.objects.filter(client=self)
+        from Reclaims.models import Reclaim
+        return Reclaim.objects.filter(client=self)

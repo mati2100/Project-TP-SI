@@ -25,21 +25,21 @@ def PackageCreateView(request):
     })
 
 @token_required
-def PackageUpdateView(request, tour_id):
-    tour = Package.objects.get(id=tour_id)
+def PackageUpdateView(request, package_id):
+    package = Package.objects.get(id=package_id)
     
     if request.method == 'POST':
-        form = PackageForm(request.POST, instance=tour)
+        form = PackageForm(request.POST, instance=package)
         if form.is_valid():
             form.save()
             return redirect('package_list')
     else:
-        form = PackageForm(instance=tour)
+        form = PackageForm(instance=package)
     
     return render(request, 'package_form.html', {
         'form': form,
         'title': 'Update Package',
-        'tour': tour
+        'package': package
     })
 
 @token_required

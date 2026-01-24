@@ -26,19 +26,5 @@ class Shipment(models.Model):
 
 
     def __str__(self):
-        return f"Shipment #{self.shipment_number} - {self.client.client_familyname} {self.client.client_firstname}"
+        return f"Shipment #{self.shipment_tracking_number}"
     
-    def save(self, *args, **kwargs):
-        from Services.models import Destination, ServiceType
-        try:
-            destination = Destination.objects.get(id=self.destination.id)
-            service_type = ServiceType.objects.get(id=self.service_type.id)
-            self.estimated_amount = (
-                destination.base_fare +
-                (self.shipment_weight * service_type.st_weight_rate) +
-                (self.shipment_volume * service_type.st_volume_rate)
-            )
-        except:
-            pass
-        
-        super().save(*args, **kwargs)

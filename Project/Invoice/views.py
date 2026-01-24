@@ -19,9 +19,8 @@ def InvoiceCreateView(request):
             invoice = form.save(commit=False)
             invoice.save()
             form.save_m2m()
-            invoice.calculate_amounts() 
             Client.objects.filter(id=invoice.client.id).update(
-                client_due_balance=F('client_due_balance') + invoice.total_amount
+                client_due_balance=F('client_due_balance') + invoice.invoice_total_amount
             )
             return redirect('invoice_list')
     else:
@@ -38,16 +37,15 @@ def InvoiceUpdateView(request, invoice_id):
     
     if request.method == 'POST':
         
-        old_total = invoice.total_amount
+        old_total = invoice.invoice_total_amount
         form = InvoiceForm(request.POST, instance=invoice)
         if form.is_valid():
             from django.db.models import F
             from Clientes.models import Client
             invoice = form.save()
-            invoice.calculate_amounts()
-            if old_total != invoice.total_amount:
+            if old_total != invoice.invoice_total_amount:
                 Client.objects.filter(id=invoice.client.id).update(
-                    client_due_balance=F('client_due_balance') - old_total + invoice.total_amount
+                    client_due_balance=F('client_due_balance') - old_total + invoice.invoice_total_amount
                 )
             return redirect('invoice_list')
     else:
@@ -67,7 +65,7 @@ def InvoiceDeleteView(request, invoice_id):
         from Clientes.models import Client
         from django.db.models import F
         Client.objects.filter(id=invoice.client.id).update(
-            client_due_balance=F('client_due_balance') - invoice.total_amount
+            client_due_balance=F('client_due_balance') - invoice.invoice_total_amount
         )
         invoice.delete()
         return redirect('invoice_list')

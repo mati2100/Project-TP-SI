@@ -56,10 +56,12 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Name</th>
+                    <th>Driver Name</th>
+                    <th>Phone Number</th>
+                    <th>Driver Email</th>
+                    <th>Driver Address</th>
                     <th>License Number</th>
-                    <th>Phone</th>
-                    <th>License Type</th>
+                    <th>Hire Date</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
@@ -68,13 +70,15 @@
                 {% for driver in drivers %}
                 <tr>
                     <td>{{ driver.id }}</td>
-                    <td>{{ driver.driver_name }}</td>
-                    <td>{{ driver.driver_license }}</td>
-                    <td>{{ driver.driver_phone }}</td>
-                    <td>{{ driver.license_type }}</td>
+                    <td>{{ driver.driver_first_name }} {{ driver.driver_last_name }}</td>
+                    <td>{{ driver.driver_phone_number }}</td>
+                    <td>{{ driver.driver_email }}</td>
+                    <td>{{ driver.driver_address }}</td>
+                    <td>{{ driver.driver_license_number}}</td>
+                    <td>{{ driver.driver_hire_date }}</td>
                     <td>
                         {% if driver.driver_active %}
-                            {% if driver.driver_available %}
+                            {% if driver.driver_availability %}
                                 <span class="status-available">Available</span>
                             {% else %}
                                 <span class="status-busy">Busy</span>

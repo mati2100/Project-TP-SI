@@ -17,7 +17,3 @@ class Driver(models.Model):
     def __str__(self):
         return f"{self.driver_first_name} {self.driver_last_name} ({self.driver_license_number})"
    
-      # Méthode pour récupérer les tournées du chauffeur
-    def get_tours(self):
-        from Package_app.models import Package
-        return Package.objects.filter(driver=self)

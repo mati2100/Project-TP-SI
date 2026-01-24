@@ -9,4 +9,5 @@ class PackageForm(forms.ModelForm):
             'package_volume', 
             'package_description', 
             'package_value',
+            'shipment'
         ]

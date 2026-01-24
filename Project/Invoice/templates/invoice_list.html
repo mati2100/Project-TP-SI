@@ -57,36 +57,34 @@
         <table class="styled-table">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Invoice Number</th>
                     <th>Client Name</th>
                     <th>Shipments Number</th>
                     <th>Issue Date</th>
-                    <th>Due Date</th>
+                    <th>Subtotal</th>
+                    <th>Tax Amount</th>
                     <th>Total Amount</th>
-                    <th>Paid Amount</th>
                     <th>Status</th>
-                    <th>Notes</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {% for invoice in invoices %}
                 <tr>
-                    <td>{{ invoice.id }}</td>
-                    <td>{{ invoice.client_familyname }} {{ invoice.client_firstname }}</td>
+                    <td>{{ invoice.invoice_number }}</td>
+                    <td>{{ invoice.client.client_familyname }} {{ invoice.client.client_firstname }}</td>
                     <td>
                         <ul>
-                            {% for shipment in invoice.shipments.all %}
+                            {% for shipment in invoice.get_shipments %}
                                 <li>{{ shipment.shipment_number }}</li>
                             {% endfor %}
                         </ul>
                     </td>
                     <td>{{ invoice.invoice_issue_date }}</td>
-                    <td>{{ invoice.invoice_due_date }}</td>
-                    <td>{{ invoice.total_amount }}</td>
-                    <td>{{ invoice.amount_paid }}</td>
-                    <td>{{ invoice.get_invoice_status_display }}</td>
-                    <td>{{ invoice.invoice_notes }}</td>
+                    <td>{{ invoice.invoice_subtotal }}</td>
+                    <td>{{ invoice.invoice_tax_amount }}</td>
+                    <td>{{ invoice.invoice_total_amount }}</td>
+                    <td>{{ invoice.invoice_status }}</td>
                     <td class="actions">
                         <button onclick="location.href='{% url 'invoice_update' invoice.id %}'" class="btn-edit">Edit</button>
                         <button onclick="location.href='{% url 'invoice_delete' invoice.id %}'" class="btn-delete">Delete</button>

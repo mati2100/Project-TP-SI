@@ -55,17 +55,11 @@
         <table class="styled-table">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Package number</th>
-                    <th>Driver name</th>
-                    <th>Vehicle</th>
-                    <th>Shipments number</th>
-                    <th>Distance</th>
-                    <th>Duration</th>
-                    <th>Fuel consumption</th>
-                    <th>Status</th>
-                    <th>Start date</th>
-                    <th>Complete date</th>
+                    <th>Package ID</th>
+                    <th>Package Weight</th>
+                    <th>Package Volume</th>
+                    <th>Package Value</th>
+                    <th>Shipment Number</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -73,22 +67,16 @@
                 {% for package in packages %}
                 <tr>
                     <td>{{ package.id }}</td>
-                    <td>{{ package.package_number }}</td>
-                    <td>{{ package.driver.driver_name }}</td>
-                    <td>{{ package.vehicle.vehicle_registration_number }}</td>
+                    <td>{{ package.package_weight }}</td>
+                    <td>{{ package.package_volume }}</td>
+                    <td>{{ package.package_value }}</td>
                     <td>
-                        {% for shipment in package.shipments.all %}
-                            <span>{{ shipment.shipment_number }}</span>{% if not forloop.last %}, {% endif %}
-                        {% empty %}
+                        {% if package.shipment %}
+                            <span>{{ package.shipment.shipment_tracking_number }}</span>
+                        {% else %}
                             No shipments
-                        {% endfor %}
+                        {% endif %}
                     </td>
-                    <td>{{ package.package_distance }}</td>
-                    <td>{{ package.package_duration }}</td>
-                    <td>{{ package.package_fuel_consumption }}</td>
-                    <td>{{ package.get_package_status_display }}</td>
-                    <td>{{ package.started_at }}</td>
-                    <td>{{ package.completed_at }}</td>
                     <td class="actions">
                         <button onclick="location.href='{% url 'package_update' package.id %}'" class="btn-edit">Edit</button>
                         <button onclick="location.href='{% url 'package_delete' package.id %}'" class="btn-delete">Delete</button>

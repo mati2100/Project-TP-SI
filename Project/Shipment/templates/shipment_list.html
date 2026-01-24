@@ -61,11 +61,10 @@
                     <th>Driver</th>
                     <th>Vehicle</th>
                     <th>Weight / Volume</th>
-                    <th>Service type</th>
-                    <th>Estimated Delivery Date</th>
-                    <th>Delivery Date</th>
-                    <th>Status</th>
                     <th>Description</th>
+                    <th>Estimated Delivery Date</th>
+                    <th>Status</th>
+                    <th>Delivery Date</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -73,12 +72,12 @@
                 {% for shipment in shipments %}
                 <tr>
                     <td>{{ shipment.shipment_tracking_number }}</td>
-                    <td>{{ shipment.client.client_lastname }} {{ shipment.client.client_firstname }}</td>
+                    <td>{{ shipment.client.client_firstname }} {{ shipment.client.client_lastname }}</td>
                     <td>{{ shipment.destination.destination_city }},{{shipment.destination.destination_state}}, {{ shipment.destination.destination_country }}</td>
-                    <td>{{ shipment.driver.first_name }} {{ shipment.driver.last_name }}</td>
+                    <td>{{ shipment.driver.driver_first_name }} {{ shipment.driver.driver_last_name }}</td>
                     <td>{{ shipment.vehicle.vehicle_registration_number }}</td>
-                    <td>{{ shipment.shipment_weight }} kg / {{ shipment.shipment_volume }} \(\text{m}^{3}\)</td>
-                    <td>{{ shipment.shipment_description }}</td>
+                    <td>{{ shipment.shipment_weight }} kg / {{ shipment.shipment_volume }} m³</td>
+                    <td>{{ shipment.shipment_notes }}</td>
                     <td>{{ shipment.shipment_expected_delivery_date }}</td>
                     <td>{{ shipment.shipment_status }}</td>
                     <td>{{ shipment.shipment_delivery_date }}</td>

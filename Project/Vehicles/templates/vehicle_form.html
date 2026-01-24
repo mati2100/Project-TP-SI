@@ -14,45 +14,18 @@
     <form method="POST">
         {% csrf_token %}
 
-        <div class="form-field">
-            <label>Registration Number</label>
-            {{ form.vehicle_registration_number }}
-            {% if form.vehicle_registration_number.errors %}
-                <div class="form-errors">
-                    {{ form.vehicle_registration_number.errors }}
-                </div>
-            {% endif %}
-        </div>
+        {% for field in form %}
+            <div class="form-field">
+                {{ field.label_tag }}
+                {{ field }}
 
-        <div class="form-field">
-            <label>Vehicle Type</label>
-            {{ form.vehicle_type }}
-        </div>
-
-        <div class="form-field">
-            <label>Model</label>
-            {{ form.vehicle_model }}
-        </div>
-
-        <div class="form-field">
-            <label>Year</label>
-            {{ form.vehicle_year }}
-        </div>
-
-        <div class="form-field">
-            <label>Capacity (kg)</label>
-            {{ form.vehicle_capacity }}
-        </div>
-
-        <div class="form-field">
-            <label>Status</label>
-            {{ form.vehicle_status }}
-        </div>
-
-        <div class="form-field">
-            <label>Active</label>
-            {{ form.vehicle_active }}
-        </div>
+                {% if field.errors %}
+                    <div class="form-errors">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
 
         <div class="form-actions">
             <button type="submit">Save Vehicle</button>

@@ -71,10 +71,7 @@ def addagent_view(request):
                 # Save the agent (form.save() handles password hashing)
                 agent = form.save()
                 
-                return render(request, 'login.html', {
-                    'form': LoginForm(),
-                    'success_message': 'Account created successfully. Please log in.'
-                })
+                return redirect('login')
             except Exception as e:
                 form.add_error(None, f"Error creating account: {str(e)}")
     else:
