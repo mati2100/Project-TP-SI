@@ -128,15 +128,16 @@
             <thead>
                 <tr>
                 <th>ID</th>
-                <th>Client name</th>
-                <th>Shipment number</th>
-                <th>Invoice number</th>
-                <th>Reclamation number</th>
-                <th>Category</th>
-                <th>Reclamation date</th>
+                <th>Reclaim Number</th>
+                <th>Reclaim Type</th>
                 <th>Description</th>
-                <th>Status</th>
                 <th>Priority</th>
+                <th>Status</th>
+                <th>Reclaim Date</th>
+                <th>Resolution Date</th>
+                <th>Agent Assigned</th>
+                <th>Packages Affected</th>
+                <th>Invoices Affected</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -144,15 +145,16 @@
             {% for reclaims in reclaims %}
             <tr>
                 <td>{{ reclaims.id }}</td>
-                <td>{{ reclaims.client.client_familyname }} {{ reclaims.client.client_firstname }}</td>
-                <td>{{ reclaims.shipment.shipment_number }}</td>
-                <td>{{ reclaims.invoice.invoice_number }}</td>
-                <td>{{ reclaims.reclaims_number }}</td>
-                <td>{{ reclaims.get_reclaims_category_display }}</td>
-                <td>{{ reclaims.reclaims_date }}</td>
-                <td>{{ reclaims.reclaims_description }}</td>
-                <td>{{ reclaims.get_reclaims_status_display }}</td>
-                <td>{{ reclaims.get_reclaims_priority_display }}</td>
+                <td>{{ reclaims.reclaim_number }}</td>
+                <td>{{ reclaims.reclaim_type }}</td>
+                <td>{{ reclaims.reclaim_description }}</td>
+                <td>{{ reclaims.reclaim_priority }}</td>
+                <td>{{ reclaims.reclaim_status }}</td>
+                <td>{{ reclaims.reclaim_date }}</td>
+                <td>{{ reclaims.reclaim_resolution_date }}</td>
+                <td>{{ reclaims.agent }}</td>
+                <td>{{ reclaims.packages_affected |default:"None" }}</td>
+                <td>{{ reclaims.invoices_affected |default:"None" }}</td>
                 <td class="actions">
                         <button onclick="location.href='{% url 'reclaims_update' reclaims.id %}'" class="btn-edit">Edit</button>
                         <button onclick="location.href='{% url 'reclaims_delete' reclaims.id %}'" class="btn-delete">Delete</button>

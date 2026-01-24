@@ -23,7 +23,7 @@ class Agent(models.Model):
     agent_created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.agent_first_name + " " + self.agent_last_name + " (" + self.agent_email + ")"
+        return self.agent_first_name + " " + self.agent_last_name + " (" + self.agent_username + ")"
     
     #untouched classes below
 class PasswordResetCode(models.Model):

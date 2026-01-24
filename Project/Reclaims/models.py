@@ -22,6 +22,12 @@ class Reclaim(models.Model):
     def __str__(self):
         return f"Reclaim #{self.reclaim_number} - {self.client.client_familyname} {self.client.client_firstname}"
     
+    def packages_affected(self):
+        return ", ".join([str(rp.package) for rp in self.reclaim_packages_set.all()])
+    
+    def invoices_affected(self):
+        return ", ".join([str(ri.invoice) for ri in self.reclaim_invoice_set.all()])
+    
 class Reclaim_Packages(models.Model):
     
     reclaim_packages_created_at = models.DateTimeField(auto_now_add=True)
