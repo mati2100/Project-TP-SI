@@ -74,7 +74,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for reclaims in reclaimss %}
+            {% for reclaims in reclaims %}
             <tr>
                 <td>{{ reclaims.id }}</td>
                 <td>{{ reclaims.client.client_familyname }} {{ reclaims.client.client_firstname }}</td>
@@ -93,7 +93,7 @@
             </tr>
             {% empty %}
             <tr>
-                <td colspan="7">No reclaimss found</td>
+                <td colspan="7">No reclaims found</td>
             </tr>
             {% endfor %}
         </tbody>
