@@ -45,51 +45,194 @@
   </div>
 
 </div>
-
-
-<div class="card chart-card">
-  <div class="chart-header">
-    <h3>Shipments Over Time</h3>
-    <span class="chart-subtitle">Last 30 days</span>
-  </div>
-<div class="chart-wrapper">
-  <canvas id="shipmentsChart"></canvas>
-</div>
+<!--                                                              -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-  const ctx = document.getElementById('shipmentsChart').getContext('2d');
+<style>
+  body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 20px;
+    background: #f5f6fa;
+    color: #2f3640;
+  }
+  h3 {
+    margin: 0 0 10px;
+    font-weight: 600;
+  }
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  table th, table td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+  canvas {
+    width: 100% !important;
+    height: 250px !important;
+  }
+</style>
+</head>
+<body>
 
-  const shipmentsChart = new Chart(ctx, {
+<h1>Dashboard</h1>
+
+<div class="dashboard-grid">
+
+  <!-- Shipments Over 12 Months -->
+  <div class="card">
+    <h3>Shipments Over 12 Months</h3>
+    <canvas id="shipmentsChart"></canvas>
+  </div>
+
+  <!-- Monthly Revenue -->
+  <div class="card">
+    <h3>Monthly Revenue (€)</h3>
+    <canvas id="revenueChart"></canvas>
+  </div>
+
+  <!-- Top Clients -->
+  <div class="card">
+    <h3>Top Clients</h3>
+    <table>
+      <tr>
+        <th>Client</th><th>Shipments</th><th>Revenue</th>
+      </tr>
+      <tr><td>Client A</td><td>120</td><td>€15,000</td></tr>
+      <tr><td>Client B</td><td>95</td><td>€12,500</td></tr>
+      <tr><td>Client C</td><td>80</td><td>€10,000</td></tr>
+      <tr><td>Client D</td><td>60</td><td>€8,000</td></tr>
+      <tr><td>Client E</td><td>50</td><td>€6,500</td></tr>
+    </table>
+  </div>
+
+  <!-- Popular Destinations -->
+  <div class="card">
+    <h3>Popular Destinations</h3>
+    <canvas id="destinationsChart"></canvas>
+  </div>
+
+  <!-- Incidents by Zone -->
+  <div class="card">
+    <h3>Incidents by Zone</h3>
+    <canvas id="incidentsZoneChart"></canvas>
+  </div>
+
+  <!-- Delivery Rounds -->
+  <div class="card">
+    <h3>Delivery Rounds Over 12 Months</h3>
+    <canvas id="roundsChart"></canvas>
+  </div>
+
+  <!-- Delivery Success Rate -->
+  <div class="card">
+    <h3>Delivery Success Rate</h3>
+    <canvas id="successRateChart"></canvas>
+  </div>
+
+  <!-- Top Drivers -->
+  <div class="card">
+    <h3>Top Drivers</h3>
+    <table>
+      <tr><th>Driver</th><th>Deliveries</th><th>Success Rate</th></tr>
+      <tr><td>Ali</td><td>180</td><td>98%</td></tr>
+      <tr><td>Karim</td><td>150</td><td>95%</td></tr>
+      <tr><td>Samir</td><td>140</td><td>92%</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<script>
+  // Dummy data arrays
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  const shipmentsData = [100, 90, 155, 110, 95, 95, 140, 105, 102, 135, 150, 110];
+  const revenueData = [55, 60, 50, 70, 72, 62, 65, 68, 78, 70, 90, 80];
+  const destinationsData = [50, 40, 30, 25, 20];
+  const zonesData = [8,5,3,2];
+  const roundsData = [5,7,6,7,5,5,6,7,8,6,9,7];
+  const successData = [75,15,10]; // Delivered, Late, Failed
+
+  // Shipments Line Chart
+  new Chart(document.getElementById('shipmentsChart').getContext('2d'), {
     type: 'line',
     data: {
-      labels: {{ chart_labels|safe }},
+      labels: months,
       datasets: [{
         label: 'Shipments',
-        data: {{ chart_data|safe }},
+        data: shipmentsData,
         fill: true,
-        tension: 0.4,
-        borderWidth: 2
+        borderColor: '#3498db',
+        backgroundColor: 'rgba(52,152,219,0.2)',
+        tension: 0.4
       }]
     },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          display: false
-        }
-      },
-      scales: {
-        x: {
-          grid: {
-            display: false
-          }
-        },
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
+    options: { responsive:true, plugins:{legend:{display:false}} }
+  });
+
+  // Revenue Bar Chart
+  new Chart(document.getElementById('revenueChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: months,
+      datasets: [{ label:'Revenue', data: revenueData, backgroundColor:'#2980b9' }]
+    },
+    options:{ responsive:true, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true}} }
+  });
+
+  // Popular Destinations Horizontal Bar
+  new Chart(document.getElementById('destinationsChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ["Paris","Lyon","Marseille","Bordeaux","Toulouse"],
+      datasets:[{ label:'Shipments', data: destinationsData, backgroundColor:'#1abc9c' }]
+    },
+    options:{ indexAxis:'y', responsive:true, plugins:{legend:{display:false}} }
+  });
+
+  // Incidents by Zone
+  new Chart(document.getElementById('incidentsZoneChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels:["Zone Nord","Zone Est","Zone Sud","Zone Ouest"],
+      datasets:[{ label:'Incidents', data: zonesData, backgroundColor:'#e74c3c' }]
+    },
+    options:{ indexAxis:'y', responsive:true, plugins:{legend:{display:false}} }
+  });
+
+  // Delivery Rounds Line Chart
+  new Chart(document.getElementById('roundsChart').getContext('2d'), {
+    type:'line',
+    data:{
+      labels:months,
+      datasets:[{ label:'Rounds', data: roundsData, borderColor:'#8e44ad', fill:false, tension:0.4 }]
+    },
+    options:{ responsive:true, plugins:{legend:{display:false}} }
+  });
+
+  // Delivery Success Rate Doughnut
+  new Chart(document.getElementById('successRateChart').getContext('2d'), {
+    type:'doughnut',
+    data:{
+      labels:['Delivered','Late','Failed'],
+      datasets:[{ data:successData, backgroundColor:['#2ecc71','#f1c40f','#e74c3c'] }]
+    },
+    options:{ responsive:true, plugins:{legend:{position:'bottom'}} }
   });
 </script>
 </div>
+
 {% endblock %}

@@ -17,6 +17,10 @@ def index(request):
     clients_count = Client.objects.count()
     incidents_count = Incident.objects.count()
     reclaims_count = Reclaim.objects.count()
+    delivery_data = [Shipment.objects.filter(shipment_status='delivered').count()
+                     ,Shipment.objects.filter(shipment_status='delayed').count()
+                     ,Shipment.objects.filter(shipment_status='in_transit').count()
+                     ,Shipment.objects.filter(shipment_status='cancelled').count()]
 
     if shipments_count:
         success_rate = round(100 - (reclaims_count / shipments_count) * 100)
@@ -31,10 +35,8 @@ def index(request):
         .annotate(count=Count('id'))
         .order_by('day')
     )
-
     labels = []
     data = []
-
     for item in shipments_per_day:
         labels.append(item['day'])
         data.append(item['count'])
@@ -45,7 +47,9 @@ def index(request):
         'shipments_count': shipments_count,
         'clients_count': clients_count,
         'incidents_count': incidents_count,
+        'reclaims_count': reclaims_count,
         'success_rate': success_rate,
+        'delivery_rate': delivery_data,
     }
 
     return render(request, "dashboard/index.html", context)
