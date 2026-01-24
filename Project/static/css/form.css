@@ -42,7 +42,7 @@ body {
     margin-bottom: 6px;
     font-size: 14px;
     font-weight: 600;
-    color: #828282;
+    color: #212121;
 }
 
 /* ---------- Inputs ---------- */
@@ -55,7 +55,6 @@ body {
     border-radius: 5px;
     border: 1px solid #ccc;
     box-sizing: border-box;
-    color: #929292;
 }
 
 /* ---------- Errors ---------- */

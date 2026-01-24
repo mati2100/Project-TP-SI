@@ -52,8 +52,44 @@
     <h3>Shipments Over Time</h3>
     <span class="chart-subtitle">Last 30 days</span>
   </div>
-
+<div class="chart-wrapper">
   <canvas id="shipmentsChart"></canvas>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('shipmentsChart').getContext('2d');
 
+  const shipmentsChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: {{ chart_labels|safe }},
+      datasets: [{
+        label: 'Shipments',
+        data: {{ chart_data|safe }},
+        fill: true,
+        tension: 0.4,
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
+      scales: {
+        x: {
+          grid: {
+            display: false
+          }
+        },
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+</div>
 {% endblock %}
