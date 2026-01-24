@@ -21,12 +21,20 @@ class Invoice(models.Model):
 
     
     def __str__(self):
-        return f"Invoice #{self.invoice_number} - {self.client.client_familyname} {self.client.client_firstname}"
+        return f"Invoice #{self.invoice_number} - {self.client.client_lastname} {self.client.client_firstname}"
     
+    def get_shipments(self):
+        return Shipment.objects.filter(invoice=self)
+
     # Override save method to calculate total amount needs update
     def save(self, *args, **kwargs):
         self.invoice_tax_amount = self.invoice_subtotal * Decimal('0.19')  # Assuming a fixed tax rate of 19%
         self.invoice_total_amount = self.invoice_subtotal + self.invoice_tax_amount
+
+    # Add Invoice amount to client balance
+        self.client.client_due_balance = F('client_due_balance') + self.invoice_total_amount
+        self.client.save(update_fields=['client_due_balance'])
+
         super().save(*args, **kwargs)
 
     def get_shipments(self):
