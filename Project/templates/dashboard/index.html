@@ -103,33 +103,6 @@
     <canvas id="revenueChart"></canvas>
   </div>
 
-  <!-- Top Clients -->
-  <div class="card">
-    <h3>Top Clients</h3>
-    <table>
-      <tr>
-        <th>Client</th><th>Shipments</th><th>Revenue</th>
-      </tr>
-      <tr><td>Client A</td><td>120</td><td>€15,000</td></tr>
-      <tr><td>Client B</td><td>95</td><td>€12,500</td></tr>
-      <tr><td>Client C</td><td>80</td><td>€10,000</td></tr>
-      <tr><td>Client D</td><td>60</td><td>€8,000</td></tr>
-      <tr><td>Client E</td><td>50</td><td>€6,500</td></tr>
-    </table>
-  </div>
-
-  <!-- Popular Destinations -->
-  <div class="card">
-    <h3>Popular Destinations</h3>
-    <canvas id="destinationsChart"></canvas>
-  </div>
-
-  <!-- Incidents by Zone -->
-  <div class="card">
-    <h3>Incidents by Zone</h3>
-    <canvas id="incidentsZoneChart"></canvas>
-  </div>
-
   <!-- Packages Delivered -->
   <div class="card">
     <h3>Packages Delivered Over 12 Months</h3>
@@ -142,27 +115,12 @@
     <canvas id="successRateChart"></canvas>
   </div>
 
-  <!-- Top Drivers -->
-  <div class="card">
-    <h3>Top Drivers</h3>
-    <table>
-      <tr><th>Driver</th><th>Deliveries</th><th>Success Rate</th></tr>
-      <tr><td>Ali</td><td>180</td><td>98%</td></tr>
-      <tr><td>Karim</td><td>150</td><td>95%</td></tr>
-      <tr><td>Samir</td><td>140</td><td>92%</td></tr>
-    </table>
-  </div>
-
-</div>
-
 <script>
-  // Dummy data arrays
+  //data arrays
   const months = {{ months|safe }};
 
   const shipmentsData = {{ shipments_data|safe }};
   const revenueData = {{ payments_data|safe }};
-  const destinationsData = [50, 40, 30, 25, 20];
-  const zonesData = [8,5,3,2];
   const packagesData = {{ packages_data|safe }};
   const successData = {{ delivery_rate|safe }};
 
@@ -191,26 +149,6 @@
       datasets: [{ label:'Revenue', data: revenueData, backgroundColor:'#2980b9' }]
     },
     options:{ responsive:true, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true}} }
-  });
-
-  // Popular Destinations Horizontal Bar
-  new Chart(document.getElementById('destinationsChart').getContext('2d'), {
-    type: 'bar',
-    data: {
-      labels: ["Paris","Lyon","Marseille","Bordeaux","Toulouse"],
-      datasets:[{ label:'Shipments', data: destinationsData, backgroundColor:'#1abc9c' }]
-    },
-    options:{ indexAxis:'y', responsive:true, plugins:{legend:{display:false}} }
-  });
-
-  // Incidents by Zone
-  new Chart(document.getElementById('incidentsZoneChart').getContext('2d'), {
-    type: 'bar',
-    data: {
-      labels:["Zone Nord","Zone Est","Zone Sud","Zone Ouest"],
-      datasets:[{ label:'Incidents', data: zonesData, backgroundColor:'#e74c3c' }]
-    },
-    options:{ indexAxis:'y', responsive:true, plugins:{legend:{display:false}} }
   });
 
   // Packages Line Chart
