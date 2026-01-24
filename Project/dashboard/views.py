@@ -3,12 +3,25 @@ from django.db.models import Count
 from django.utils import timezone
 from datetime import timedelta
 from Profiles.decorators import token_required
+from Incident.models import Incident
+from Reclaims.models import Reclaim
 from Shipment.models import Shipment
+from Clientes.models import Client
 
 @token_required
 def index(request):
     today = timezone.now().date()
     start_date = today - timedelta(days=29)
+
+    shipments_count = Shipment.objects.count()
+    clients_count = Client.objects.count()
+    incidents_count = Incident.objects.count()
+    reclaims_count = Reclaim.objects.count()
+
+    if shipments_count:
+        success_rate = round(100 - (reclaims_count / shipments_count) * 100)
+    else:
+        success_rate = 100
 
     shipments_per_day = (
         Shipment.objects
@@ -28,7 +41,11 @@ def index(request):
 
     context = {
         'chart_labels': labels,
-        'chart_data': data
+        'chart_data': data,
+        'shipments_count': shipments_count,
+        'clients_count': clients_count,
+        'incidents_count': incidents_count,
+        'success_rate': success_rate,
     }
 
     return render(request, "dashboard/index.html", context)
