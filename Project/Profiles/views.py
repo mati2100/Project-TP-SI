@@ -6,6 +6,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from Profiles.decorators import token_required
+from django.utils import timezone
 
 def login_view(request):
     if request.method == 'POST':
@@ -30,10 +31,9 @@ def login_view(request):
                     # Create at refreche fi koul login 
                     token, created = AgentToken.objects.update_or_create(
                         agent=agent,
-                        defaults={}
+                         defaults={'created_at': timezone.now()}
                     )    
                     request.session['auth_token'] = str(token.token)
-                    request.session['agent_id'] = agent.id
                     
                     # redirect to dashboard
                     return redirect('dashboard:index')
