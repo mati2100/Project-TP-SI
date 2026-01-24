@@ -5,6 +5,8 @@ from .forms import LoginForm, AddAgentForm, ForgotPasswordForm, VerifyCodeForm, 
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from Profiles.decorators import token_required
+from django.utils import timezone
 
 def login_view(request):
     if request.method == 'POST':
@@ -26,8 +28,11 @@ def login_view(request):
                     request.session['agent_id'] = agent.id
                     request.session['agent_name'] = f"{agent.agent_first_name} {agent.agent_last_name}"
                     
-                    # Create or get token
-                    token, created = AgentToken.objects.get_or_create(agent=agent)
+                    # Create at refreche fi koul login 
+                    token, created = AgentToken.objects.update_or_create(
+                        agent=agent,
+                         defaults={'created_at': timezone.now()}
+                    )    
                     request.session['auth_token'] = str(token.token)
                     
                     # redirect to dashboard
@@ -49,6 +54,7 @@ def logout_view(request):
     request.session.flush()
     return redirect('login')
 
+@token_required
 def home_view(request):
     if 'agent_id' not in request.session:
         return redirect('login')

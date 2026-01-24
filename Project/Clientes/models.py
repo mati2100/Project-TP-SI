@@ -27,6 +27,6 @@ class Client(models.Model):
         return Invoice.objects.filter(client=self)
     
     # Méthode pour récupérer les réclamations du client
-    def get_reclaimss(self):
+    def get_reclaims(self):
         from Reclaims.models import Reclaim
         return Reclaim.objects.filter(client=self)
