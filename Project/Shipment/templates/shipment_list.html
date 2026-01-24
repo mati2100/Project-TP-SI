@@ -55,37 +55,32 @@
         <table class="styled-table">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Client name</th>
-                    <th>Shipment number</th>
-                    <th>Service type</th>
+                    <th>Tracking Number</th>
+                    <th>Client Name</th>
                     <th>Destination</th>
                     <th>Driver</th>
                     <th>Vehicle</th>
-                    <th>Weight</th>
-                    <th>Volume</th>
-                    <th>Description</th>
+                    <th>Weight / Volume</th>
+                    <th>Service type</th>
+                    <th>Estimated Delivery Date</th>
+                    <th>Delivery Date</th>
                     <th>Status</th>
-                    <th>Amount</th>
-                    <th>Delivery date</th>
+                    <th>Description</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {% for shipment in shipments %}
                 <tr>
-                    <td>{{ shipment.id }}</td>
-                    <td>{{ shipment.client.client_familyname }} {{ shipment.client.client_firstname }}</td>
-                    <td>{{ shipment.shipment_number }}</td>
-                    <td>{{ shipment.service_type.st_name }}</td>
-                    <td>{{ shipment.destination.dest_city }}, {{ shipment.destination.dest_country }}</td>
-                    <td>{{ shipment.driver.driver_name }}</td>
+                    <td>{{ shipment.shipment_tracking_number }}</td>
+                    <td>{{ shipment.client.client_lastname }} {{ shipment.client.client_firstname }}</td>
+                    <td>{{ shipment.destination.destination_city }},{{shipment.destination.destination_state}}, {{ shipment.destination.destination_country }}</td>
+                    <td>{{ shipment.driver.first_name }} {{ shipment.driver.last_name }}</td>
                     <td>{{ shipment.vehicle.vehicle_registration_number }}</td>
-                    <td>{{ shipment.shipment_weight }}</td>
-                    <td>{{ shipment.shipment_volume }}</td>
+                    <td>{{ shipment.shipment_weight }} kg / {{ shipment.shipment_volume }} \(\text{m}^{3}\)</td>
                     <td>{{ shipment.shipment_description }}</td>
-                    <td>{{ shipment.get_shipment_status_display }}</td>
-                    <td>{{ shipment.estimated_amount }}</td>
+                    <td>{{ shipment.shipment_expected_delivery_date }}</td>
+                    <td>{{ shipment.shipment_status }}</td>
                     <td>{{ shipment.shipment_delivery_date }}</td>
                     <td class="actions">
                         <button onclick="location.href='{% url 'shipment_update' shipment.id %}'" class="btn-edit">Edit</button>

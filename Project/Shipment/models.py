@@ -6,8 +6,8 @@ class Shipment(models.Model):
     
     shipment_tracking_number = models.CharField(max_length=30, unique=True, db_index=True)
 
-    shipment_total_weight = models.DecimalField(max_digits=10, decimal_places=2)  # en kg
-    shipment_total_volume = models.DecimalField(max_digits=10, decimal_places=2)  # en m³
+    shipment_total_weight = models.DecimalField(max_digits=10, decimal_places=2) 
+    shipment_total_volume = models.DecimalField(max_digits=10, decimal_places=2)  
 
     shipment_status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='pending')
     shipment_expected_delivery_date = models.DateField(null=True, blank=True)
