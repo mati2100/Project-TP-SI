@@ -130,10 +130,10 @@
     <canvas id="incidentsZoneChart"></canvas>
   </div>
 
-  <!-- Delivery Rounds -->
+  <!-- Packages Delivered -->
   <div class="card">
-    <h3>Delivery Rounds Over 12 Months</h3>
-    <canvas id="roundsChart"></canvas>
+    <h3>Packages Delivered Over 12 Months</h3>
+    <canvas id="packagesChart"></canvas>
   </div>
 
   <!-- Delivery Success Rate -->
@@ -157,14 +157,14 @@
 
 <script>
   // Dummy data arrays
-  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const months = {{ months|safe }};
 
-  const shipmentsData = [100, 90, 155, 110, 95, 95, 140, 105, 102, 135, 150, 110];
-  const revenueData = [55, 60, 50, 70, 72, 62, 65, 68, 78, 70, 90, 80];
+  const shipmentsData = {{ shipments_data|safe }};
+  const revenueData = {{ payments_data|safe }};
   const destinationsData = [50, 40, 30, 25, 20];
   const zonesData = [8,5,3,2];
-  const roundsData = [5,7,6,7,5,5,6,7,8,6,9,7];
-  const successData = [75,15,10]; // Delivered, Late, Failed
+  const packagesData = {{ packages_data|safe }};
+  const successData = {{ delivery_rate|safe }};
 
   // Shipments Line Chart
   new Chart(document.getElementById('shipmentsChart').getContext('2d'), {
@@ -213,12 +213,12 @@
     options:{ indexAxis:'y', responsive:true, plugins:{legend:{display:false}} }
   });
 
-  // Delivery Rounds Line Chart
-  new Chart(document.getElementById('roundsChart').getContext('2d'), {
+  // Packages Line Chart
+  new Chart(document.getElementById('packagesChart').getContext('2d'), {
     type:'line',
     data:{
       labels:months,
-      datasets:[{ label:'Rounds', data: roundsData, borderColor:'#8e44ad', fill:false, tension:0.4 }]
+      datasets:[{ label:'Packages', data: packagesData, borderColor:'#8e44ad', fill:false, tension:0.4 }]
     },
     options:{ responsive:true, plugins:{legend:{display:false}} }
   });
@@ -227,8 +227,8 @@
   new Chart(document.getElementById('successRateChart').getContext('2d'), {
     type:'doughnut',
     data:{
-      labels:['Delivered','Late','Failed'],
-      datasets:[{ data:successData, backgroundColor:['#2ecc71','#f1c40f','#e74c3c'] }]
+      labels:['Pending','In Transit','Sorting Center','Out for Delivery','Delivered','Failed'],
+      datasets:[{ data:successData, backgroundColor:['#37bbc2','#3498db','#9b59b6','#f1c40f','#2ecc71','#e74c3c'] }]
     },
     options:{ responsive:true, plugins:{legend:{position:'bottom'}} }
   });
