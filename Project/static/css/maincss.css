@@ -44,6 +44,7 @@ body {
   border-bottom: 1px solid #a4a8b1;
   padding-bottom: 20px;
   color: var(--text);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.21);
 }
 
 .sidebar-nav a {
@@ -99,9 +100,11 @@ body {
 }
 
 .topbar .account {
-  font-weight: 500;
-  font-size: large;
-  color: rgb(100, 100, 100)
+    position: relative;
+    display: inline-block;
+    font-weight: 500;
+    font-size: large;
+    color: rgb(100, 100, 100);
 }
 
 .account-btn {
@@ -114,6 +117,7 @@ body {
     cursor: pointer;
     color: var(--text-main);
     font-size: 20px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 /* ===============================
@@ -122,7 +126,7 @@ body {
 .account-menu {
     position: absolute;
     left: auto;
-    top: 90px;
+    top: 50px;
     width: 200px;
     background: white;
     border-radius: 8px;
@@ -190,12 +194,10 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   padding: 24px;
   border-radius: 20px;
   color: white;
-
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.251);
 }
 
 .stat-card p {
@@ -238,6 +240,7 @@ body {
   padding: 24px;
   border-radius: 18px;
   margin-left: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.11);
 }
 
 .chart-header {
@@ -250,6 +253,7 @@ body {
 .chart-header h3 {
   font-size: 16px;
   font-weight: 600;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .chart-subtitle {
