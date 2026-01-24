@@ -1,6 +1,6 @@
 /* ---------- Background ---------- */
 body {
-    background-image: url("../images/Background.avif");
+    background-image: url("../image/Background.avif");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -42,7 +42,7 @@ body {
     margin-bottom: 6px;
     font-size: 14px;
     font-weight: 600;
-    color: #444;
+    color: #828282;
 }
 
 /* ---------- Inputs ---------- */
@@ -55,6 +55,7 @@ body {
     border-radius: 5px;
     border: 1px solid #ccc;
     box-sizing: border-box;
+    color: #929292;
 }
 
 /* ---------- Errors ---------- */

@@ -18,7 +18,7 @@
     <div class="topbar-left">
         <div class="home-sidebar-wrapper">
             <a href="{% url 'dashboard:index' %}" class="home-link">Home</a>
-
+            <i class="fa-solid fa-chevron-right" style="color: #bcbcbc;"></i>
             <aside class="sidebar hover-sidebar">
                 <h1 class="sidebar-title">LOGISTICS</h1>
 
@@ -78,6 +78,7 @@
     <div class="topbar-right">
 <div class="account">
     <button class="account-btn">
+        <i class="fa-solid fa-chevron-down" style="color: #bcbcbc;"></i>
         {{ request.session.agent_name|default:"Account" }}
     </button>
 
