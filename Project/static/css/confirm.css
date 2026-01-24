@@ -9,7 +9,7 @@ body {
 
 /* ---------- Confirmation box ---------- */
 .confirm-box {
-    width: 380px;
+    width: 40%;
     margin: 120px auto;
     padding: 25px;
     background-color: #f9f9f9;

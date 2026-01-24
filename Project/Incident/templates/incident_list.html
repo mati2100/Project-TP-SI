@@ -122,16 +122,13 @@
         <table class="styled-table">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Shipment number</th>
-                    <th>Tour number</th>
+                    <th>Incident ID</th>
+                    <th>Shipment Tracking Number</th>
+                    <th>Client Name</th>
+                    <th>Driver Name</th>
                     <th>Type</th>
                     <th>Severity</th>
                     <th>Description</th>
-                    <th>Location</th>
-                    <th>Incident Date</th>
-                    <th>Is Resolved</th>
-                    <th>Resolution Note</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -139,21 +136,12 @@
                 {% for incident in incidents %}
                 <tr>
                     <td>{{ incident.id }}</td>
-                    <td>{{ incident.shipment.shipment_number }}</td>
-                    <td>{{ incident.tour.tour_number }}</td>
+                    <td>{{ incident.shipment.shipment_tracking_number }}</td>
+                    <td>{{ incident.shipment.client.client_lastname }} {{ incident.shipment.client.client_firstname }}</td>
+                    <td>{{ incident.shipment.driver.driver_first_name }} {{ incident.shipment.driver.driver_last_name }}</td>
                     <td>{{ incident.get_incident_type_display }}</td>
                     <td>{{ incident.get_incident_severity_display }}</td>
                     <td>{{ incident.incident_description }}</td>
-                    <td>{{ incident.incident_location }}</td>
-                    <td>{{ incident.incident_date }}</td>
-                    <td>
-                        {% if incident.is_resolved %}
-                            <span class="status-available">Yes</span>
-                        {% else %}
-                            <span class="status-busy">No</span>
-                        {% endif %}
-                    </td>
-                    <td>{{ incident.resolution_notes }}</td>
                     <td class="actions">
                         <button onclick="location.href='{% url 'incident_update' incident.id %}'" class="btn-edit">Edit</button>
                         <button onclick="location.href='{% url 'incident_delete' incident.id %}'" class="btn-delete">Delete</button>

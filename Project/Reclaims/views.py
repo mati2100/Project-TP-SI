@@ -34,7 +34,7 @@ def ReclaimCreateView(request):
         form = ReclaimForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('Reclaim_list')
+            return redirect('reclaims_list')
     else:
         form = ReclaimForm()
     
@@ -50,7 +50,7 @@ def ReclaimUpdateView(request, reclaim_id):
         form = ReclaimForm(request.POST, instance=reclaim)
         if form.is_valid():
             form.save()
-            return redirect('Reclaim_list')
+            return redirect('reclaims_list')
     else:
         form = ReclaimForm(instance=reclaim)
     
@@ -65,6 +65,6 @@ def ReclaimDeleteView(request, reclaim_id):
     
     if request.method == 'POST':
         reclaim.delete()
-        return redirect('Reclaim_list')
+        return redirect('reclaims_list')
     
     return render(request, 'Reclaim_confirm_delete.html', {'reclaim': reclaim})

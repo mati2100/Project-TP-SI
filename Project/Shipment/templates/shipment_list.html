@@ -140,10 +140,10 @@
                 <tr>
                     <td>{{ shipment.shipment_tracking_number }}</td>
                     <td>{{ shipment.client.client_firstname }} {{ shipment.client.client_lastname }}</td>
-                    <td>{{ shipment.destination.destination_city }},{{shipment.destination.destination_state}}, {{ shipment.destination.destination_country }}</td>
+                    <td>{{ shipment.destination.destination_city }} {{ shipment.destination.destination_state }} {{ shipment.destination.destination_country |default:"No Destination Selected" }}</td>
                     <td>{{ shipment.driver.driver_first_name }} {{ shipment.driver.driver_last_name }}</td>
                     <td>{{ shipment.vehicle.vehicle_registration_number }}</td>
-                    <td>{{ shipment.shipment_weight }} kg / {{ shipment.shipment_volume }} m³</td>
+                    <td>{{ shipment.shipment_total_weight }} kg / {{ shipment.shipment_total_volume }} m³</td>
                     <td>{{ shipment.shipment_notes }}</td>
                     <td>{{ shipment.shipment_expected_delivery_date }}</td>
                     <td>{{ shipment.shipment_status }}</td>
