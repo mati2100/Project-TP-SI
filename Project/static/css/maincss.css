@@ -1,0 +1,285 @@
+/* =========================
+   VARIABLES
+========================= */
+:root {
+  --white: #ffffff;
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --danger: #ef4444;
+}
+
+/* =========================
+   BASE
+========================= */
+body {
+  margin: 0;
+  font-family: 'Inter', 'Open Sans', sans-serif;
+  background-color: #f5f7fb;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 190px;
+  height: 100vh;
+
+  background: linear-gradient(180deg, #f8faff, #eef2ff);
+  border-right: 1px solid var(--border);
+  padding: 20px;
+
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.06);
+  z-index: 100;
+}
+
+.sidebar-title {
+  font-weight: 700;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #a4a8b1;
+  padding-bottom: 20px;
+  color: var(--text);
+}
+
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 7px 14px;
+  margin-bottom: 6px;
+
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 500;
+  color: #334155;
+
+  transition: all 0.2s ease;
+}
+
+.sidebar-nav a i {
+  width: 20px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.sidebar-nav a:hover {
+  background: linear-gradient(135deg, #e0e7ff, #f0abfc);
+  color: var(--primary);
+}
+
+.sidebar-nav a.active {
+  background: linear-gradient(135deg, #4facfe, #a18cd1);
+  color: white;
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.35);
+}
+
+/* =========================
+   MAIN LAYOUT
+========================= */
+.main {
+  margin-left: 190px;
+  min-height: 100vh;
+}
+
+/* =========================
+   TOPBAR
+========================= */
+.topbar {
+  background: var(--white);
+  padding: 16px 32px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+  margin-left: 20px;
+}
+
+.topbar .account {
+  font-weight: 500;
+  font-size: large;
+  color: rgb(100, 100, 100)
+}
+
+.account-btn {
+    background: none;
+    border: none;
+    border-left: 1px solid var(--border-dark);
+    margin: 0;
+    padding: 10px 20px;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text-main);
+    font-size: 20px;
+}
+
+/* ===============================
+   DROPDOWN
+================================ */
+.account-menu {
+    position: absolute;
+    left: auto;
+    top: 90px;
+    width: 200px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    padding: 15px;
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: all 0.2s ease;
+}
+
+.account:hover .account-menu,
+.account:focus-within .account-menu {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.account-menu p {
+    margin: 0 0 10px;
+    font-size: 14px;
+    color: var(--text-main);
+}
+
+.logout-link {
+    display: block;
+    text-decoration: none;
+    color: rgb(187, 2, 255);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.logout-link:hover {
+    text-decoration: underline;
+}
+
+/* ===============================
+   EMPTY STATE
+================================ */
+.empty {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+}
+
+/* =========================
+   CONTENT
+========================= */
+.content {
+  padding: 32px;
+}
+
+/* =========================
+   DASHBOARD STATS
+========================= */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-bottom: 40px;
+  margin-left: 20px;
+}
+
+.stat-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 24px;
+  border-radius: 20px;
+  color: white;
+
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card p {
+  font-size: 14px;
+  opacity: 0.9;
+  margin-bottom: 6px;
+}
+
+.stat-card h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+}
+
+.stat-card .icon {
+  font-size: 36px;
+  opacity: 0.9;
+}
+
+/* Card colors */
+.stat-card.blue {
+  background: linear-gradient(135deg, #4f86fe, #00f2fe);
+}
+
+.stat-card.blue-soft {
+  background: linear-gradient(135deg, #ef4ffe, #b502d0);
+}
+
+.stat-card.purple {
+  background: linear-gradient(135deg, #4369ff, #ae00fe);
+}
+
+.stat-card.pink {
+  background: linear-gradient(135deg, #aa43ff, #c300fe);
+}
+/* =========================
+   CHART CARD
+========================= */
+.chart-card {
+  padding: 24px;
+  border-radius: 18px;
+  margin-left: 20px;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.chart-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.chart-subtitle {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* =========================
+   GENERIC CARDS
+========================= */
+.card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* =========================
+   HEADINGS & LINKS
+========================= */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text);
+  font-weight: 600;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

@@ -4,6 +4,12 @@
 <head>
     <title>Invoice List</title>
     <link rel="stylesheet" href="{% static 'css/list.css' %}">
+        <style>
+        :root {
+        --primary: #bb14f3;
+        --accent: #d735fb;
+    }
+    </style>
 </head>
 <body>
 
@@ -13,15 +19,17 @@
         <a href="{% url 'dashboard:index' %}" class="home-link">Home</a>
     </div>
     <div class="topbar-right">
-        <div class="account">
-            <button class="account-btn">
-                {{ agent.agent_name|default:"Account" }}
-            </button>
-            <div class="account-menu">
-                <p>Hello! <strong>{{ agent.agent_name|default:"Account" }}</strong></p>
-                <a href="{% url 'login' %}" class="logout-link">Log out</a>
-            </div>
-        </div>
+<div class="account">
+    <button class="account-btn">
+        {{ request.session.agent_name|default:"Account" }}
+    </button>
+
+    <div class="account-menu">
+        <p>Hello! <strong>{{ request.session.agent_name|default:"Account" }}</strong></p>
+        <a href="{% url 'login' %}" class="logout-link">Log out</a>
+    </div>
+</div>
+
     </div>
 </div>
 

@@ -1,4 +1,16 @@
 <header class="topbar">
   <h1>{% block page_title %}{% endblock %}</h1>
-  <div class="user">Agent</div>
+  <div class="account">
+    <button class="account-btn">
+      <span class="fa-stack fa-sm">
+  <i class="fas fa-circle fa-stack-2x" style="color:#D3D3D3"></i>
+  <i class="fas fa-user fa-stack-1x fa-inverse"></i> <!-- user inside -->
+</span>
+        {{ request.session.agent_name|default:"Account" }}
+    </button>
+    <div class="account-menu">
+        <p>Hello! <strong>{{ request.session.agent_name|default:"Account" }}</strong></p>
+        <a href="{% url 'login' %}" class="logout-link">Log out</a>
+    </div>
+</div>
 </header>

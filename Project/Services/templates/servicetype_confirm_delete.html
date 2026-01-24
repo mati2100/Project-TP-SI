@@ -1,67 +1,35 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Delete Service Type</title>
-    <style>
-        .confirm-container { 
-            max-width: 500px; 
-            margin: 50px auto; 
-            text-align: center; 
-            padding: 30px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            background-color: #f8f9fa;
-        }
-        .warning { 
-            color: #e74c3c; 
-            font-size: 18px; 
-            margin: 20px 0;
-            font-weight: bold;
-        }
-        .service-info {
-            background-color: white;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 6px;
-            text-align: left;
-        }
-        .btn-yes { 
-            background-color: #e74c3c; 
-            color: white; 
-            padding: 12px 25px; 
-            border: none; 
-            border-radius: 4px;
-            cursor: pointer;
-            margin-right: 15px;
-        }
-        .btn-no { 
-            background-color: #8e44ad; 
-            color: white; 
-            padding: 12px 25px; 
-            text-decoration: none;
-            border-radius: 4px;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/confirm.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="confirm-container">
-        <h1>Delete Service Type</h1>
-        
-        <div class="warning">Are you sure you want to delete this service type?</div>
-        
-        <div class="service-info">
-            <p><strong>Service Type:</strong> {{ service_type.get_st_name_display }}</p>
-            <p><strong>Description:</strong> {{ service_type.st_description|truncatechars:100 }}</p>
-            <p><strong>Weight Rate:</strong> ${{ service_type.st_weight_rate }} / kg</p>
-            <p><strong>Volume Rate:</strong> ${{ service_type.st_volume_rate }} / m³</p>
-        </div>
-        
-        <form method="POST">
-            {% csrf_token %}
-            <button type="submit" class="btn-yes">Yes, Delete</button>
-            <a href="{% url 'servicetype_list' %}" class="btn-no">No, Cancel</a>
-        </form>
+
+<div class="confirm-box">
+    <h1>Delete Service Type</h1>
+
+    <p class="confirm-message">
+        Are you sure you want to delete this service type: 
+        <strong>{{ service_type.get_st_name_display }}</strong>?
+    </p>
+
+    <div class="confirm-details">
+        <p><strong>Description:</strong> {{ service_type.st_description|truncatechars:100 }}</p>
+        <p><strong>Weight Rate:</strong> ${{ service_type.st_weight_rate }} / kg</p>
+        <p><strong>Volume Rate:</strong> ${{ service_type.st_volume_rate }} / m³</p>
     </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="confirm-actions">
+            <button type="submit" class="confirm-delete">Yes, Delete</button>
+            <a href="{% url 'servicetype_list' %}" class="confirm-cancel">Cancel</a>
+        </div>
+    </form>
+</div>
+
 </body>
 </html>

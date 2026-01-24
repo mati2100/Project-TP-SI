@@ -1,15 +1,57 @@
+/* ===============================
+   THEME VARIABLES
+================================ */
+:root {
+    /* Backgrounds */
+    --bg-page: #f5f7fb;
+    --bg-card: #ffffff;
+    --bg-muted: #f1f5f9;
+    --bg-hover: #f9fafb;
+
+    /* Primary / Accent */
+    --primary: #2563eb;
+    --primary-hover: #1e40af;
+    --accent: #7e35fb;
+
+    /* Buttons */
+    --btn-blue: #3e4ef8;
+    --btn-blue-hover: #1e40af;
+    --btn-danger: #ff0000;
+
+    /* Text */
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+    --text-soft: #475569;
+
+    /* Borders */
+    --border-light: #e5e7eb;
+    --border-medium: #d1d5db;
+    --border-dark: #bbbdbf;
+
+    /* Status */
+    --success-bg: #dcfce7;
+    --success-text: #166534;
+    --danger-bg: #fee2e2;
+    --danger-text: #991b1b;
+}
+
+/* ===============================
+   BASE
+================================ */
 * {
     box-sizing: border-box;
     font-family: "Segoe UI", Tahoma, sans-serif;
 }
 
 body {
-    background-color: #f5f7fb;
+    background-color: var(--bg-page);
     margin: 0;
-    padding: 0px;
+    padding: 0;
 }
 
-/* Layout */
+/* ===============================
+   LAYOUT
+================================ */
 .page-container {
     max-width: 1200px;
     margin: auto;
@@ -24,12 +66,14 @@ body {
 
 .page-header h2 {
     margin: 0;
-    color: #1f2937;
+    color: var(--text-main);
 }
 
-/* Buttons */
+/* ===============================
+   BUTTONS
+================================ */
 .btn-primary {
-    background: #2563eb;
+    background: var(--primary);
     color: white;
     padding: 10px 16px;
     text-decoration: none;
@@ -38,25 +82,31 @@ body {
 }
 
 .btn-primary:hover {
-    background: #1e40af;
+    background: var(--primary-hover);
 }
 
-/* Card */
+/* ===============================
+   CARD
+================================ */
 .card {
-    background: white;
+    background: var(--bg-card);
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     padding: 15px;
 }
 
-/* Table */
+/* ===============================
+   TABLE
+================================ */
 .styled-table {
     width: 100%;
     border-collapse: collapse;
+    background: var(--bg-card);
+    border: 1px solid var(--border-medium);
 }
 
 .styled-table thead {
-    background-color: #f1f5f9;
+    background-color: var(--bg-muted);
 }
 
 .styled-table th,
@@ -64,22 +114,25 @@ body {
     padding: 12px 14px;
     text-align: left;
     font-size: 14px;
+    border: 1px solid var(--border-light);
 }
 
 .styled-table th {
-    color: #475569;
+    color: var(--text-soft);
     font-weight: 600;
 }
 
 .styled-table tbody tr {
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--border-light);
 }
 
 .styled-table tbody tr:hover {
-    background-color: #f9fafb;
+    background-color: var(--bg-hover);
 }
 
-/* Status badges */
+/* ===============================
+   STATUS BADGES
+================================ */
 .badge {
     padding: 4px 10px;
     border-radius: 12px;
@@ -88,16 +141,18 @@ body {
 }
 
 .badge-success {
-    background: #dcfce7;
-    color: #166534;
+    background: var(--success-bg);
+    color: var(--success-text);
 }
 
 .badge-danger {
-    background: #fee2e2;
-    color: #991b1b;
+    background: var(--danger-bg);
+    color: var(--danger-text);
 }
 
-/* Actions */
+/* ===============================
+   ACTIONS
+================================ */
 .actions a {
     margin-right: 10px;
     text-decoration: none;
@@ -110,18 +165,16 @@ body {
     border-radius: 6px;
     font-size: 13px;
     cursor: pointer;
+    border: none;
+    color: white;
 }
 
 .btn-edit {
-    border: none;
-    background-color: #3b82f6;
-    color: white;
+    background-color: var(--btn-blue);
 }
 
 .btn-delete {
-    border: none;
-    background-color: #ff0000;
-    color: white;
+    background-color: var(--btn-danger);
 }
 
 .btn-edit:hover,
@@ -129,53 +182,57 @@ body {
     opacity: 0.8;
 }
 
-/* Top Bar */
+/* ===============================
+   TOP BAR
+================================ */
 .topbar {
     height: 60px;
-    border-bottom: 1px solid #bbbdbf;
+    border-bottom: 1px solid var(--border-dark);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    margin-bottom: 60px
+    margin-bottom: 60px;
 }
 
 .home-link {
     font-size: 20px;
-    text-decoration: none;
     font-weight: 600;
-    color: #2563eb;
+    text-decoration: none;
+
+    background: linear-gradient(90deg, #25a6eb, #f435fb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.home-link:hover {
-    color: #7e35fb;
-}
-
-/* Account section */
+/* ===============================
+   ACCOUNT
+================================ */
 .account {
     position: relative;
 }
 
-/* Button */
 .account-btn {
     background: none;
     border: none;
-    border-left: 1px solid #bbbdbf;
-    margin: 0px;
+    border-left: 1px solid var(--border-dark);
+    margin: 0;
     padding: 10px 20px;
     font-weight: 600;
     cursor: pointer;
-    color: #1f2937;
+    color: var(--text-main);
     font-size: 20px;
 }
 
-/* Dropdown menu */
+/* ===============================
+   DROPDOWN
+================================ */
 .account-menu {
     position: absolute;
     right: 0;
     top: 45px;
     width: 200px;
-    background: white;
+    background: var(--bg-card);
     border-radius: 8px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     padding: 15px;
@@ -183,11 +240,9 @@ body {
     opacity: 0;
     transform: translateY(-10px);
     pointer-events: none;
-
     transition: all 0.2s ease;
 }
 
-/* Show dropdown (CSS only) */
 .account:hover .account-menu,
 .account:focus-within .account-menu {
     opacity: 1;
@@ -195,17 +250,16 @@ body {
     pointer-events: auto;
 }
 
-/* Text */
 .account-menu p {
     margin: 0 0 10px;
     font-size: 14px;
-    color: #374151;
+    color: var(--text-main);
 }
 
 .logout-link {
     display: block;
     text-decoration: none;
-    color: #7e35fb;
+    color: var(--accent);
     font-weight: 600;
     font-size: 14px;
 }
@@ -214,12 +268,18 @@ body {
     text-decoration: underline;
 }
 
+/* ===============================
+   EMPTY STATE
+================================ */
 .empty {
     text-align: center;
     padding: 20px;
-    color: #6b7280;
+    color: var(--text-muted);
 }
-/* Toolbar (search + add) */
+
+/* ===============================
+   TOOLBAR
+================================ */
 .toolbar {
     display: flex;
     justify-content: space-between;
@@ -227,7 +287,9 @@ body {
     margin-bottom: 25px;
 }
 
-/* Search */
+/* ===============================
+   SEARCH
+================================ */
 .search-form {
     display: flex;
     gap: 10px;
@@ -237,7 +299,7 @@ body {
 .search-input {
     padding: 10px 16px;
     border-radius: 999px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--border-medium);
     font-size: 14px;
     outline: none;
 }
@@ -246,7 +308,9 @@ body {
     width: 240px;
 }
 
-/* Pill buttons */
+/* ===============================
+   PILL BUTTONS
+================================ */
 .btn-pill {
     padding: 10px 22px;
     border-radius: 999px;
@@ -259,75 +323,38 @@ body {
     align-items: center;
 }
 
-/* Search button */
-.btn-search {
-    background: #3e4ef8;
-    color: white;
-}
-
-.btn-search:hover {
-    background: #1e40af;
-}
-
+.btn-search,
 .btn-add {
-    background: #3e4ef8;
+    background: var(--primary);
     color: white;
 }
 
+.btn-search:hover,
 .btn-add:hover {
-    background: #7e35fb;
+    background: var(--accent);
 }
 
-.styled-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border: 1px solid #d1d5db;
-}
-
-.styled-table thead {
-    background-color: #f1f5f9;
-}
-
-.styled-table th,
-.styled-table td {
-    padding: 12px 14px;
-    text-align: left;
-    font-size: 14px;
-    border: 1px solid #e5e7eb; /* grid lines */
-}
-
-.styled-table th {
-    color: #475569;
-    font-weight: 600;
-}
-
-.styled-table tbody tr:hover {
-    background-color: #f9fafb;
-}
-
-/* Fused search bar */
+/* ===============================
+   FUSED SEARCH
+================================ */
 .fused-search {
     display: flex;
     align-items: stretch;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--border-medium);
     border-radius: 999px;
     overflow: hidden;
-    background: white;
+    background: var(--bg-card);
 }
 
-/* Dropdown */
 .fused-select {
     border: none;
     padding: 10px 16px;
     font-size: 14px;
     background: transparent;
     cursor: pointer;
+    border-right: 1px solid var(--border-dark);
 
     appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    border-right: #bbbdbf 1px solid;
     background-image: url("data:image/svg+xml,%3Csvg fill='none' stroke='%236b7280' stroke-width='2' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 12px center;
@@ -335,7 +362,6 @@ body {
     padding-right: 32px;
 }
 
-/* Input */
 .fused-input {
     border: none;
     padding: 10px 16px;
@@ -344,21 +370,19 @@ body {
     outline: none;
 }
 
-/* Button */
 .fused-button {
     border: none;
     padding: 10px 20px;
-    background: #3e4ef8;
+    background: var(--primary);
     color: white;
     font-weight: 600;
     cursor: pointer;
 }
 
 .fused-button:hover {
-    background: #7e35fb;
+    background: var(--accent);
 }
 
-/* Remove outlines between elements */
 .fused-select:focus,
 .fused-input:focus {
     outline: none;

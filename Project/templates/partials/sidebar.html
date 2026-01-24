@@ -1,17 +1,65 @@
 <aside class="sidebar">
   <h1 class="sidebar-title">LOGISTICS</h1>
-  <nav>
-    <a href="{% url 'dashboard:index' %}">Dashboard</a>
-    <a href="/shipments/">Shipments</a>
-    <a href="/packages/">Packages</a>
-    <a href="/clientes/">Clients</a>
-    <a href="/drivers/">Drivers</a>
-    <a href="/vehicles/">Vehicles</a>
-    <a href="/invoices/">Invoices</a>
-    <a href="/incidents/">Incidents</a>
-    <a href="/reclaims/">Reclamations</a>
-    <a href="/services/destinations/">Destinations</a>
-    <a href="/services/servicetypes/">Service Types</a>
-    <a href="/payments/">Payments</a>
+
+  <nav class="sidebar-nav">
+    <a href="{% url 'dashboard:index' %}" class="active">
+      <i class="fa-solid fa-chart-line"></i>
+      <span>Dashboard</span>
+    </a>
+
+    <a href="/shipments/">
+      <i class="fa-solid fa-truck-fast"></i>
+      <span>Shipments</span>
+    </a>
+
+    <a href="/packages/">
+      <i class="fa-solid fa-box"></i>
+      <span>Packages</span>
+    </a>
+
+    <a href="/clientes/">
+      <i class="fa-solid fa-users"></i>
+      <span>Clients</span>
+    </a>
+
+    <a href="/drivers/">
+      <i class="fa-solid fa-id-card"></i>
+      <span>Drivers</span>
+    </a>
+
+    <a href="/vehicles/">
+      <i class="fa-solid fa-car"></i>
+      <span>Vehicles</span>
+    </a>
+
+    <a href="/invoices/">
+      <i class="fa-solid fa-file-invoice"></i>
+      <span>Invoices</span>
+    </a>
+
+    <a href="/incidents/">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <span>Incidents</span>
+    </a>
+
+    <a href="/reclaims/">
+      <i class="fa-solid fa-rotate-left"></i>
+      <span>Reclamations</span>
+    </a>
+
+    <a href="/services/destinations/">
+      <i class="fa-solid fa-location-dot"></i>
+      <span>Destinations</span>
+    </a>
+
+    <a href="/services/servicetypes/">
+      <i class="fa-solid fa-layer-group"></i>
+      <span>Service Types</span>
+    </a>
+
+    <a href="/payments/">
+      <i class="fa-solid fa-credit-card"></i>
+      <span>Payments</span>
+    </a>
   </nav>
 </aside>

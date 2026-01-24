@@ -40,7 +40,7 @@ def ReclaimCreateView(request):
     
     return render(request, 'Reclaim_form.html', {
         'form': form,
-        'title': 'Create New Reclaim'
+        'title': 'Create New Reclamation'
     })
 @token_required
 def ReclaimUpdateView(request, reclaim_id):
