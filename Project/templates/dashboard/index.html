@@ -45,51 +45,132 @@
   </div>
 
 </div>
-
-
-<div class="card chart-card">
-  <div class="chart-header">
-    <h3>Shipments Over Time</h3>
-    <span class="chart-subtitle">Last 30 days</span>
-  </div>
-<div class="chart-wrapper">
-  <canvas id="shipmentsChart"></canvas>
-</div>
+<!--                                                              -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-  const ctx = document.getElementById('shipmentsChart').getContext('2d');
+<style>
+  body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 20px;
+    background: #f5f6fa;
+    color: #2f3640;
+  }
+  h3 {
+    margin: 0 0 10px;
+    font-weight: 600;
+  }
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  table th, table td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+  canvas {
+    width: 100% !important;
+    height: 250px !important;
+  }
+</style>
+</head>
+<body>
 
-  const shipmentsChart = new Chart(ctx, {
+<h1>Dashboard</h1>
+
+<div class="dashboard-grid">
+
+  <!-- Shipments Over 12 Months -->
+  <div class="card">
+    <h3>Shipments Over 12 Months</h3>
+    <canvas id="shipmentsChart"></canvas>
+  </div>
+
+  <!-- Monthly Revenue -->
+  <div class="card">
+    <h3>Monthly Revenue (€)</h3>
+    <canvas id="revenueChart"></canvas>
+  </div>
+
+  <!-- Packages Delivered -->
+  <div class="card">
+    <h3>Packages Delivered Over 12 Months</h3>
+    <canvas id="packagesChart"></canvas>
+  </div>
+
+  <!-- Delivery Success Rate -->
+  <div class="card">
+    <h3>Delivery Success Rate</h3>
+    <canvas id="successRateChart"></canvas>
+  </div>
+
+<script>
+  //data arrays
+  const months = {{ months|safe }};
+
+  const shipmentsData = {{ shipments_data|safe }};
+  const revenueData = {{ payments_data|safe }};
+  const packagesData = {{ packages_data|safe }};
+  const successData = {{ delivery_rate|safe }};
+
+  // Shipments Line Chart
+  new Chart(document.getElementById('shipmentsChart').getContext('2d'), {
     type: 'line',
     data: {
-      labels: {{ chart_labels|safe }},
+      labels: months,
       datasets: [{
         label: 'Shipments',
-        data: {{ chart_data|safe }},
+        data: shipmentsData,
         fill: true,
-        tension: 0.4,
-        borderWidth: 2
+        borderColor: '#3498db',
+        backgroundColor: 'rgba(52,152,219,0.2)',
+        tension: 0.4
       }]
     },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          display: false
-        }
-      },
-      scales: {
-        x: {
-          grid: {
-            display: false
-          }
-        },
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
+    options: { responsive:true, plugins:{legend:{display:false}} }
+  });
+
+  // Revenue Bar Chart
+  new Chart(document.getElementById('revenueChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: months,
+      datasets: [{ label:'Revenue', data: revenueData, backgroundColor:'#2980b9' }]
+    },
+    options:{ responsive:true, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true}} }
+  });
+
+  // Packages Line Chart
+  new Chart(document.getElementById('packagesChart').getContext('2d'), {
+    type:'line',
+    data:{
+      labels:months,
+      datasets:[{ label:'Packages', data: packagesData, borderColor:'#8e44ad', fill:false, tension:0.4 }]
+    },
+    options:{ responsive:true, plugins:{legend:{display:false}} }
+  });
+
+  // Delivery Success Rate Doughnut
+  new Chart(document.getElementById('successRateChart').getContext('2d'), {
+    type:'doughnut',
+    data:{
+      labels:['Pending','In Transit','Sorting Center','Out for Delivery','Delivered','Failed'],
+      datasets:[{ data:successData, backgroundColor:['#37bbc2','#3498db','#9b59b6','#f1c40f','#2ecc71','#e74c3c'] }]
+    },
+    options:{ responsive:true, plugins:{legend:{position:'bottom'}} }
   });
 </script>
 </div>
+
 {% endblock %}
