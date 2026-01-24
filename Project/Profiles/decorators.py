@@ -1,4 +1,6 @@
+# Profiles/decorators.py
 from django.shortcuts import redirect
+from django.utils import timezone
 from .models import AgentToken
 
 def token_required(view_func):
@@ -9,12 +11,19 @@ def token_required(view_func):
         if not token or not agent_id:
             return redirect('login')
 
-        exists = AgentToken.objects.filter(
-            token=token,
-            agent_id=agent_id
-        ).exists()
+        try:
+            agent_token = AgentToken.objects.get(
+                token=token,
+                agent_id=agent_id
+            )
+        except AgentToken.DoesNotExist:
+            return redirect('login')
 
-        if not exists:
+        # EXPIRATION CHECK
+        if agent_token.is_expired():
+            # cleanup
+            agent_token.delete()
+            request.session.flush()
             return redirect('login')
 
         return view_func(request, *args, **kwargs)

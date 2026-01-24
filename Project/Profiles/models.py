@@ -50,5 +50,10 @@ class AgentToken(models.Model):
     token = models.UUIDField(default=uuid.uuid4, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    EXPIRES_AFTER_HOURS = 1
+
+    def is_expired(self):
+        return timezone.now() > self.created_at + timedelta(hours=self.EXPIRES_AFTER_HOURS)
+
     def __str__(self):
         return f"{self.agent.agent_first_name} {self.agent.agent_last_name}"    
