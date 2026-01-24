@@ -19,14 +19,14 @@ class ShipmentForm(forms.ModelForm):
             'vehicle',
             'driver',
             'shipment_tracking_number',
-            'shipment_total_weight',
-            'shipment_total_volume',
             'shipment_status',
             'shipment_expected_delivery_date',
             'shipment_delivery_date',
             'shipment_notes',
             'service_type',
             'invoice',
+            'shipment_total_weight',
+            'shipment_total_volume',
         ]
 
     # Override save method to handle one-to-many relationship for packages

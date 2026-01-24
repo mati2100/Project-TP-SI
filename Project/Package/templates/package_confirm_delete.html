@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Delete Delivery Tour</title>
+    <title>Delete Delivery Package</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/confirm.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -9,18 +9,18 @@
 <body>
 
 <div class="confirm-box">
-    <h1>Delete Delivery Tour</h1>
+    <h1>Delete Delivery Package</h1>
 
     <p class="confirm-message">
-        Are you sure you want to delete delivery tour:
-        <strong>Tour #{{ tour.tour_number }} - {{ tour.driver.driver_name }}</strong>?
+        Are you sure you want to delete delivery package:
+        <strong>Package #{{ package.package_number }} </strong>?
     </p>
 
     <form method="POST">
         {% csrf_token %}
         <div class="confirm-actions">
             <button type="submit" class="confirm-delete">Yes, Delete</button>
-            <a href="{% url 'tour_list' %}" class="confirm-cancel">Cancel</a>
+            <a href="{% url 'package_list' %}" class="confirm-cancel">Cancel</a>
         </div>
     </form>
 </div>
