@@ -106,3 +106,13 @@ body {
 .form-actions a:hover {
     text-decoration: underline;
 }
+button{
+    padding: 10px 22px;
+    background-color: #29b8ff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
