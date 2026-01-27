@@ -106,7 +106,7 @@ body {
 .form-actions a:hover {
     text-decoration: underline;
 }
-button{
+button { 
     padding: 10px 22px;
     background-color: #29b8ff;
     color: white;
@@ -115,4 +115,7 @@ button{
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
+    margin-bottom: 10px;
+    position: relative;
+    left: 210px;
 }
