@@ -11,7 +11,8 @@ def VehicleCreateView(request):
         form = VehicleForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('vehicle_list')
+            #  Go back to where user came from
+            return redirect(request.GET.get("next", "vehicle_list"))
     else:
         form = VehicleForm()
     
@@ -27,7 +28,8 @@ def VehicleUpdateView(request, vehicle_id):
         form = VehicleForm(request.POST, instance=vehicle)
         if form.is_valid():
             form.save()
-            return redirect('vehicle_list')
+            #  Go back to where user came from
+            return redirect(request.GET.get("next", "vehicle_list"))
     else:
         form = VehicleForm(instance=vehicle)
     
@@ -42,6 +44,7 @@ def VehicleDeleteView(request, vehicle_id):
     
     if request.method == 'POST':
         vehicle.delete()
-        return redirect('vehicle_list')
+        #  Go back to where user came from
+        return redirect(request.GET.get("next", "vehicle_list"))
     
     return render(request, 'vehicle_confirm_delete.html', {'vehicle': vehicle})

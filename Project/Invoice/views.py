@@ -14,12 +14,11 @@ def InvoiceCreateView(request):
     if request.method == 'POST':
         form = InvoiceForm(request.POST)
         if form.is_valid():
-            from django.db.models import F
-            from Clientes.models import Client
             invoice = form.save(commit=False)
             invoice.save()
             form.save_m2m()
-            return redirect('invoice_list')
+            #  Go back to where user came from
+            return redirect(request.GET.get("next", "invoice_list"))
     else:
         form = InvoiceForm()
     
@@ -44,7 +43,8 @@ def InvoiceUpdateView(request, invoice_id):
                 Client.objects.filter(id=invoice.client.id).update(
                     client_due_balance=F('client_due_balance') - old_total + invoice.invoice_total_amount
                 )
-            return redirect('invoice_list')
+                #  Go back to where user came from
+            return redirect(request.GET.get("next", "invoice_list"))
     else:
         form = InvoiceForm(instance=invoice)
     
@@ -65,6 +65,7 @@ def InvoiceDeleteView(request, invoice_id):
             client_due_balance=F('client_due_balance') - invoice.invoice_total_amount
         )
         invoice.delete()
-        return redirect('invoice_list')
+        #  Go back to where user came from
+        return redirect(request.GET.get("next", "invoice_list"))
     
     return render(request, 'invoice_confirm_delete.html', {'invoice': invoice})

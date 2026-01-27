@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.db import models
+from django.urls import reverse
 from .models import Shipment
 from .forms import ShipmentForm
 from Profiles.decorators import token_required
@@ -25,18 +27,35 @@ def ShipmentListView(request):
 
 @token_required
 def ShipmentCreateView(request):
-    if request.method == 'POST':
-        form = ShipmentForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('shipment_list')
-    else:
-        form = ShipmentForm()
-    
-    return render(request, 'shipment_form.html', {
-        'form': form,
-        'title': 'Create New Shipment'
+    form = ShipmentForm(request.POST or None)
+
+    for name, field in form.fields.items():
+        try:
+            model_field = form._meta.model._meta.get_field(name)
+        except:
+            continue
+
+        if isinstance(model_field, models.ForeignKey):
+            try:
+                url_name = f"{model_field.related_model._meta.model_name}_create"
+                create_url = reverse(url_name)
+                next_url = request.path
+
+                field.help_text = (
+                    f'<a href="{create_url}?next={next_url}">➕ Add new</a>'
+                )
+            except:
+                pass
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        return redirect(request.GET.get("next", "shipment_list"))
+
+    return render(request, "shipment_form.html", {
+        "form": form,
+        "title": "Create Shipment",
     })
+
 
 @token_required
 def ShipmentUpdateView(request, shipment_id):
@@ -46,7 +65,7 @@ def ShipmentUpdateView(request, shipment_id):
         form = ShipmentForm(request.POST, instance=shipment)
         if form.is_valid():
             form.save()
-            return redirect('shipment_list')
+            return redirect(request.GET.get("next", "shipment_list"))
     else:
         form = ShipmentForm(instance=shipment)
     
@@ -62,6 +81,7 @@ def ShipmentDeleteView(request, shipment_id):
     
     if request.method == 'POST':
         shipment.delete()
-        return redirect('shipment_list')
+        #  Go back to where user came from
+        return redirect(request.GET.get("next", "shipment_list"))
     
     return render(request, 'shipment_confirm_delete.html', {'shipment': shipment})

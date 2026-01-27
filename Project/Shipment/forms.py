@@ -46,6 +46,10 @@ class ShipmentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+
+        #
+        self.fields["client"].help_text = ('<a href="{% url \'client_create\' %}?next={{ request.path }}">➕ Add new client</a>')
+
         # empty labels placeholders
         self.fields['client'].empty_label = "Please Select a Client"
         self.fields['destination'].empty_label = "No destination assigned"

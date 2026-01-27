@@ -12,7 +12,8 @@ def PaymentCreateView(request):
         if form.is_valid():
             payment = form.save()
             payment.discount_balance()
-            return redirect('payment_list')
+            #  Go back to where user came from
+            return redirect(request.GET.get("next", "payment_list"))
     else:
         form = PaymentForm()
     
@@ -35,7 +36,8 @@ def PaymentUpdateView(request, payment_id):
                 Client.objects.filter(id=payment.client.id).update(
                     client_due_balance=F('client_due_balance') + old_amount - payment.payment_amount
                 )
-            return redirect('payment_list')
+            #  Go back to where user came from
+            return redirect(request.GET.get("next", "payment_list"))
     else:
         form = PaymentForm(instance=payment)
     
@@ -55,6 +57,7 @@ def PaymentDeleteView(request, payment_id):
             client_due_balance=F('client_due_balance') + payment.payment_amount
         )
         payment.delete()
-        return redirect('payment_list')
+        #  Go back to where user came from
+        return redirect(request.GET.get("next", "payment_list"))
     
     return render(request, 'payment_confirm_delete.html', {'payment': payment})

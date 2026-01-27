@@ -33,7 +33,8 @@ def ClientCreateView(request):
         form = ClientForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('client_list')
+            # Go back to where user came from
+            return redirect(request.GET.get("next", "client_list"))
     else:
         form = ClientForm()
     
@@ -49,7 +50,8 @@ def ClientUpdateView(request, client_id):
         form = ClientForm(request.POST, instance=client)
         if form.is_valid():
             form.save()
-            return redirect('client_list')
+            #  Go back to where user came from
+            return redirect(request.GET.get("next", "client_list"))
     else:
         form = ClientForm(instance=client)
     
@@ -64,6 +66,7 @@ def ClientDeleteView(request, client_id):
     
     if request.method == 'POST':
         client.delete()
-        return redirect('client_list')
+        #  Go back to where user came from
+        return redirect(request.GET.get("next", "client_list"))
     
     return render(request, 'client_confirm_delete.html', {'client': client})

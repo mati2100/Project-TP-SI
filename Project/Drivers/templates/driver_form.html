@@ -16,7 +16,14 @@
 
         {% for field in form %}
             <div class="form-field">
-                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field.label_tag }}
+
+                {% if field.help_text %}
+                    <div class="form-help">
+                        {{ field.help_text|safe }}
+                    </div>
+                {% endif %}
+
                 {{ field }}
 
                 {% if field.errors %}
@@ -29,7 +36,11 @@
 
         <div class="form-actions">
             <button type="submit">Save Driver</button>
-            <a href="{% url 'driver_list' %}">Cancel</a>
+            {% if request.GET.next %}
+                <a href="{{ request.GET.next }}">Cancel</a>
+            {% else %}
+                <a href="{% url 'driver_list' %}">Cancel</a>
+            {% endif %}
         </div>
     </form>
 </div>
