@@ -42,7 +42,7 @@ def ShipmentCreateView(request):
                 next_url = request.path
 
                 field.help_text = (
-                    f'<a href="{create_url}?next={next_url}">➕ Add new</a>'
+                    f'<button href="{create_url}?next={next_url}">+ Add new</button>'
                 )
             except:
                 pass
