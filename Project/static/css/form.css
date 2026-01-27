@@ -106,7 +106,7 @@ body {
 .form-actions a:hover {
     text-decoration: underline;
 }
-button { 
+button.add-new-button {
     padding: 10px 22px;
     background-color: #29b8ff;
     color: white;

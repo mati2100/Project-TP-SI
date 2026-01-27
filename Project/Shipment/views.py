@@ -40,7 +40,6 @@ def ShipmentCreateView(request):
                 url_name = f"{model_field.related_model._meta.model_name}_create"
                 create_url = reverse(url_name)
                 next_url = request.path
-
                 field.help_text = (
                     f'<button class="add-new-button" href="{create_url}?next={next_url}">+ Add new</button>'
                 )
