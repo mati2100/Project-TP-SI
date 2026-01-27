@@ -8,7 +8,6 @@
     <title>Service Types</title>
     <link rel="stylesheet" href="{% static 'css/list.css' %}">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <!-- Theme override (per app) -->
     <style>
         :root {
             --primary: #2c25eb;
@@ -19,7 +18,7 @@
 
 <body>
 
-<!-- Top Navigation Bar -->
+<!-- Topbar -->
 <div class="topbar">
     <div class="topbar-left">
         <div class="home-sidebar-wrapper">
@@ -103,11 +102,7 @@
     <div class="page-header">
         <h2>Service Type Management</h2>
     </div>
-
-    <!-- Toolbar (SEARCH + ADD) -->
     <div class="toolbar">
-
-        <!-- Search -->
         <form method="get" class="search-form fused-search">
             <input
                 type="text"
@@ -120,14 +115,12 @@
                 Search
             </button>
         </form>
-
-        <!-- Add button -->
         <a href="{% url 'servicetype_create' %}" class="btn-pill btn-add">
             + Add Service Type
         </a>
     </div>
 
-    <!-- Table Card -->
+    <!-- Table -->
     <div class="card">
         <table class="styled-table">
             <thead>

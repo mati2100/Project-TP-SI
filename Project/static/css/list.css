@@ -1,43 +1,33 @@
-/* ===============================
-   THEME VARIABLES
-================================ */
+/* THEME VARIABLES */
 :root {
-    /* Backgrounds */
     --bg-page: #f5f7fb;
     --bg-card: #ffffff;
     --bg-muted: #f1f5f9;
     --bg-hover: #f9fafb;
 
-    /* Primary / Accent */
     --primary: #2563eb;
     --primary-hover: #1e40af;
     --accent: #7e35fb;
 
-    /* Buttons */
     --btn-blue: #3e4ef8;
     --btn-blue-hover: #1e40af;
     --btn-danger: #ff0000;
 
-    /* Text */
     --text-main: #1f2937;
     --text-muted: #6b7280;
     --text-soft: #475569;
 
-    /* Borders */
     --border-light: #e5e7eb;
     --border-medium: #d1d5db;
     --border-dark: #bbbdbf;
 
-    /* Status */
     --success-bg: #dcfce7;
     --success-text: #166534;
     --danger-bg: #fee2e2;
     --danger-text: #991b1b;
 }
 
-/* ===============================
-   BASE
-================================ */
+/* BASE */
 * {
     box-sizing: border-box;
     font-family: "Segoe UI", Tahoma, sans-serif;
@@ -49,9 +39,7 @@ body {
     padding: 0;
 }
 
-/* ===============================
-   LAYOUT
-================================ */
+/* LAYOUT */
 .page-container {
     max-width: 1200px;
     margin: auto;
@@ -69,9 +57,7 @@ body {
     color: var(--text-main);
 }
 
-/* ===============================
-   BUTTONS
-================================ */
+/* BUTTONS */
 .btn-primary {
     background: var(--primary);
     color: white;
@@ -85,9 +71,7 @@ body {
     background: var(--primary-hover);
 }
 
-/* ===============================
-   CARD
-================================ */
+/* CARD */
 .card {
     background: var(--bg-card);
     border-radius: 10px;
@@ -95,9 +79,7 @@ body {
     padding: 15px;
 }
 
-/* ===============================
-   TABLE
-================================ */
+/* TABLE */
 .styled-table {
     width: 100%;
     border-collapse: collapse;
@@ -130,9 +112,7 @@ body {
     background-color: var(--bg-hover);
 }
 
-/* ===============================
-   STATUS BADGES
-================================ */
+/* STATUS BADGES */
 .badge {
     padding: 4px 10px;
     border-radius: 12px;
@@ -150,9 +130,7 @@ body {
     color: var(--danger-text);
 }
 
-/* ===============================
-   ACTIONS
-================================ */
+/* ACTIONS */
 .actions a {
     margin-right: 10px;
     text-decoration: none;
@@ -182,9 +160,7 @@ body {
     opacity: 0.8;
 }
 
-/* ===============================
-   TOP BAR
-================================ */
+/* TOP BAR */
 .topbar {
     height: 60px;
     border-bottom: 1px solid var(--border-dark);
@@ -205,9 +181,7 @@ body {
     -webkit-text-fill-color: transparent;
 }
 
-/* ===============================
-   ACCOUNT
-================================ */
+/* ACCOUNT */
 .account {
     position: relative;
 }
@@ -224,9 +198,7 @@ body {
     font-size: 20px;
 }
 
-/* ===============================
-   DROPDOWN
-================================ */
+/* DROPDOWN */
 .account-menu {
     position: absolute;
     right: 0;
@@ -268,18 +240,14 @@ body {
     text-decoration: underline;
 }
 
-/* ===============================
-   EMPTY STATE
-================================ */
+/* EMPTY STATE */
 .empty {
     text-align: center;
     padding: 20px;
     color: var(--text-muted);
 }
 
-/* ===============================
-   TOOLBAR
-================================ */
+/* TOOLBAR */
 .toolbar {
     display: flex;
     justify-content: space-between;
@@ -287,9 +255,9 @@ body {
     margin-bottom: 25px;
 }
 
-/* ===============================
+/* 
    SEARCH
-================================ */
+ */
 .search-form {
     display: flex;
     gap: 10px;
@@ -308,9 +276,9 @@ body {
     width: 240px;
 }
 
-/* ===============================
+/* 
    PILL BUTTONS
-================================ */
+ */
 .btn-pill {
     padding: 10px 22px;
     border-radius: 999px;
@@ -334,9 +302,6 @@ body {
     background: var(--accent);
 }
 
-/* ===============================
-   FUSED SEARCH
-================================ */
 .fused-search {
     display: flex;
     align-items: stretch;
@@ -353,7 +318,6 @@ body {
     background: transparent;
     cursor: pointer;
     border-right: 1px solid var(--border-dark);
-
     appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg fill='none' stroke='%236b7280' stroke-width='2' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
@@ -408,12 +372,15 @@ body {
     pointer-events: none;
     transition: all 0.2s ease;
     z-index: 200;
+    transform: translateX(-20px);
+    transition: opacity 0.15s ease, transform 0.25s ease;
 }
 
 .home-sidebar-wrapper:hover .hover-sidebar {
     opacity: 1;
     pointer-events: auto;
     transform: translateY(0);
+    transform: translateX(0);
 }
 
 .hover-sidebar .sidebar-title {
