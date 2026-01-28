@@ -107,19 +107,20 @@ body {
 .form-actions a:hover {
     text-decoration: underline;
 }
-button.add-new-button {
+.add-new-button {
     position: absolute;
-    top: 0;
+    top: -10px;
     right: 0;
-
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     padding: 6px 14px;
-    background-color: #29b8ff;
+    background: #29b8ff;
     color: white;
-    border: none;
-    border-radius: 6px;
+    text-decoration: none;
+    border-radius: 999px;
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
-
-    transform: translateY(-4px);
+    transition: all 0.2s ease;
 }
