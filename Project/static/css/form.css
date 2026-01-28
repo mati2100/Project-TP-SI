@@ -124,3 +124,6 @@ body {
     cursor: pointer;
     transition: all 0.2s ease;
 }
+.add-new-button:hover {
+    background: #7e35fb;
+}
