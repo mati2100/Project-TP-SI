@@ -38,6 +38,7 @@ body {
 .form-field {
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .form-field.full {
@@ -107,15 +108,18 @@ body {
     text-decoration: underline;
 }
 button.add-new-button {
-    padding: 8px 18px;
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    padding: 6px 14px;
     background-color: #29b8ff;
     color: white;
     border: none;
     border-radius: 6px;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
     cursor: pointer;
-    margin-bottom: 10px;
-    position: relative;
-    left: 66%;
+
+    transform: translateY(-4px);
 }
