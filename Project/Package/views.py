@@ -15,7 +15,8 @@ def PackageCreateView(request):
         form = PackageForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('package_list')
+            # Go back to where user came from
+            return redirect(request.GET.get("next", "package_list"))
     else:
         form = PackageForm()
     
@@ -32,7 +33,8 @@ def PackageUpdateView(request, package_id):
         form = PackageForm(request.POST, instance=package)
         if form.is_valid():
             form.save()
-            return redirect('package_list')
+            # Go back to where user came from
+            return redirect(request.GET.get("next", "package_list"))
     else:
         form = PackageForm(instance=package)
     
@@ -43,11 +45,12 @@ def PackageUpdateView(request, package_id):
     })
 
 @token_required
-def PackageDeleteView(request, tour_id):
-    tour = Package.objects.get(id=tour_id)
+def PackageDeleteView(request, package_id):
+    package = Package.objects.get(id=package_id)
     
     if request.method == 'POST':
-        tour.delete()
-        return redirect('package_list')
+        package.delete()
+        # Go back to where user came from
+        return redirect(request.GET.get("next", "package_list"))
     
-    return render(request, 'package_confirm_delete.html', {'tour': tour})
+    return render(request, 'package_confirm_delete.html', {'package': package})

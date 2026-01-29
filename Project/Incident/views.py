@@ -15,7 +15,8 @@ def IncidentCreateView(request):
         form = IncidentForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('incident_list')
+            #  Go back to where user came from
+            return redirect(request.GET.get("next", "incident_list"))
     else:
         form = IncidentForm()
     
@@ -32,7 +33,8 @@ def IncidentUpdateView(request, incident_id):
         form = IncidentForm(request.POST, instance=incident)
         if form.is_valid():
             form.save()
-            return redirect('incident_list')
+            #  Go back to where user came from
+            return redirect(request.GET.get("next", "incident_list"))
     else:
         form = IncidentForm(instance=incident)
     
@@ -48,6 +50,7 @@ def IncidentDeleteView(request, incident_id):
     
     if request.method == 'POST':
         incident.delete()
-        return redirect('incident_list')
+        #  Go back to where user came from
+        return redirect(request.GET.get("next", "incident_list"))
     
     return render(request, 'incident_confirm_delete.html', {'incident': incident})

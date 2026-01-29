@@ -1,5 +1,4 @@
 {% load static %}
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +6,6 @@
     <title>Destinations</title>
     <link rel="stylesheet" href="{% static 'css/list.css' %}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <!-- Theme override (per app) -->
     <style>
         :root {
             --primary: #a225eb;
@@ -17,7 +15,7 @@
 </head>
 <body>
 
-<!-- Top Navigation Bar -->
+<!-- Topbar -->
 <div class="topbar">
     <div class="topbar-left">
         <div class="home-sidebar-wrapper">
@@ -101,11 +99,7 @@
     <div class="page-header">
         <h2>Destination Management</h2>
     </div>
-
-    <!-- Toolbar (SEARCH + ADD) -->
     <div class="toolbar">
-
-        <!-- Search -->
         <form method="get" class="search-form fused-search">
             <select name="by" class="fused-select">
                 <option value="city" {% if request.GET.by == "city" %}selected{% endif %}>City</option>
@@ -126,13 +120,12 @@
             </button>
         </form>
 
-        <!-- Add button -->
         <a href="{% url 'destination_create' %}" class="btn-pill btn-add">
             + Add Destination
         </a>
     </div>
 
-    <!-- Table Card -->
+    <!-- Table -->
     <div class="card">
         <table class="styled-table">
             <thead>

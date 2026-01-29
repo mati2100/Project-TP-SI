@@ -15,7 +15,8 @@ def DriverCreateView(request):
         form = DriverForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('driver_list')
+            #  Go back to where user came from
+            return redirect(request.GET.get("next",'driver_list'))
     else:
         form = DriverForm()
     
@@ -32,7 +33,7 @@ def DriverUpdateView(request, driver_id):
         form = DriverForm(request.POST, instance=driver)
         if form.is_valid():
             form.save()
-            return redirect('driver_list')
+            return redirect(request.GET.get("next",'driver_list'))
     else:
         form = DriverForm(instance=driver)
     
@@ -48,6 +49,6 @@ def DriverDeleteView(request, driver_id):
     
     if request.method == 'POST':
         driver.delete()
-        return redirect('driver_list')
+        return redirect(request.GET.get("next",'driver_list'))
     
     return render(request, 'driver_confirm_delete.html', {'driver': driver})

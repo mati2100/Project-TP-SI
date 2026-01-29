@@ -30,8 +30,7 @@ def login_view(request):
                 else:
                     # Store session data
                     request.session['agent_id'] = agent.id
-                    request.session['agent_name'] = f"{agent.agent_first_name} {agent.agent_last_name}"
-                    
+                    request.session['agent_name'] = f" {agent.agent_username}"
                     # Create at refreche fi koul login 
                     token, created = AgentToken.objects.update_or_create(
                         agent=agent,

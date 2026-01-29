@@ -16,7 +16,8 @@ def DestinationCreateView(request):
         form = DestinationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('destination_list')
+            #  Go back to where user came from
+            return redirect(request.GET.get("next", "destination_list"))
     else:
         form = DestinationForm()
     
@@ -33,7 +34,8 @@ def DestinationUpdateView(request, destination_id):
         form = DestinationForm(request.POST, instance=destination)
         if form.is_valid():
             form.save()
-            return redirect('destination_list')
+            #  Go back to where user came from
+            return redirect(request.GET.get("next", "destination_list"))
     else:
         form = DestinationForm(instance=destination)
     
@@ -48,7 +50,8 @@ def DestinationDeleteView(request, destination_id):
     
     if request.method == 'POST':
         destination.delete()
-        return redirect('destination_list')
+        #  Go back to where user came from
+        return redirect(request.GET.get("next", "destination_list"))
     
     return render(request, 'destination_confirm_delete.html', {'destination': destination})
 
@@ -64,7 +67,8 @@ def ServiceTypeCreateView(request):
         form = ServiceTypeForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('servicetype_list')
+            #  Go back to where user came from
+            return redirect(request.GET.get("next", "servicetype_list"))
     else:
         form = ServiceTypeForm()
     
@@ -81,7 +85,8 @@ def ServiceTypeUpdateView(request, servicetype_id):
         form = ServiceTypeForm(request.POST, instance=service_type)
         if form.is_valid():
             form.save()
-            return redirect('servicetype_list')
+            #  Go back to where user came from
+            return redirect(request.GET.get("next", "servicetype_list"))
     else:
         form = ServiceTypeForm(instance=service_type)
     
@@ -97,6 +102,7 @@ def ServiceTypeDeleteView(request, servicetype_id):
     
     if request.method == 'POST':
         service_type.delete()
-        return redirect('servicetype_list')
+        #  Go back to where user came from
+        return redirect(request.GET.get("next", "servicetype_list"))
     
     return render(request, 'servicetype_confirm_delete.html', {'service_type': service_type})
