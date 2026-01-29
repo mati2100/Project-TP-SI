@@ -10,6 +10,14 @@
     <div class="login-container">
         <h2 class="login-title">Login</h2>
 
+        {% if messages %}
+            {% for message in messages %}
+                <div class="error-container" style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb;">
+                    <p>{{ message }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+
         {% if form.non_field_errors %}
             <div class="error-container">
                 {% for error in form.non_field_errors %}

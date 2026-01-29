@@ -13,17 +13,19 @@ class Payment(models.Model):
     payment_status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='completed')
     
     invoice = models.ForeignKey('Invoice.Invoice', on_delete=models.CASCADE, related_name='payments')
+    
     def __str__(self):
         return f"Payment #{self.payment_number} - {self.payment_amount} DZD"
     
+    @property
     def client(self):
         return self.invoice.client
     
     def discount_balance(self):
         from Clientes.models import Client
-        if self.payment_amount > self.client.balance:
+        if self.payment_amount > self.invoice.client.client_due_balance:
             raise ValidationError("The payment amount exceeds the client's balance.")
     
-        Client.objects.filter(id=self.client.id).update(
-        client_due_balance=F('client_due_balance') - self.payment_amount
-      )
+        Client.objects.filter(id=self.invoice.client.id).update(
+            client_due_balance=F('client_due_balance') - self.payment_amount
+        )
