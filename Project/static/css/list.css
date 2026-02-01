@@ -132,19 +132,30 @@ body {
 
 /* ACTIONS */
 .actions a {
-    margin-right: 10px;
+    display: inline-block;
+    margin-right: 0;
     text-decoration: none;
     font-weight: 500;
 }
 
 .btn-edit,
-.btn-delete {
+.btn-delete,
+.btn-view,
+.btn-pdf {
     padding: 6px 12px;
     border-radius: 6px;
     font-size: 13px;
     cursor: pointer;
     border: none;
     color: white;
+}
+
+.btn-view {
+    background-color: #29b8ff;
+}
+
+.btn-pdf {
+    background-color: #a100f7;
 }
 
 .btn-edit {
@@ -156,7 +167,9 @@ body {
 }
 
 .btn-edit:hover,
-.btn-delete:hover {
+.btn-delete:hover,
+.btn-view:hover,
+.btn-pdf:hover {
     opacity: 0.8;
 }
 

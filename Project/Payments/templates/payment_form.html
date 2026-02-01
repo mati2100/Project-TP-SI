@@ -35,6 +35,7 @@
         {% endfor %}
 
         <div class="form-actions">
+            <button type="submit">Save</button>
             {% if request.GET.next %}
                 <a href="{{ request.GET.next }}">Cancel</a>
             {% else %}
