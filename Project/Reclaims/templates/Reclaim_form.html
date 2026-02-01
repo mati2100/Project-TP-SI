@@ -39,7 +39,7 @@
         {% if request.GET.next %}
                 <a href="{{ request.GET.next }}">Cancel</a>
             {% else %}
-                <a href="{% url 'reclaim_list' %}">Cancel</a>
+                <a href="{% url 'reclaims_list' %}">Cancel</a>
             {% endif %}
         </div>
     </form>

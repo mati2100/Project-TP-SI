@@ -13,14 +13,14 @@
 
     <p class="confirm-message">
         Are you sure you want to delete reclamation:
-        <strong>{{ reclaims.reclamation_number }} - {{ reclaims.client.client_familyname }} {{ reclaims.client.client_firstname }}</strong>?
+        <strong>{{ reclaim.reclaim_number }}</strong>?
     </p>
 
     <form method="POST">
         {% csrf_token %}
         <div class="confirm-actions">
             <button type="submit" class="confirm-delete">Yes, Delete</button>
-            <a href="{% url 'reclaim_list' %}" class="confirm-cancel">Cancel</a>
+            <a href="{% url 'reclaims_list' %}" class="confirm-cancel">Cancel</a>
         </div>
     </form>
 </div>

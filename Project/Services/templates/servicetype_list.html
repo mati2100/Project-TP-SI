@@ -126,7 +126,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Service Type</th>
+                    <th>Service Name</th>
                     <th>Description</th>
                     <th>Weight Rate</th>
                     <th>Volume Rate</th>
@@ -138,21 +138,10 @@
                 {% for service in service_types %}
                 <tr>
                     <td>{{ service.id }}</td>
-
-                    <td>
-                        {% if service.st_name == 'standard' %}
-                            <span class="badge badge-standard">{{ service.get_st_name_display }}</span>
-                        {% elif service.st_name == 'express' %}
-                            <span class="badge badge-express">{{ service.get_st_name_display }}</span>
-                        {% else %}
-                            <span class="badge badge-international">{{ service.get_st_name_display }}</span>
-                        {% endif %}
-                    </td>
-
-                    <td>{{ service.st_description|truncatechars:50 }}</td>
-
-                    <td>${{ service.st_weight_rate }}</td>
-                    <td>${{ service.st_volume_rate }}</td>
+                    <td> <span class="badge badge-standard">{{ service.service_type_name }}</span></td>
+                    <td>{{ service.service_type_description|truncatechars:50 }}</td>
+                    <td>${{ service.service_type_weight_surcharge }}</td>
+                    <td>${{ service.service_type_volume_surcharge }}</td>
 
                     <td class="actions">
                         <button
