@@ -20,7 +20,7 @@ class Reclaim(models.Model):
     agent = models.ForeignKey('Profiles.Agent', on_delete=models.SET_NULL, null=True, blank=True)
     
     def __str__(self):
-        return f"Reclaim #{self.reclaim_number} - {self.client.client_familyname} {self.client.client_firstname}"
+        return f"Reclaim #{self.reclaim_number} - {self.client.client_lastname} {self.client.client_firstname}"
     
     def packages_affected(self):
         return ", ".join([str(rp.package) for rp in self.reclaim_packages_set.all()])
