@@ -101,6 +101,8 @@
             <select name="by" class="fused-select">
                 <option value="client" {% if request.GET.by == "client" %}selected{% endif %}>Client</option>
                 <option value="shipment_number" {% if request.GET.by == "shipment_number" %}selected{% endif %}>Shipment Number</option>
+                <option value="driver" {% if request.GET.by == "driver" %}selected{% endif %}>Driver</option>
+                <option value="status" {% if request.GET.by == "status" %}selected{% endif %}>Status</option>
             </select>
             <input
                 type="text"
