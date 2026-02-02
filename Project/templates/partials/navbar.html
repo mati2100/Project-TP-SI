@@ -10,7 +10,7 @@
     </button>
     <div class="account-menu">
         <p>Hello! <strong>{{ request.session.agent_name|default:"Account" }}</strong></p>
-        <a href="{% url 'login' %}" class="logout-link">Log out</a>
+        <a href="{% url 'logout' %}" class="logout-link">Log out</a>
     </div>
 </div>
 </header>
