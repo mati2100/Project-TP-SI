@@ -138,7 +138,7 @@
                 {% for invoice in invoices %}
                 <tr>
                     <td>{{ invoice.invoice_number }}</td>
-                    <td>{{ invoice.client.client_familyname }} {{ invoice.client.client_firstname }}</td>
+                    <td>{{ invoice.client.client_lastname }} {{ invoice.client.client_firstname }}</td>
                     <td>
                         <ul>
                             {% for shipment in invoice.get_shipments %}

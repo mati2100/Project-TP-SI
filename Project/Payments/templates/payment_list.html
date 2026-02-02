@@ -137,7 +137,7 @@
                 {% for payment in payments %}
                 <tr>
                     <td>{{ payment.id }}</td>
-                    <td>{{ payment.client.client_familyname }} {{ payment.client.client_firstname }}</td>
+                    <td>{{ payment.client.client_lastname }} {{ payment.client.client_firstname }}</td>
                     <td>{{ payment.payment_number }}</td>
                     <td>{{ payment.payment_date }}</td>
                     <td>{{ payment.payment_amount }}</td>

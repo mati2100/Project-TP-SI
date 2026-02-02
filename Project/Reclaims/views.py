@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Reclaim
 from .forms import ReclaimForm
+from django.db.models import Q
 from Profiles.decorators import token_required
 
 
@@ -17,7 +18,10 @@ def ReclaimListView(request):
         elif search_by == 'status':
             reclaims = reclaims.filter(Reclaim_status__icontains=query)
         elif search_by == 'client':
-            reclaims = reclaims.filter(client__client_firstname__icontains=query) | reclaims.filter(client__client_familyname__icontains=query)
+            reclaims = reclaims.filter(
+                Q(client_firstname__icontains=query) |
+                Q(client_lastname__icontains=query)
+            )
         elif search_by == 'shipment':
             reclaims = reclaims.filter(shipment__shipment_number__icontains=query)
 #        experimental sorting feature
