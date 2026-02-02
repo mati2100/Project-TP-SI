@@ -15,13 +15,13 @@ def ShipmentListView(request):
 
     if query:
         if search_by == 'number':
-            shipments = shipments.filter(shipment_number__icontains=query)
+            shipments = shipments.filter(shipment_tracking_number__icontains=query)
         elif search_by == 'status':
             shipments = shipments.filter(shipment_status__icontains=query)
         elif search_by == 'client':
             shipments = shipments.filter(client__client_firstname__icontains=query) | shipments.filter(client__client_familyname__icontains=query)
-        elif search_by == 'shipment':
-            shipments = shipments.filter(shipment_number__icontains=query)
+        elif search_by == 'driver':
+            shipments = shipments.filter(driver__driver_first_name__icontains=query) | shipments.filter(driver__driver_last_name__icontains=query)
 
     return render(request, 'shipment_list.html', {'shipments': shipments})
 
@@ -29,6 +29,7 @@ def ShipmentListView(request):
 def ShipmentCreateView(request):
     form = ShipmentForm(request.POST or None)
 
+    #Adds create new links to foreign key fields
     for name, field in form.fields.items():
         try:
             model_field = form._meta.model._meta.get_field(name)

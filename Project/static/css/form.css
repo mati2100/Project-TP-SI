@@ -64,7 +64,8 @@ body {
 }
 
 .form-field textarea {
-    min-height: 120px;
+    height: 40px;
+    min-height: 40px;
     resize: vertical;
 }
 
