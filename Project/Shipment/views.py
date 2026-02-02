@@ -3,6 +3,7 @@ from django.db import models
 from django.urls import reverse
 from .models import Shipment
 from .forms import ShipmentForm
+from django.db.models import Q
 from Profiles.decorators import token_required
 
 
@@ -19,7 +20,10 @@ def ShipmentListView(request):
         elif search_by == 'status':
             shipments = shipments.filter(shipment_status__icontains=query)
         elif search_by == 'client':
-            shipments = shipments.filter(client__client_firstname__icontains=query) | shipments.filter(client__client_familyname__icontains=query)
+            shipments = (
+                Q(client_firstname__icontains=query) |
+                Q(client_lastname__icontains=query)
+            )
         elif search_by == 'driver':
             shipments = shipments.filter(driver__driver_first_name__icontains=query) | shipments.filter(driver__driver_last_name__icontains=query)
 
