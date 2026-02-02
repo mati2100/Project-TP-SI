@@ -13,13 +13,13 @@
 
     <p class="confirm-message">
         Are you sure you want to delete this service type: 
-        <strong>{{ service_type.get_st_name_display }}</strong>?
+        <strong>{{ service_type.service_type_name }}</strong>?
     </p>
 
     <div class="confirm-details">
-        <p><strong>Description:</strong> {{ service_type.st_description|truncatechars:100 }}</p>
-        <p><strong>Weight Rate:</strong> ${{ service_type.st_weight_rate }} / kg</p>
-        <p><strong>Volume Rate:</strong> ${{ service_type.st_volume_rate }} / m³</p>
+        <p><strong>Description:</strong> {{ service_type.service_type_description|truncatechars:100 }}</p>
+        <p><strong>Weight Rate:</strong> ${{ service_type.service_type_weight_surcharge }} / kg</p>
+        <p><strong>Volume Rate:</strong> ${{ service_type.service_type_volume_surcharge }} / m³</p>
     </div>
 
     <form method="POST">

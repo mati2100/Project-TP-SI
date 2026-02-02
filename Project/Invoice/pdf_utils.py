@@ -159,7 +159,6 @@ def _generate_html_fallback(invoice):
 <body>
 <div class="document">
 
-    <!-- HEADER -->
     <div class="doc-header">
         <div class="doc-title">INVOICE</div>
         <div class="doc-meta">
@@ -169,7 +168,6 @@ def _generate_html_fallback(invoice):
         </div>
     </div>
 
-    <!-- BILL TO -->
     <div class="section">
         <h3>Bill To</h3>
         <p><strong>{invoice.client.client_lastname} {invoice.client.client_firstname}</strong></p>
@@ -178,7 +176,6 @@ def _generate_html_fallback(invoice):
         <p>Address: {invoice.client.client_address}</p>
     </div>
 
-    <!-- SHIPMENTS -->
     <div class="section">
         <h3>Shipments</h3>
         <table>

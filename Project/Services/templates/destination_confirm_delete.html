@@ -13,12 +13,11 @@
 
     <p class="confirm-message">
         Are you sure you want to delete this destination: 
-        <strong>{{ destination.dest_city }}, {{ destination.dest_country }}</strong>?
+        <strong>{{ destination.destination_city }}, {{ destination.destination_country }}</strong>?
     </p>
 
     <div class="confirm-details">
-        <p><strong>Zone:</strong> {{ destination.get_dest_zone_display }}</p>
-        <p><strong>Base Fare:</strong> ${{ destination.base_fare }}</p>
+        <p><strong>Base Fare:</strong> ${{ destination.destination_base_fare }}</p>
     </div>
 
     <form method="POST">

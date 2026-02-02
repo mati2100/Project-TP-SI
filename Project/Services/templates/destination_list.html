@@ -133,7 +133,7 @@
                     <th>ID</th>
                     <th>City</th>
                     <th>Country</th>
-                    <th>Zone</th>
+                    <th>State</th>
                     <th>Base Fare</th>
                     <th>Actions</th>
                 </tr>
@@ -143,21 +143,13 @@
                 {% for destination in destinations %}
                 <tr>
                     <td>{{ destination.id }}</td>
-                    <td>{{ destination.dest_city }}</td>
-                    <td>{{ destination.dest_country }}</td>
+                    <td>{{ destination.destination_city }}</td>
+                    <td>{{ destination.destination_country }}</td>
                     <td>
-                        {% if destination.dest_zone == 'local' %}
-                            <span class="badge badge-success">Local</span>
-                        {% elif destination.dest_zone == 'regional' %}
-                            <span class="badge">Regional</span>
-                        {% elif destination.dest_zone == 'national' %}
-                            <span class="badge">National</span>
-                        {% else %}
-                            <span class="badge badge-danger">International</span>
-                        {% endif %}
+                        {{ destination.destination_state }}
                     </td>
                     <td>
-                        ${{ destination.base_fare }}
+                        ${{ destination.destination_base_fare }}
                     </td>
                     <td class="actions">
                         <button
