@@ -8,7 +8,7 @@ class ShipmentForm(forms.ModelForm):
     packages = forms.ModelMultipleChoiceField(
         queryset=Package.objects.filter(shipment__isnull=True),
         widget=forms.CheckboxSelectMultiple,
-        required=True,
+        required=False,
         help_text="Select packages to include in this shipment"
     )
     class Meta:
